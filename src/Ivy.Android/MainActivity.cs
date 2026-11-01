@@ -11,9 +11,8 @@ namespace Ivy.AndroidHost;
 [Activity(Label = "Ivy", MainLauncher = true, Exported = true)]
 public sealed class MainActivity : Activity
 {
-    private readonly StringBuilder report = new();
     private TextView output = null!;
-    private ModSession? session;
+    private ModSession? session { get => ProcessHost.Session; set => ProcessHost.Session = value; }
     private string modsPath = "";
     private const int ImportRequest = 10;
     private const int ExportRequest = 11;
@@ -21,14 +20,16 @@ public sealed class MainActivity : Activity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        ProcessHost.Initialize(FilesDir!.AbsolutePath);
         modsPath = Path.Combine(FilesDir!.AbsolutePath, "mods");
         Directory.CreateDirectory(modsPath);
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.1.1", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.2.0", TextSize = 24 };
         layout.AddView(title);
-        layout.AddView(new TextView(this) { Text = "Teste do runtime C# · ARM64\nIntegração com o Terraria: pendente", TextSize = 15 });
+        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste de inicialização e metadados IL2CPP", TextSize = 15 });
+        AddButton(layout, "Abrir Terraria", OpenGame);
         AddButton(layout, "Carregar mods C#", LoadMods);
         AddButton(layout, "Descarregar mods", () => { session?.Dispose(); session = null; });
         AddButton(layout, "Importar mod (.dll)", () =>
@@ -53,7 +54,7 @@ public sealed class MainActivity : Activity
         SetContentView(layout);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
         Log($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
-        Log("O teste usa Mono/.NET; não carrega o jogo nem arquivos .tmod.");
+        Log("Runtime Mono/.NET pronto. Mods .tmod e hooks de gameplay ainda não são suportados.");
         try
         {
             var samplePath = Path.Combine(modsPath, "ExampleMod.dll");
@@ -70,7 +71,11 @@ public sealed class MainActivity : Activity
         var button = new Button(this) { Text = text };
         button.Click += (_, _) =>
         {
-            try { action(); }
+            try
+            {
+                action();
+                output.Text = ProcessHost.GetReport();
+            }
             catch (Exception ex) { Log(ex.ToString()); }
         };
         parent.AddView(button);
@@ -83,13 +88,25 @@ public sealed class MainActivity : Activity
             Log("Já existe uma sessão. Descarregue antes de carregar novamente.");
             return;
         }
-        session = new ModSession(Log);
+        session = new ModSession(ProcessHost.Write);
         foreach (var path in Directory.GetFiles(modsPath, "*.dll").Order(StringComparer.Ordinal))
         {
             try { session.LoadFile(path); }
             catch (Exception ex) { Log($"Erro em {Path.GetFileName(path)}: {ex}"); }
         }
-        Log($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). Ponte do jogo: ausente.");
+        Log($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). Hooks de gameplay: pendentes.");
+    }
+
+    private void OpenGame()
+    {
+        var intent = new Intent();
+        intent.SetClassName(PackageName!, "com.unity3d.player.UnityPlayerActivity");
+        if (intent.ResolveActivity(PackageManager!) is null)
+            throw new InvalidOperationException("Este APK contém apenas o runtime. Use o APK GameHost para abrir o Terraria.");
+        if (session is null) LoadMods();
+        Log($"Abrindo UnityPlayerActivity no pacote {PackageName}, PID C#={System.Environment.ProcessId}.");
+        StartActivity(intent);
+        Il2CppProbe.Start();
     }
 
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
@@ -102,7 +119,7 @@ public sealed class MainActivity : Activity
             {
                 using var stream = ContentResolver!.OpenOutputStream(data.Data)!;
                 using var writer = new StreamWriter(stream, Encoding.UTF8);
-                writer.Write(report.ToString());
+                writer.Write(ProcessHost.GetReport());
                 Log("Relatório exportado.");
             }
             else if (requestCode == ImportRequest)
@@ -132,15 +149,13 @@ public sealed class MainActivity : Activity
 
     private void Log(string message)
     {
-        report.AppendLine($"{DateTimeOffset.Now:HH:mm:ss} {message}");
-        output.Text = report.ToString();
-        global::Android.Util.Log.Info("Ivy", message);
+        ProcessHost.Write(message);
+        output.Text = ProcessHost.GetReport();
     }
 
-    protected override void OnDestroy()
+    protected override void OnResume()
     {
-        session?.Dispose();
-        session = null;
-        base.OnDestroy();
+        base.OnResume();
+        if (output is not null) output.Text = ProcessHost.GetReport();
     }
 }

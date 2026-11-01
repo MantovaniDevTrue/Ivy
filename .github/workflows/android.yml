@@ -20,6 +20,7 @@ jobs:
       - run: dotnet workload install android --skip-manifest-update
       - run: dotnet build src/Ivy.Android/Ivy.Android.csproj -t:InstallAndroidDependencies -p:AndroidSdkDirectory="$ANDROID_HOME" -p:AcceptAndroidSdkLicenses=True
       - run: bash scripts/build.sh
+      - run: python3 -m unittest discover -s tests -p 'test_*.py'
       - uses: actions/upload-artifact@v4
         with:
           name: Ivy-ARM64
