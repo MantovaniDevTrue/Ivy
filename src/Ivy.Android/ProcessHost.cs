@@ -18,7 +18,7 @@ internal static class ProcessHost
             logPath = Path.Combine(filesDirectory, "ivy-session.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.2.0 · C# PID={Environment.ProcessId}");
+            Write($"Ivy 0.2.1 · C# PID={Environment.ProcessId}");
         }
     }
 

@@ -26,7 +26,7 @@ public sealed class MainActivity : Activity
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.2.0", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.2.1", TextSize = 24 };
         layout.AddView(title);
         layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste de inicialização e metadados IL2CPP", TextSize = 15 });
         AddButton(layout, "Abrir Terraria", OpenGame);

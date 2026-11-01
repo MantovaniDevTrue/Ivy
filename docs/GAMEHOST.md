@@ -1,4 +1,4 @@
-# Host Android — 0.2.0
+# Host Android — 0.2.1
 
 O empacotador combina um APK base local com o APK do runtime Ivy. Preserva a classe Application original, as permissões, os DEX e todos os assets e bibliotecas ARM64 do jogo. Os controles de licença do APK base não são removidos nem alterados.
 
@@ -11,12 +11,12 @@ Instale o Apktool 3.0.3 pelo projeto oficial https://apktool.org/ . O jogo e o A
 ```sh
 python3 scripts/pack_game.py \
   --base-apk /caminho/Terraria.apk \
-  --host-apk artifacts/Ivy_0.2.0_RuntimeTest.apk \
+  --host-apk artifacts/Ivy_0.2.1_RuntimeTest.apk \
   --apktool /caminho/apktool_3.0.3.jar \
   --build-tools /caminho/android-sdk/build-tools/36.0.0 \
   --java-home /caminho/jdk-21 \
   --keystore /caminho/assinatura.keystore \
-  --output artifacts/Ivy_0.2.0_GameHost.apk
+  --output artifacts/Ivy_0.2.1_GameHost.apk
 ```
 
 O script reconstrói os recursos mantendo os IDs públicos, acrescenta os DEX do host, mantém somente ARM64, alinha as entradas para páginas de 16 KB e assina o resultado. Depois compara os bytes dos DEX, assets e bibliotecas ARM64 com os dois APKs de entrada. A chave deve ficar fora do repositório.

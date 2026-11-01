@@ -1,12 +1,12 @@
-# Ivy — 0.2.0
+# Ivy — 0.2.1
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A base já carregou uma DLL externa no Android 14: 1 mod e 1 sistema. Este lote adiciona o host do Terraria e um diagnóstico de metadados IL2CPP. A inicialização integrada ainda precisa ser validada no aparelho.
+A base já carregou uma DLL externa no Android 14: 1 mod e 1 sistema. A 0.2.1 corrige o registro JNI da tela inicial do host Terraria. A inicialização integrada ainda precisa ser validada no aparelho.
 
 ## Teste no celular
 
-1. Instale `Ivy_0.2.0_GameHost.apk` e abra o Ivy.
+1. Instale `Ivy_0.2.1_GameHost.apk` e abra o Ivy.
 2. Toque em **Abrir Terraria**. O ExampleMod é carregado automaticamente.
 3. Confira se o jogo chega ao menu.
 4. Volte ao Ivy e exporte o relatório. Se o app fechar, abra novamente e exporte: a sessão anterior é preservada.

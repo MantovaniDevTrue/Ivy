@@ -5,6 +5,7 @@ dotnet build samples/ExampleMod/ExampleMod.csproj -c Release -m:1 -p:UseSharedCo
 dotnet build tests/Ivy.Tests/Ivy.Tests.csproj -c Release -m:1 -p:UseSharedCompilation=false
 dotnet tests/Ivy.Tests/bin/Release/net10.0/Ivy.Tests.dll samples/ExampleMod/bin/Release/net10.0/ExampleMod.dll
 dotnet build src/Ivy.Android/Ivy.Android.csproj -c Release -t:SignAndroidPackage -m:1 -p:UseSharedCompilation=false "$@"
+python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src
 mkdir -p artifacts
-cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.2.0_RuntimeTest.apk
+cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.2.1_RuntimeTest.apk
 cp samples/ExampleMod/bin/Release/net10.0/ExampleMod.dll artifacts/
