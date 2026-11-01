@@ -31,6 +31,8 @@ def verify_host_processes(manifest, require_unity=False):
     if len(launchers) != 1:
         raise ValueError("Esperado apenas o launcher Ivy.")
     panel = launchers[0]
+    if "${" in panel.get(ANDROID + "taskAffinity", ""):
+        raise ValueError("Placeholder de tarefa do painel não resolvido.")
     services = [s for s in app.findall("service") if s.get(ANDROID + "name", "").endswith(".GameControlService")]
     if len(services) != 1 or services[0].get(ANDROID + "exported") != "false":
         raise ValueError("GameControlService interno ausente ou exportado.")
@@ -69,7 +71,7 @@ def load_decoded_manifest(folder):
     return manifest
 
 
-def merge_manifests(base, host):
+def merge_manifests(base, host, label="Ivy"):
     old_package = base.get("package")
     package = host.get("package")
     base.set("package", package)
@@ -105,8 +107,9 @@ def merge_manifests(base, host):
         item = copy.deepcopy(child)
         if item.tag == "activity":
             item.set(ANDROID + "theme", "@android:style/Theme.Material.NoActionBar")
+            item.set(ANDROID + "label", label)
         app.append(item)
-    app.set(ANDROID + "label", "Ivy")
+    app.set(ANDROID + "label", label)
     app.set(ANDROID + "allowBackup", "false")
     app.set(ANDROID + "extractNativeLibs", "true")
     app.set(ANDROID + "icon", "@drawable/ivy_icon")
@@ -175,6 +178,7 @@ def verify_payload(base_apk, host_apk, result_apk):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--label", default="Ivy")
     parser.add_argument("--base-apk", required=True, type=Path)
     parser.add_argument("--host-apk", required=True, type=Path)
     parser.add_argument("--apktool", required=True, type=Path)
@@ -193,7 +197,7 @@ def main():
         base, host = root / "base", root / "host"
         for source, target in ((args.base_apk, base), (args.host_apk, host)):
             run([java, "-jar", args.apktool, "d", "-s", "-f", source, "-o", target])
-        manifest = merge_manifests(load_decoded_manifest(base), load_decoded_manifest(host))
+        manifest = merge_manifests(load_decoded_manifest(base), load_decoded_manifest(host), args.label)
         verify_host_processes(manifest, require_unity=True)
         ET.ElementTree(manifest).write(base / "AndroidManifest.xml", encoding="utf-8", xml_declaration=True)
         merge_payload(base, host)

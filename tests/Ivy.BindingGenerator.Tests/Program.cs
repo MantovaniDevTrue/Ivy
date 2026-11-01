@@ -25,7 +25,21 @@ Check(assembly.Types.Single(t => t.Name == "Terraria.Fixture.AbstractSample").Me
 var again = CatalogReader.ReadAssembly(typeof(Terraria.Fixture.Sample).Assembly.Location, ["Terraria"]);
 Check(JsonSerializer.Serialize(assembly) == JsonSerializer.Serialize(again), "saída determinística e leitura sem inicializadores");
 Check(assembly.Types.All(t => t.Namespace.StartsWith("Terraria", StringComparison.Ordinal)), "filtro de namespaces");
-Console.WriteLine("14 verificações do gerador passaram.");
+var gameplay = CatalogReader.ReadAssembly(typeof(Terraria.Main).Assembly.Location, ["Terraria"]);
+var gameCatalog = new ApiCatalog(1, "metadata-only-no-runtime-execution", [gameplay]);
+var sdk = GameplaySdkGenerator.Generate(gameCatalog);
+Check(sdk.Contains("public static class On_Main") && sdk.Contains("public partial class Player"), "perfil tipado Main/Player e On_Main");
+var changed = gameplay with { Types = gameplay.Types.Select(t => t.Name != "Terraria.Player" ? t : t with {
+    Fields = t.Fields.Select(f => f.Name != "statLife" ? f : f with { Type = "System.Double" }).ToArray()
+}).ToArray() };
+try { GameplaySdkGenerator.Generate(gameCatalog with { Assemblies = [changed] }); throw new Exception("Campo incompatível foi aceito."); }
+catch (InvalidDataException) { Check(true, "perfil rejeita tipo de campo incompatível"); }
+var changedMethod = gameplay with { Types = gameplay.Types.Select(t => t.Name != "Terraria.Main" ? t : t with {
+    Methods = t.Methods.Select(m => m.Name != "DoUpdateInWorld" ? m : m with { IsStatic = true }).ToArray()
+}).ToArray() };
+try { GameplaySdkGenerator.Generate(gameCatalog with { Assemblies = [changedMethod] }); throw new Exception("Método incompatível foi aceito."); }
+catch (InvalidDataException) { Check(true, "perfil rejeita mudança de assinatura do hook"); }
+Console.WriteLine("17 verificações do gerador passaram.");
 
 static void Check(bool condition, string name)
 {

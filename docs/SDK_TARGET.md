@@ -67,7 +67,7 @@ automaticamente após uma exceção se ele já tiver sido executado.
 
 ## Estado atual e próximo lote
 
-O código atual gera descritores e delegates primitivos candidatos; ainda não
+Estado histórico até a 0.3.1: o gerador produz descritores e delegates primitivos candidatos; ainda não
 gera essas fachadas nem eventos On_. O único hook executável é o adaptador
 diagnóstico de Main.DoUpdateInWorld, com original antes do callback. Isso ainda
 não equivale ao contrato de orig controlado pelo handler descrito acima.
@@ -85,3 +85,7 @@ de assinatura, preservando a mesma arquitetura para todo o inventário.
 Cada membro terá estado separado: catalogado, gerado/compilável, conectado e
 validado no runtime. Toda limitação deve ser diagnosticada no build/preflight.
 Autocomplete ou compilação isolados não contam como implementação funcional.
+
+## Primeiro lote — 0.4.0
+
+[Implementação e limites](GAMEPLAY_SDK.md): perfil Main/Player validado contra metadados, accessors tipados, evento On_Main, ABI 2 com orig controlável e unload por mod. A cobertura geral e a execução da nova ABI no aparelho continuam pendentes.

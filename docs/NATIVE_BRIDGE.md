@@ -87,3 +87,7 @@ o teste local não comprova 60 FPS ou fidelidade ao tModLoader.
 
 Se a instalação for rejeitada, o log deve mostrar código/mensagem do backend ou
 a assinatura ausente. Não trate apenas a abertura do mundo como prova do hook.
+
+## Evolução na 0.4.0
+
+A ABI 1 descrita acima é histórica. A [ABI 2 e o SDK de gameplay](GAMEPLAY_SDK.md) permitem ao handler controlar orig, com ownership e unload por mod. A execução Android da ABI 2 ainda aguarda validação.

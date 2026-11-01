@@ -1,6 +1,8 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Ivy.Core")]
+[assembly: InternalsVisibleTo("Ivy.Android")]
+[assembly: InternalsVisibleTo("Ivy.Tests")]
 
 namespace Terraria.ModLoader;
 

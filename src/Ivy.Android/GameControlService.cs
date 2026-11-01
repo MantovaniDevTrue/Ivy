@@ -69,6 +69,6 @@ public sealed class GameControlService : Service
             try { session.LoadFile(path); }
             catch (Exception ex) { ProcessHost.Write($"Erro em {Path.GetFileName(path)}: {ex}"); }
         }
-        ProcessHost.Write($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). API de gameplay dos mods: pendente.");
+        ProcessHost.Write($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). On_Main e SDK Main/Player prontos; demais APIs pendentes.");
     }
 }

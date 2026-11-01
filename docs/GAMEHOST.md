@@ -1,4 +1,4 @@
-# Host Android — 0.3.1
+# Host Android — 0.4.0
 
 O empacotador combina um APK base local com o APK do runtime Ivy. Preserva a classe Application original, as permissões, os DEX e todos os assets e bibliotecas ARM64 do jogo. Os controles de licença do APK base não são removidos nem alterados.
 
@@ -11,12 +11,12 @@ Instale o Apktool 3.0.3 pelo projeto oficial https://apktool.org/ . O jogo e o A
 ```sh
 python3 scripts/pack_game.py \
   --base-apk /caminho/Terraria.apk \
-  --host-apk artifacts/Ivy_0.3.1_RuntimeTest.apk \
+  --host-apk artifacts/Ivy_0.4.0_RuntimeTest.apk \
   --apktool /caminho/apktool_3.0.3.jar \
   --build-tools /caminho/android-sdk/build-tools/36.0.0 \
   --java-home /caminho/jdk-21 \
   --keystore /caminho/assinatura.keystore \
-  --output artifacts/Ivy_0.3.1_GameHost.apk
+  --output artifacts/Ivy_0.4.0_GameHost.apk
 ```
 
 O script reconstrói os recursos mantendo os IDs públicos, acrescenta os DEX do host, mantém somente ARM64, alinha as entradas para páginas de 16 KB e assina o resultado. Depois compara os bytes dos DEX, assets e bibliotecas ARM64 com os dois APKs de entrada. A chave deve ficar fora do repositório.
@@ -30,3 +30,5 @@ A sessão de mods pertence ao processo Unity e não é descartada quando o servi
 ## Limites deste lote
 
 Abrir a Unity e resolver metadados não comprova execução do novo hook: confira os contadores e as mensagens do callback no aparelho. Esta ponte ainda não oferece hooks públicos, registro de itens ou compatibilidade com mods do PC. Alterações de assinatura/pacote podem ser rejeitadas pela inicialização do APK base; esse resultado deve ser diagnosticado pelos logs, sem desativar os controles do jogo.
+
+Para o APK paralelo deste lote, compile com `-p:ApplicationId=dev.mantovani.ivy.sdktest` e empacote com `--label "Ivy SDK Test"`. A afinidade da tarefa do painel acompanha ApplicationId, evitando compartilhar a tarefa com outra instalação. Veja [GAMEPLAY_SDK.md](GAMEPLAY_SDK.md).

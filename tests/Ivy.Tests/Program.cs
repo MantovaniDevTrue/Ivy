@@ -24,7 +24,7 @@ using (var session = new ModSession(logs.Add))
     Throws<InvalidOperationException>(() => session.LoadAssembly(MakeAssembly("Failure", true, true)), "erro de Load propagado");
     Check(session.ModCount == 0 && session.SystemCount == 0, "contadores após falha");
     Check(events.SequenceEqual(new[] { "Mod.Load", "System.Load", "System.Unload", "Mod.Unload" }), "rollback após falha parcial");
-    Throws<InvalidOperationException>(() => session.LoadAssembly(typeof(Probe).Assembly), "DLL sem Mod rejeitada");
+    Throws<InvalidOperationException>(() => session.LoadAssembly(typeof(string).Assembly), "DLL sem Mod rejeitada");
 }
 if (args.Length != 1) throw new ArgumentException("Informe o caminho de ExampleMod.dll.");
 using (var session = new ModSession(logs.Add))
@@ -33,6 +33,7 @@ using (var session = new ModSession(logs.Add))
     Check(session.ModCount == 1 && session.SystemCount == 1, "DLL externa e identidade compartilhada da API");
 }
 Console.WriteLine("11 verificações passaram.");
+GameplayChecks.Run(args[0]);
 
 static void Check(bool condition, string name)
 {

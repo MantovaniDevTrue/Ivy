@@ -3,4 +3,5 @@
     <TargetFramework>net10.0</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+  <ItemGroup><EmbeddedResource Include="GameplayTemplate.txt" WithCulture="false" LogicalName="Ivy.BindingGenerator.Gameplay.g.cs.txt" /></ItemGroup>
 </Project>

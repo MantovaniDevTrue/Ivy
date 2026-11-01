@@ -10,7 +10,7 @@
 #define IVY_EXPORT extern "C" __attribute__((visibility("default")))
 
 using world_update = void (*)(void *, const void *);
-using world_callback = int32_t (*)(void *, uint64_t, uint64_t, int32_t);
+using world_callback = int32_t (*)(void *, const void *, uint64_t, int32_t);
 
 namespace {
 pthread_mutex_t control = PTHREAD_MUTEX_INITIALIZER;
@@ -24,13 +24,26 @@ std::atomic<bool> installed{false};
 std::atomic<uint64_t> ticks{0}, originals{0}, callbacks{0}, failures{0}, in_flight{0}, installs{0};
 std::atomic<int32_t> last_error{0}, first_thread{0};
 
+struct call_frame {
+    world_update original;
+    const void *method;
+    uint64_t original_calls;
+    call_frame *previous;
+};
+thread_local call_frame *current_frame = nullptr;
+
+void call_original(call_frame &frame, void *instance) {
+    frame.original_calls++;
+    originals.fetch_add(1, std::memory_order_relaxed);
+    frame.original(instance, frame.method);
+}
+
 void world_proxy(void *instance, const void *method_info) {
     auto original = reinterpret_cast<world_update>(__atomic_load_n(&original_address, __ATOMIC_ACQUIRE));
     if (original == nullptr) __builtin_trap();
-    const auto original_count = originals.fetch_add(1, std::memory_order_relaxed) + 1;
-    original(instance, method_info);
+    call_frame frame{original, method_info, 0, current_frame};
+    current_frame = &frame;
     const auto tick = ticks.fetch_add(1, std::memory_order_relaxed) + 1;
-    if (!enabled.load(std::memory_order_acquire)) return;
     in_flight.fetch_add(1, std::memory_order_acq_rel);
     const auto managed = callback.load(std::memory_order_acquire);
     if (enabled.load(std::memory_order_acquire) && managed != nullptr) {
@@ -38,12 +51,17 @@ void world_proxy(void *instance, const void *method_info) {
         int32_t expected = 0;
         first_thread.compare_exchange_strong(expected, tid, std::memory_order_relaxed);
         callbacks.fetch_add(1, std::memory_order_relaxed);
-        if (managed(instance, tick, original_count, tid) != 0) {
+        if (managed(instance, method_info, tick, tid) != 0) {
             failures.fetch_add(1, std::memory_order_relaxed);
             enabled.store(false, std::memory_order_release);
+            // Failure before orig: preserve the game. Never repeat an original already invoked.
+            if (frame.original_calls == 0) call_original(frame, instance);
         }
+    } else {
+        call_original(frame, instance);
     }
     in_flight.fetch_sub(1, std::memory_order_acq_rel);
+    current_frame = frame.previous;
 }
 
 int32_t finish(int32_t result) {
@@ -53,7 +71,13 @@ int32_t finish(int32_t result) {
 }
 }
 
-IVY_EXPORT uint32_t ivy_native_abi_version() { return 1; }
+IVY_EXPORT uint32_t ivy_native_abi_version() { return 2; }
+
+IVY_EXPORT int32_t ivy_native_call_world_original(void *instance) {
+    if (instance == nullptr || current_frame == nullptr) return -8;
+    call_original(*current_frame, instance);
+    return 0;
+}
 
 IVY_EXPORT int32_t ivy_native_install_world_hook(void *address, world_callback managed) {
     pthread_mutex_lock(&control);
@@ -134,6 +158,7 @@ IVY_EXPORT const char *ivy_native_error_message(int32_t error) {
         case -5: return "Hook backend returned no stub";
         case -6: return "Hook backend returned no original function";
         case -7: return "World update hook is not installed";
+        case -8: return "Original is only callable inside a world hook on its thread";
         default: return shadowhook_to_errmsg(error);
     }
 }

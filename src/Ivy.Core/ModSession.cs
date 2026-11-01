@@ -1,13 +1,14 @@
 using System.Reflection;
 using System.Runtime.Loader;
 using Terraria.ModLoader;
+using Ivy.Runtime;
 
 namespace Ivy.Loader;
 
 public sealed class ModSession : IDisposable
 {
     private readonly Action<string> log;
-    private readonly List<(Action Unload, string Name)> loaded = [];
+    private readonly List<(Action Unload, string Name, HookOwner Owner)> loaded = [];
     private readonly List<AssemblyLoadContext> contexts = [];
     private readonly HashSet<string> names = new(StringComparer.OrdinalIgnoreCase);
     private bool disposed;
@@ -44,17 +45,19 @@ public sealed class ModSession : IDisposable
         var mod = (Mod)Activator.CreateInstance(entries[0])!;
         if (!names.Add(mod.Name))
             throw new InvalidOperationException($"Mod já carregado: {mod.Name}.");
+        var owner = new HookOwner();
         var checkpoint = loaded.Count;
         var systemsAdded = 0;
         try
         {
-            loaded.Add((mod.Unload, mod.Name));
+            loaded.Add((mod.Unload, mod.Name, owner));
+            using var hookScope = WorldHooks.EnterOwner(owner);
             mod.Load();
             foreach (var type in types.Where(t => typeof(ModSystem).IsAssignableFrom(t)))
             {
                 var system = (ModSystem)Activator.CreateInstance(type)!;
                 system.AttachToLoader(mod);
-                loaded.Add((system.Unload, type.Name));
+                loaded.Add((system.Unload, type.Name, owner));
                 system.Load();
                 systemsAdded++;
             }
@@ -74,6 +77,7 @@ public sealed class ModSession : IDisposable
     {
         for (var i = loaded.Count - 1; i >= count; i--)
         {
+            loaded[i].Owner.Stop();
             try { loaded[i].Unload(); }
             catch (Exception ex) { log($"Falha ao descarregar {loaded[i].Name}: {ex}"); }
             loaded.RemoveAt(i);
@@ -83,6 +87,8 @@ public sealed class ModSession : IDisposable
     public void Dispose()
     {
         if (disposed) return;
+        if (loaded.Any(entry => entry.Owner.IsExecutingHere))
+            throw new InvalidOperationException("Descarregue a sessão fora de seus hooks.");
         disposed = true;
         UnloadTo(0);
         foreach (var context in contexts) context.Unload();

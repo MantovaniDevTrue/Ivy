@@ -251,3 +251,7 @@ Os lotes são dependências, não datas prometidas. Fazer CI entre alterações 
 - TagCompound: https://docs.tmodloader.net/docs/stable/class_tag_compound.html
 - ModPacket: https://docs.tmodloader.net/docs/stable/class_mod_packet.html
 - ModConfig: https://docs.tmodloader.net/docs/stable/class_mod_config.html
+
+## Entrega 0.4.0 — primeiro perfil tipado
+
+[Estado e limites](GAMEPLAY_SDK.md): Main/Player e On_Main.DoUpdateInWorld, orig controlável, encadeamento e unload por mod implementados. Gerador valida um template estreito contra o dump; não gera ainda fachadas universais. A execução da ABI 2 e a escrita de vida no aparelho são a próxima validação.

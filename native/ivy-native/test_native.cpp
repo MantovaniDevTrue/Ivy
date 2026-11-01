@@ -2,66 +2,57 @@
 #include <cstdint>
 #include <iostream>
 #include "hook_backend.h"
-
-using callback_type = int32_t (*)(void *, uint64_t, uint64_t, int32_t);
+using callback_type = int32_t (*)(void *, const void *, uint64_t, int32_t);
 extern "C" int32_t ivy_native_install_world_hook(void *, callback_type);
 extern "C" int32_t ivy_native_uninstall_world_hook();
 extern "C" int32_t ivy_native_set_callbacks_enabled(int32_t);
+extern "C" int32_t ivy_native_call_world_original(void *);
 extern "C" int64_t ivy_native_get_stat(int32_t);
 extern "C" void ivy_native_test_tick(void *, const void *);
-
-static int stage = 0, original_count = 0, managed_count = 0;
-static bool fail_callback = false;
-static void original(void *self, const void *method) {
-    assert(self == reinterpret_cast<void *>(1));
-    assert(method == reinterpret_cast<void *>(2));
-    stage = 1;
-    original_count++;
+static int originals = 0, callbacks = 0, mode = 0;
+static void *self = reinterpret_cast<void *>(1);
+static void original(void *instance, const void *method) {
+    assert(instance == self && method == reinterpret_cast<void *>(2)); originals++;
 }
-static int32_t managed(void *self, uint64_t tick, uint64_t calls, int32_t tid) {
-    assert(self == reinterpret_cast<void *>(1));
-    assert(stage == 1 && static_cast<int>(calls) == original_count);
-    assert(tick == calls && tid > 0);
-    stage = 2;
-    managed_count++;
-    return fail_callback ? -1 : 0;
+static int32_t managed(void *instance, const void *method, uint64_t tick, int32_t tid) {
+    assert(instance == self && method == reinterpret_cast<void *>(2) && tick > 0 && tid > 0);
+    callbacks++;
+    if (mode == 1) return 0; // Deliberately omit orig.
+    if (mode == 3) return -1; // Fail before orig.
+    const int before = originals;
+    assert(ivy_native_call_world_original(instance) == 0 && originals == before + 1);
+    if (mode == 2) assert(ivy_native_call_world_original(instance) == 0 && originals == before + 2);
+    return mode == 4 ? -1 : 0;
 }
-
-extern "C" int shadowhook_init(shadowhook_mode_t mode, bool debug) { assert(mode == SHADOWHOOK_MODE_UNIQUE && !debug); return 0; }
-extern "C" void *shadowhook_hook_func_addr(void *target, void *, void **previous) {
-    *previous = target;
-    return reinterpret_cast<void *>(3);
-}
+extern "C" int shadowhook_init(shadowhook_mode_t m, bool debug) { assert(m == SHADOWHOOK_MODE_UNIQUE && !debug); return 0; }
+extern "C" void *shadowhook_hook_func_addr(void *target, void *, void **previous) { *previous = target; return reinterpret_cast<void *>(3); }
 extern "C" int shadowhook_unhook(void *stub) { assert(stub == reinterpret_cast<void *>(3)); return 0; }
 extern "C" int shadowhook_get_errno() { return 0; }
 extern "C" const char *shadowhook_to_errmsg(int) { return "mock"; }
-
+static void tick() { ivy_native_test_tick(self, reinterpret_cast<void *>(2)); }
 int main() {
-    const auto address = reinterpret_cast<void *>(original);
+    auto address = reinterpret_cast<void *>(original);
+    assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_install_world_hook(nullptr, managed) == -1);
     assert(ivy_native_install_world_hook(address, nullptr) == -1);
     assert(ivy_native_install_world_hook(address, managed) == 0);
-    assert(ivy_native_install_world_hook(address, managed) == 0);
-    assert(ivy_native_get_stat(9) == 1);
+    assert(ivy_native_install_world_hook(address, managed) == 0 && ivy_native_get_stat(9) == 1);
     assert(ivy_native_install_world_hook(reinterpret_cast<void *>(4), managed) == -2);
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(original_count == 1 && managed_count == 1 && stage == 2);
-    assert(ivy_native_get_stat(0) == 1 && ivy_native_get_stat(1) == 1 && ivy_native_get_stat(2) == 1);
+    tick(); assert(originals == 1 && callbacks == 1);
+    mode = 1; tick(); assert(originals == 1 && callbacks == 2);
+    mode = 2; tick(); assert(originals == 3 && callbacks == 3);
     assert(ivy_native_set_callbacks_enabled(0) == 0);
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(original_count == 2 && managed_count == 1);
+    tick(); assert(originals == 4 && callbacks == 3);
     assert(ivy_native_set_callbacks_enabled(1) == 0);
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(original_count == 3 && managed_count == 2);
-    fail_callback = true;
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(ivy_native_get_stat(8) == 1 && ivy_native_get_stat(3) == 0 && ivy_native_get_stat(7) == 0);
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(original_count == 5 && managed_count == 3);
+    mode = 3; tick(); assert(originals == 5 && callbacks == 4 && ivy_native_get_stat(3) == 0);
+    tick(); assert(originals == 6 && callbacks == 4);
+    assert(ivy_native_set_callbacks_enabled(1) == 0);
+    mode = 4; tick(); assert(originals == 7 && callbacks == 5 && ivy_native_get_stat(3) == 0);
+    assert(ivy_native_get_stat(8) == 2 && ivy_native_get_stat(7) == 0);
+    assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_uninstall_world_hook() == 0 && ivy_native_get_stat(4) == 0);
-    ivy_native_test_tick(reinterpret_cast<void *>(1), reinterpret_cast<void *>(2));
-    assert(original_count == 6 && managed_count == 3);
+    tick(); assert(originals == 8 && callbacks == 5);
     assert(ivy_native_uninstall_world_hook() == 0);
     assert(ivy_native_install_world_hook(address, managed) == -3);
-    std::cout << "Native bridge control tests passed (mock hook backend; no ARM64 patch executed).\n";
+    std::cout << "Native ABI 2 control tests passed: zero/one/two originals, error fallback without duplicates, removal (mock backend).\n";
 }

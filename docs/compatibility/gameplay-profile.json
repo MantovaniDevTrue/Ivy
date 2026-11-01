@@ -1,0 +1,13 @@
+{
+  "profile": "main-player-on-world-v1",
+  "ivyVersion": "0.4.0",
+  "nativeAbi": 2,
+  "sourceAssembly": "Assembly-CSharp",
+  "sourceSha256": "c3569dcd0e8fff1a1ea22885a40f32a9c4d9e4a710b723f7be23b5e48389a68c",
+  "types": [
+    "Terraria.Main",
+    "Terraria.Player"
+  ],
+  "runtimeStatus": "implemented-awaiting-android-abi2-validation",
+  "generator": "validated fixed template, not universal facade generation"
+}

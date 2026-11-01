@@ -57,3 +57,7 @@ A API adicional semelhante ao tModLoader continua sendo trabalho do Ivy: ModItem
 O gerador passou em 14 verificações de contrato, incluindo overloads com mesmo número de parâmetros, ref/out, arrays de ranks distintos, genéricos de tipo/método, constantes, readonly, properties, eventos, abstratos, filtro de namespaces e determinismo. A fixture tem um inicializador que lança exceção caso seja executado: a análise dos metadados não o executa.
 
 O catálogo real e o projeto C# gerado compilaram com zero erros. Isso é evidência da geração e da integridade de suas estruturas; não é evidência de execução dos 21.296 métodos nem de equivalência de todas as assinaturas na ABI Android.
+
+## Perfil executável inicial — 0.4.0
+
+O [primeiro perfil de gameplay](GAMEPLAY_SDK.md) gera Main/Player/On_Main por template validado contra as assinaturas reais. É separado do catálogo geral de descritores e não transforma os demais membros em acessos funcionais. Os testes do gerador agora incluem três verificações desse perfil (17 no total).

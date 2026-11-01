@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Ivy.AndroidHost;
 
-[Activity(Label = "Ivy", MainLauncher = true, Exported = true, Process = ":launcher", TaskAffinity = "dev.mantovani.ivy.launcher")]
+[Activity(Label = "Ivy", MainLauncher = true, Exported = true, Process = ":launcher", TaskAffinity = "${ivyPanelAffinity}")]
 public sealed class MainActivity : Activity
 {
     private TextView output = null!;
@@ -26,13 +26,13 @@ public sealed class MainActivity : Activity
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.3.1", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.4.0", TextSize = 24 };
         layout.AddView(title);
-        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste do hook C++ → C# no mundo", TextSize = 15 });
+        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSDK Main/Player + hooks On_Main", TextSize = 15 });
         AddButton(layout, "Abrir Terraria", OpenGame);
         AddButton(layout, "Carregar mods C#", () => SendCommand(GameControlService.Load));
         AddButton(layout, "Descarregar mods", () => SendCommand(GameControlService.Unload));
-        AddButton(layout, "Parar hook de diagnóstico", () => SendCommand(GameControlService.StopHook));
+        AddButton(layout, "Parar ponte On_Main", () => SendCommand(GameControlService.StopHook));
         AddButton(layout, "Importar mod (.dll)", () =>
         {
             var intent = new Intent(Intent.ActionOpenDocument);
@@ -55,7 +55,7 @@ public sealed class MainActivity : Activity
         SetContentView(layout);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
         Log($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
-        Log("Runtime Mono/.NET pronto. Ponte de gameplay em diagnóstico; API de conteúdo ainda pendente.");
+        Log("Runtime Mono/.NET pronto. On_Main e acessos tipados Main/Player; API de conteúdo ainda pendente.");
         try
         {
             var samplePath = Path.Combine(modsPath, "ExampleMod.dll");

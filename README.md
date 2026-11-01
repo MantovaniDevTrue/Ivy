@@ -1,18 +1,17 @@
-# Ivy — 0.3.1
+# Ivy — 0.4.0
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A versão 0.3.0 executou o primeiro hook C++ → C# no Android 14: ticks 1 e 60, original e callback correspondentes, leitura de vida 100. A 0.3.1 separa o painel do processo Unity para que o encerramento do jogo não encerre o painel. Mantovani confirmou a saída normal sem crash na 0.3.1.
+A 0.3.1 teve a saída normal confirmada sem crash. A 0.4.0 acrescenta o primeiro SDK Main/Player tipado, evento On_Main.DoUpdateInWorld com original controlado pelo handler, unload de registros por mod e ExampleMod externo com recuperação de vida. A ABI nativa 2 e a escrita no jogo ainda aguardam teste no aparelho. [Escopo, limites e teste](docs/GAMEPLAY_SDK.md).
 
 ## Teste no celular
 
-1. Instale `Ivy_0.3.1_GameHost.apk` e abra o Ivy.
-2. Toque em **Abrir Terraria** e entre em um mundo. O ExampleMod carrega automaticamente.
-3. Jogue por um minuto, pause/retome, salve e entre novamente.
-4. Saia do Terraria e confira se o painel continua disponível. Abra o jogo novamente e exporte o relatório. Procure `Hook C++ instalado` e `Gameplay C# após original`, com contadores e leitura da vida.
-5. Se fechar, reabra e exporte: a sessão anterior é preservada.
+1. Instale Ivy_0.4.0_SDK_Test.apk ao lado do Ivy anterior (pacote dev.mantovani.ivy.sdktest).
+2. Abra um mundo de teste, receba dano e confira a recuperação adicional de até 5 de vida a cada 120 ticks.
+3. Descarregue os mods pelo painel e confirme que o efeito para; carregue novamente.
+4. Salve, saia/reentre e exporte o relatório. Procure On_Main concluído e SDK Player.statLife.
 
-A ponte chama o original antes do callback C# e apenas lê alguns valores em quatro pontos do teste. O botão **Parar hook de diagnóstico** remove o hook; reinicie o processo para instalar novamente. Detalhes e limites: [NATIVE_BRIDGE.md](docs/NATIVE_BRIDGE.md).
+A chave antiga não estava disponível no ambiente recriado; este APK de teste usa pacote/assinatura separados e tem dados próprios. Não precisa desinstalar o Ivy validado.
 
 O pacote `dev.mantovani.ivy` é separado do Terraria original. O APK `RuntimeTest` dos Actions contém somente o runtime: o jogo é empacotado localmente com o APK base fornecido pelo usuário.
 
@@ -33,7 +32,7 @@ O workflow **Android ARM64** executa os testes e gera o APK do runtime. Para o A
 
 `Mod.Load/Unload`, `Mod.Name`, `ModSystem.Load/Unload` e `ModSystem.Mod`, no namespace `Terraria.ModLoader`. Os mods referenciam `Ivy.Api.dll`. O núcleo descobre as classes, bloqueia duplicatas e desfaz carregamentos incompletos.
 
-Ainda faltam registro de conteúdo no jogo, hooks públicos para mods, compilação no celular, dependências de mods e multiplayer. Não carrega `.tmod` do PC. As DLLs executam com os privilégios do app. Reinicie o processo ao atualizar uma DLL.
+O primeiro hook público e acessos tipados estão em [GAMEPLAY_SDK.md](docs/GAMEPLAY_SDK.md). Ainda faltam registro de conteúdo, cobertura geral de hooks/acessos, compilação no celular, dependências de mods e multiplayer. Não carrega `.tmod` do PC. As DLLs executam com os privilégios do app. Reinicie o processo ao atualizar uma DLL.
 
 - `src/Ivy.Api`: contrato público inicial.
 - `src/Ivy.Core`: carregamento e ciclo de vida.
@@ -58,4 +57,4 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 
 ## Objetivo do SDK
 
-[Contrato de acesso tipado e hooks On_](docs/SDK_TARGET.md): C# no Mono dentro do jogo, fachadas geradas com autocomplete e acesso ao estado IL2CPP real, com originais tipados e encadeamento por mod. Esse contrato define o objetivo; as fachadas e os eventos On_ ainda não estão implementados.
+[Contrato de acesso tipado e hooks On_](docs/SDK_TARGET.md): C# no Mono dentro do jogo, fachadas geradas com autocomplete e acesso ao estado IL2CPP real, com originais tipados e encadeamento por mod. Esse contrato define o objetivo; a primeira fatia Main/Player/On_Main está implementada na 0.4.0; a cobertura geral continua pendente.

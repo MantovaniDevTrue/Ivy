@@ -4,12 +4,14 @@ using Ivy.BindingGenerator;
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Uso: Ivy.BindingGenerator <diretório DummyDll> <saída> [prefixos separados por vírgula]");
+    Console.Error.WriteLine("Uso: Ivy.BindingGenerator <diretório DummyDll> <saída> [prefixos separados por vírgula] [arquivo-SDK-MainPlayer.cs]");
     return 2;
 }
 var prefixes = (args.Length > 2 ? args[2] : "Terraria,Microsoft.Xna.Framework,ReLogic").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 var catalog = CatalogReader.ReadDirectory(args[0], prefixes);
 Directory.CreateDirectory(args[1]);
+if (args.Length > 3)
+    File.WriteAllText(args[3], GameplaySdkGenerator.Generate(catalog));
 var json = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 File.WriteAllText(Path.Combine(args[1], "native-api.json"), JsonSerializer.Serialize(catalog, json) + "\n");
 var types = catalog.Assemblies.SelectMany(a => a.Types).ToArray();
