@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "mode": "metadata-only-no-runtime-execution",
+  "prefixes": [
+    "Terraria",
+    "Microsoft.Xna.Framework",
+    "ReLogic"
+  ],
+  "assemblies": 1,
+  "types": 2683,
+  "methods": 21296,
+  "fields": 31812,
+  "properties": 2356,
+  "events": 97,
+  "primitiveOnlySignatures": 7959,
+  "reviewReasons": {
+    "abstract-no-native-body": 478,
+    "array-marshalling": 747,
+    "byref-lifetime-and-writeback": 1320,
+    "construction-or-type-initialization": 2706,
+    "extern-or-internal-call": 14,
+    "generic-context": 440,
+    "il2cpp-string-conversion": 1366,
+    "object-or-value-type-marshalling": 10004,
+    "pointer-or-function-pointer": 10
+  },
+  "runtimeMethodsValidated": 0,
+  "hooksInstalled": 0,
+  "status": "Descriptors generated; native invocation, public facades and hook ABI validation remain separate stages."
+}

@@ -45,3 +45,7 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 ## Roadmap de compatibilidade
 
 [Plano completo por lotes](docs/ROADMAP.md), [catálogo inicial de classes](docs/compatibility/CLASSES.md) e [perfil de referência fixado](docs/compatibility/baseline.json). A API e o pacote são próprios do Ivy, com classes, assinaturas e comportamento muito próximos do tModLoader para portar fontes com o mínimo de alterações. O fluxo é recompilar fontes/assets contra o SDK Ivy; carregar .tmod ou DLLs de mods compiladas para PC fica fora do escopo.
+
+## Acessos nativos gerados
+
+[Gerador de bindings e estado da validação](docs/NATIVE_BINDINGS.md): inventário automático das DummyDlls, descritores de 21.296 métodos e 7.959 delegates primitivos candidatos. O catálogo gerado compila; resolução/chamadas nativas, marshalling completo e fachadas públicas ainda estão pendentes. O gerador não instala hooks.

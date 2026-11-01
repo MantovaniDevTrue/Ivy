@@ -21,6 +21,7 @@ jobs:
       - run: dotnet build src/Ivy.Android/Ivy.Android.csproj -t:InstallAndroidDependencies -p:AndroidSdkDirectory="$ANDROID_HOME" -p:AcceptAndroidSdkLicenses=True
       - run: bash scripts/build.sh
       - run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - run: bash scripts/generate_bindings.sh tests/Ivy.BindingGenerator.Tests/bin/Release/net10.0 generated/fixture-api Terraria.Fixture
       - uses: actions/upload-artifact@v4
         with:
           name: Ivy-ARM64

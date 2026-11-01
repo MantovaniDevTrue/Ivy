@@ -47,6 +47,8 @@ O dump enviado já contém tipos Microsoft.Xna.Framework como Vector2, Color, Sp
 
 ## Lote 0 — contrato e ferramentas
 
+Prioridade atual: gerar automaticamente a base de acessos do jogo. O primeiro gerador lê as DummyDlls, cataloga os membros e produz descritores/delegates; detalhes e limites em [NATIVE_BINDINGS.md](NATIVE_BINDINGS.md). As chamadas nativas e fachadas públicas ainda precisam ser implementadas e validadas.
+
 Entregar um perfil reproduzível de API e um analisador do que cada mod exige.
 
 - Inventariar namespaces, tipos, herança, interfaces, visibilidade, campos/propriedades, overloads, genéricos, atributos, defaults, ref/out/in e retornos por referência.
@@ -227,7 +229,7 @@ Em todos os lotes:
 
 Os lotes são dependências, não datas prometidas. Fazer CI entre alterações e consolidar APKs por comportamento completo ou bloqueador nativo, evitando um APK por classe.
 
-**Próxima entrega:** lote 1 mais prova mínima do lote 2: hook de atualização, original preservado, contador de simulação, leitura/escrita vanilla controlada, ref/identidade de entidade e saída/reentrada. Depois expandir o registro de conteúdo.
+**Próxima entrega:** conectar o gerador à resolução e ao marshalling do backend, validar chamadas pequenas na thread do jogo e então ligar o hook de atualização usando as assinaturas geradas. Preservar o original, provar leitura/escrita e identidade de entidades e testar saída/reentrada antes de expandir o registro de conteúdo.
 
 ## Referências
 
