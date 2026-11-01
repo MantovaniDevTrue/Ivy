@@ -2,17 +2,17 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using Ivy.Loader;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Ivy.AndroidHost;
 
-[Activity(Label = "Ivy", MainLauncher = true, Exported = true)]
+[Activity(Label = "Ivy", MainLauncher = true, Exported = true, Process = ":launcher", TaskAffinity = "dev.mantovani.ivy.launcher")]
 public sealed class MainActivity : Activity
 {
     private TextView output = null!;
-    private ModSession? session { get => ProcessHost.Session; set => ProcessHost.Session = value; }
+    private CancellationTokenSource? refresh;
+    private readonly HashSet<string> reportedExits = new();
     private string modsPath = "";
     private const int ImportRequest = 10;
     private const int ExportRequest = 11;
@@ -20,19 +20,19 @@ public sealed class MainActivity : Activity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        ProcessHost.Initialize(FilesDir!.AbsolutePath);
+        ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: false);
         modsPath = Path.Combine(FilesDir!.AbsolutePath, "mods");
         Directory.CreateDirectory(modsPath);
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.3.0", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.3.1", TextSize = 24 };
         layout.AddView(title);
         layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste do hook C++ → C# no mundo", TextSize = 15 });
         AddButton(layout, "Abrir Terraria", OpenGame);
-        AddButton(layout, "Carregar mods C#", LoadMods);
-        AddButton(layout, "Descarregar mods", () => { session?.Dispose(); session = null; });
-        AddButton(layout, "Parar hook de diagnóstico", NativeWorldBridge.Stop);
+        AddButton(layout, "Carregar mods C#", () => SendCommand(GameControlService.Load));
+        AddButton(layout, "Descarregar mods", () => SendCommand(GameControlService.Unload));
+        AddButton(layout, "Parar hook de diagnóstico", () => SendCommand(GameControlService.StopHook));
         AddButton(layout, "Importar mod (.dll)", () =>
         {
             var intent = new Intent(Intent.ActionOpenDocument);
@@ -82,32 +82,23 @@ public sealed class MainActivity : Activity
         parent.AddView(button);
     }
 
-    private void LoadMods()
+    private void SendCommand(string action)
     {
-        if (session is not null)
-        {
-            Log("Já existe uma sessão. Descarregue antes de carregar novamente.");
-            return;
-        }
-        session = new ModSession(ProcessHost.Write);
-        foreach (var path in Directory.GetFiles(modsPath, "*.dll").Order(StringComparer.Ordinal))
-        {
-            try { session.LoadFile(path); }
-            catch (Exception ex) { Log($"Erro em {Path.GetFileName(path)}: {ex}"); }
-        }
-        Log($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). API de gameplay dos mods: pendente.");
+        var command = new Intent(this, typeof(GameControlService));
+        command.SetAction(action);
+        StartService(command);
     }
 
     private void OpenGame()
     {
         var intent = new Intent();
         intent.SetClassName(PackageName!, "com.unity3d.player.UnityPlayerActivity");
+        intent.AddFlags(ActivityFlags.NewTask);
         if (intent.ResolveActivity(PackageManager!) is null)
             throw new InvalidOperationException("Este APK contém apenas o runtime. Use o APK GameHost para abrir o Terraria.");
-        if (session is null) LoadMods();
-        Log($"Abrindo UnityPlayerActivity no pacote {PackageName}, PID C#={System.Environment.ProcessId}.");
+        SendCommand(GameControlService.Prepare);
+        Log($"Abrindo Terraria em processo separado do painel PID={System.Environment.ProcessId}.");
         StartActivity(intent);
-        Il2CppProbe.Start();
     }
 
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
@@ -125,8 +116,6 @@ public sealed class MainActivity : Activity
             }
             else if (requestCode == ImportRequest)
             {
-                if (session is not null)
-                    throw new InvalidOperationException("Descarregue os mods antes de importar.");
                 using var stream = ContentResolver!.OpenInputStream(data.Data)!;
                 using var bytes = new MemoryStream();
                 var buffer = new byte[8192];
@@ -141,8 +130,10 @@ public sealed class MainActivity : Activity
                 if (content.Length < 2 || content[0] != 'M' || content[1] != 'Z')
                     throw new InvalidDataException("Selecione uma DLL .NET compilada para esta API.");
                 var hash = Convert.ToHexString(SHA256.HashData(content));
-                File.WriteAllBytes(Path.Combine(modsPath, $"mod-{hash}.dll"), content);
-                Log("DLL importada. Toque em Carregar mods C#.");
+                var temporary = Path.Combine(modsPath, $"mod-{hash}.pending");
+                File.WriteAllBytes(temporary, content);
+                File.Move(temporary, Path.Combine(modsPath, $"mod-{hash}.dll"), overwrite: true);
+                Log("DLL importada. Descarregue e carregue os mods para iniciar uma nova sessão.");
             }
         }
         catch (Exception ex) { Log(ex.ToString()); }
@@ -157,6 +148,45 @@ public sealed class MainActivity : Activity
     protected override void OnResume()
     {
         base.OnResume();
+        RecordGameExits();
         if (output is not null) output.Text = ProcessHost.GetReport();
+        refresh = new CancellationTokenSource();
+        _ = RefreshReport(refresh.Token);
+    }
+
+    protected override void OnPause()
+    {
+        refresh?.Cancel();
+        refresh?.Dispose();
+        refresh = null;
+        base.OnPause();
+    }
+
+    private async Task RefreshReport(CancellationToken token)
+    {
+        try
+        {
+            while (true)
+            {
+                await Task.Delay(1000, token);
+                output.Text = ProcessHost.GetReport();
+            }
+        }
+        catch (System.OperationCanceledException) when (token.IsCancellationRequested) { }
+    }
+
+    private void RecordGameExits()
+    {
+        if (!OperatingSystem.IsAndroidVersionAtLeast(30)) return;
+        try
+        {
+            var manager = (ActivityManager)GetSystemService(ActivityService)!;
+            foreach (var exit in manager.GetHistoricalProcessExitReasons(PackageName, 0, 8))
+            {
+                if (exit.ProcessName != PackageName || !reportedExits.Add($"{exit.Pid}:{exit.Timestamp}")) continue;
+                ProcessHost.Write($"Saída do jogo registrada pelo Android: PID={exit.Pid}, motivo={exit.Reason}, status={exit.Status}, data={DateTimeOffset.FromUnixTimeMilliseconds(exit.Timestamp):O}, descrição={exit.Description}.");
+            }
+        }
+        catch (Exception ex) { ProcessHost.Write($"Não foi possível consultar a saída do jogo: {ex.Message}"); }
     }
 }

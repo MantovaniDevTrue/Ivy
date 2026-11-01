@@ -1,8 +1,10 @@
 # Ponte nativa — Ivy 0.3.0
 
-Esta versão implementa o primeiro hook C++ → C# de gameplay. Foi compilada e
-verificada localmente; a execução no Android com o jogo ainda precisa ser testada.
-A entrada normal em um mundo já confirmada por Mantovani pertence à versão 0.2.1.
+A 0.3.0 implementou o primeiro hook C++ → C# de gameplay. O relatório de Mantovani
+confirmou no Android 14 os ticks 1 e 60, originais correspondentes, callback C#
+no TID 12439 e leitura de vida 100. O processo terminou depois; o relatório sozinho
+não informa a causa. Pausa/reentrada, estabilidade longa e remoção ainda não estão
+validadas. A [0.3.1](LIFECYCLE_0.3.1.md) isola o painel sem separar Mono do IL2CPP.
 
 ## Caminho implementado
 
@@ -67,11 +69,12 @@ dos payloads dos dois APKs de entrada; a assinatura é verificada após o build.
 
 O teste nativo local não modifica instruções ARM64: ele comprova a lógica de
 ordenação, contagem, suspensão por erro, instalação idempotente e retirada.
-Não comprova instalação do hook no celular, 60 FPS ou fidelidade ao tModLoader.
+O relatório do aparelho confirma a instalação e callbacks iniciais separadamente;
+o teste local não comprova 60 FPS ou fidelidade ao tModLoader.
 
 ## Teste no aparelho
 
-1. Instale Ivy_0.3.0_GameHost.apk, abra o Terraria e entre em um mundo.
+1. Instale Ivy_0.3.1_GameHost.apk, abra o Terraria e entre em um mundo.
 2. Jogue por cerca de um minuto, pause/retome e saia salvando. Entre novamente.
 3. Volte ao painel Ivy e exporte o relatório. Em caso de fechamento, reabra o Ivy
    e exporte: ele também inclui a sessão anterior.

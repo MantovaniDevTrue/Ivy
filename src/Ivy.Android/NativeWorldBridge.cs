@@ -96,6 +96,7 @@ internal static class NativeWorldBridge
                 life = value;
             }
             ProcessHost.Write($"Gameplay C# após original: tick={tick}, originais={originalCalls}, TID={nativeTid}, menuMode={menu}, jogador={playerIndex}, vida={life?.ToString() ?? "indisponível"}.");
+            ProcessHost.Write(Snapshot().TrimEnd());
             return 0;
         }
         catch (Exception ex)

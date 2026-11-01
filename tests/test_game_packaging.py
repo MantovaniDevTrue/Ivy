@@ -42,6 +42,45 @@ class GamePackagingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             pack.merge_manifests(base, host)
 
+    def isolated_manifest(self):
+        base, host = self.manifests()
+        app = host.find("application")
+        panel = app.find("activity")
+        panel.set(A + "process", ":launcher")
+        panel.set(A + "taskAffinity", "ivy.launcher")
+        ET.SubElement(app, "service", {A + "name": "ivy.GameControlService", A + "exported": "false"})
+        ET.SubElement(app, "provider", {A + "name": "mono.MonoRuntimeProvider_1", A + "process": ":launcher"})
+        return pack.merge_manifests(base, host)
+
+    def test_independent_panel_and_game_runtime(self):
+        pack.verify_host_processes(self.isolated_manifest(), require_unity=True)
+
+    def test_reject_shared_panel_process(self):
+        manifest = self.isolated_manifest()
+        panel = manifest.find("application").findall("activity")[1]
+        panel.attrib.pop(A + "process")
+        with self.assertRaisesRegex(ValueError, "processos distintos"):
+            pack.verify_host_processes(manifest, require_unity=True)
+
+    def test_reject_missing_panel_mono_initialization(self):
+        manifest = self.isolated_manifest()
+        app = manifest.find("application")
+        app.remove(next(p for p in app.findall("provider") if p.get(A + "process") == ":launcher"))
+        with self.assertRaisesRegex(ValueError, "Inicialização Mono"):
+            pack.verify_host_processes(manifest)
+
+    def test_reject_shared_tasks(self):
+        manifest = self.isolated_manifest()
+        manifest.find("application").findall("activity")[1].attrib.pop(A + "taskAffinity")
+        with self.assertRaisesRegex(ValueError, "tarefas independentes"):
+            pack.verify_host_processes(manifest, require_unity=True)
+
+    def test_reject_exported_game_commands(self):
+        manifest = self.isolated_manifest()
+        manifest.find("application/service").set(A + "exported", "true")
+        with self.assertRaisesRegex(ValueError, "exportado"):
+            pack.verify_host_processes(manifest)
+
     def test_payload_dex_and_arm64(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

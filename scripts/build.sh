@@ -7,6 +7,8 @@ dotnet build tests/Ivy.Tests/Ivy.Tests.csproj -c Release -m:1 -p:UseSharedCompil
 dotnet tests/Ivy.Tests/bin/Release/net10.0/Ivy.Tests.dll samples/ExampleMod/bin/Release/net10.0/ExampleMod.dll
 dotnet build src/Ivy.Android/Ivy.Android.csproj -c Release -t:SignAndroidPackage -m:1 -p:UseSharedCompilation=false "$@"
 python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src
+python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src GameControlService
+python3 scripts/verify_android_host.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/AndroidManifest.xml
 mkdir -p artifacts
-cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.3.0_RuntimeTest.apk
+cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.3.1_RuntimeTest.apk
 cp samples/ExampleMod/bin/Release/net10.0/ExampleMod.dll artifacts/

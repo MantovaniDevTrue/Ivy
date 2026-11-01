@@ -6,7 +6,7 @@ Objetivo: desenvolver uma API própria do Ivy, muito fiel à experiência e aos 
 
 ## Base validada
 
-Ivy 0.2.1 iniciou no Android 14 ARM64, carregou uma DLL externa (1 mod/1 sistema), encontrou C# e IL2CPP no mesmo PID, 303 assemblies, Terraria.Main e get_menuMode. Mantovani confirmou a entrada normal em um mundo. A 0.3.0 implementa a primeira ponte C++ de gameplay, com callback diagnóstico C# após DoUpdateInWorld; a execução desse hook ainda aguarda teste no aparelho. Hooks públicos e registro de conteúdo continuam pendentes. Testes locais não equivalem a recursos tModLoader completos. Veja [NATIVE_BRIDGE.md](NATIVE_BRIDGE.md).
+Ivy 0.2.1 iniciou no Android 14 ARM64, carregou uma DLL externa (1 mod/1 sistema), encontrou C# e IL2CPP no mesmo PID, 303 assemblies, Terraria.Main e get_menuMode. Mantovani confirmou a entrada normal em um mundo. A 0.3.0 implementa a primeira ponte C++ de gameplay, com callback diagnóstico C# após DoUpdateInWorld; o relatório do Android 14 confirmou os ticks 1/60 e leitura de vida. A 0.3.1 isola o painel para sobreviver à saída do processo Unity; essa mudança e o ciclo completo ainda aguardam teste no aparelho. Hooks públicos e registro de conteúdo continuam pendentes. Testes locais não equivalem a recursos tModLoader completos. Veja [NATIVE_BRIDGE.md](NATIVE_BRIDGE.md).
 
 Perfil inicial: **tModLoader v2026.08.3.0**, commit **c9545cf27d56c456321e1896274c02adf67d0140**, release identificado como linha **Terraria 1.4.4**. Backend: **Terraria Android 1.4.5.8.6, build 301720**. As diferenças vanilla entre versões serão adaptadas dentro do Ivy. A documentação `/stable/` é móvel; o contrato deve ser extraído da revisão fixada, que prevalece em divergências. Novos perfis serão separados.
 

@@ -22,11 +22,12 @@ def verify_source(source):
 
 def main():
     root = Path(sys.argv[1])
-    files = list(root.rglob("MainActivity.java"))
+    name = sys.argv[2] if len(sys.argv) > 2 else "MainActivity"
+    files = list(root.rglob(name + ".java"))
     if len(files) != 1:
-        raise ValueError(f"Esperado um stub MainActivity.java; encontrados {len(files)}.")
+        raise ValueError(f"Esperado um stub {name}.java; encontrados {len(files)}.")
     methods = verify_source(files[0].read_text())
-    print("Registro JNI da MainActivity validado: " + ", ".join(sorted(methods)))
+    print(f"Registro JNI de {name} validado: " + ", ".join(sorted(methods)))
 
 
 if __name__ == "__main__":

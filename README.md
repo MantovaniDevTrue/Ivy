@@ -1,15 +1,15 @@
-# Ivy — 0.3.0
+# Ivy — 0.3.1
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A versão 0.2.1 já entrou em um mundo no Android 14 e confirmou C# e IL2CPP no mesmo processo. A 0.3.0 acrescenta a primeira ponte C++ → C# no método Main.DoUpdateInWorld, ainda aguardando validação no aparelho.
+A versão 0.3.0 executou o primeiro hook C++ → C# no Android 14: ticks 1 e 60, original e callback correspondentes, leitura de vida 100. A 0.3.1 separa o painel do processo Unity para que o encerramento do jogo não encerre o painel. A mudança de ciclo de vida ainda precisa de teste no aparelho.
 
 ## Teste no celular
 
-1. Instale `Ivy_0.3.0_GameHost.apk` e abra o Ivy.
+1. Instale `Ivy_0.3.1_GameHost.apk` e abra o Ivy.
 2. Toque em **Abrir Terraria** e entre em um mundo. O ExampleMod carrega automaticamente.
 3. Jogue por um minuto, pause/retome, salve e entre novamente.
-4. Volte ao Ivy e exporte o relatório. Procure `Hook C++ instalado` e `Gameplay C# após original`, com contadores e leitura da vida.
+4. Saia do Terraria e confira se o painel continua disponível. Abra o jogo novamente e exporte o relatório. Procure `Hook C++ instalado` e `Gameplay C# após original`, com contadores e leitura da vida.
 5. Se fechar, reabra e exporte: a sessão anterior é preservada.
 
 A ponte chama o original antes do callback C# e apenas lê alguns valores em quatro pontos do teste. O botão **Parar hook de diagnóstico** remove o hook; reinicie o processo para instalar novamente. Detalhes e limites: [NATIVE_BRIDGE.md](docs/NATIVE_BRIDGE.md).
@@ -37,7 +37,7 @@ Ainda faltam registro de conteúdo no jogo, hooks públicos para mods, compilaç
 
 - `src/Ivy.Api`: contrato público inicial.
 - `src/Ivy.Core`: carregamento e ciclo de vida.
-- `src/Ivy.Android`: painel, sessão persistente, resolução IL2CPP e callback de gameplay.
+- `src/Ivy.Android`: painel em :launcher; serviço interno, sessão, resolução IL2CPP e callback no processo Unity. Os logs de ambos entram no relatório.
 - `native/ivy-native`: ponte C++ com backend ShadowHook 2.0.1 (MIT).
 - `samples/ExampleMod`: DLL independente de teste.
 - `tests`: verificações C# e de empacotamento.
@@ -51,3 +51,7 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 ## Acessos nativos gerados
 
 [Gerador de bindings e estado da validação](docs/NATIVE_BINDINGS.md): inventário automático das DummyDlls, descritores de 21.296 métodos e 7.959 delegates primitivos candidatos. O catálogo gerado compila; resolução/chamadas gerais, marshalling completo e fachadas públicas ainda estão pendentes. O gerador não instala hooks; a primeira ponte diagnóstica é um adaptador separado para a assinatura já conferida neste backend.
+
+## Saída do jogo
+
+[Correção de ciclo de vida da 0.3.1](docs/LIFECYCLE_0.3.1.md): painel em processo/tarefa independentes, inicialização Mono nos dois processos, comandos internos para mods e diagnóstico de saídas pelo Android.

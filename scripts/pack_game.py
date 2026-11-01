@@ -17,6 +17,37 @@ ET.register_namespace("android", ANDROID[1:-1])
 UNITY = "com.unity3d.player.UnityPlayerActivity"
 
 
+def verify_host_processes(manifest, require_unity=False):
+    package = manifest.get("package")
+    app = manifest.find("application")
+
+    def process(component):
+        name = component.get(ANDROID + "process", app.get(ANDROID + "process", package))
+        return package + name if name.startswith(":") else name
+
+    launchers = [a for a in app.findall("activity") if any(
+        c.get(ANDROID + "name") == "android.intent.category.LAUNCHER"
+        for c in a.findall("intent-filter/category"))]
+    if len(launchers) != 1:
+        raise ValueError("Esperado apenas o launcher Ivy.")
+    panel = launchers[0]
+    services = [s for s in app.findall("service") if s.get(ANDROID + "name", "").endswith(".GameControlService")]
+    if len(services) != 1 or services[0].get(ANDROID + "exported") != "false":
+        raise ValueError("GameControlService interno ausente ou exportado.")
+    if process(services[0]) != package or process(panel) == package:
+        raise ValueError("Painel e serviço do jogo precisam de processos distintos.")
+    runtime_processes = {process(p) for p in app.findall("provider")
+                         if p.get(ANDROID + "name", "").startswith("mono.MonoRuntimeProvider")}
+    if not {package, process(panel)}.issubset(runtime_processes):
+        raise ValueError("Inicialização Mono ausente em um dos processos.")
+    if require_unity:
+        unity = next(a for a in app.findall("activity") if a.get(ANDROID + "name") == UNITY)
+        if process(unity) != package:
+            raise ValueError("Unity e serviço C# precisam do mesmo processo.")
+        if panel.get(ANDROID + "taskAffinity", package) == unity.get(ANDROID + "taskAffinity", package):
+            raise ValueError("Painel e Unity precisam de tarefas independentes.")
+
+
 def load_decoded_manifest(folder):
     manifest = ET.parse(folder / "AndroidManifest.xml").getroot()
     metadata = (folder / "apktool.yml").read_text()
@@ -163,6 +194,7 @@ def main():
         for source, target in ((args.base_apk, base), (args.host_apk, host)):
             run([java, "-jar", args.apktool, "d", "-s", "-f", source, "-o", target])
         manifest = merge_manifests(load_decoded_manifest(base), load_decoded_manifest(host))
+        verify_host_processes(manifest, require_unity=True)
         ET.ElementTree(manifest).write(base / "AndroidManifest.xml", encoding="utf-8", xml_declaration=True)
         merge_payload(base, host)
         metadata = base / "apktool.yml"

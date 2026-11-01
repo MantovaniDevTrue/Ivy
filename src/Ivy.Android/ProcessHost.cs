@@ -8,17 +8,21 @@ internal static class ProcessHost
     private static readonly object gate = new();
     private static readonly StringBuilder report = new();
     private static string? logPath;
+    private static string? filesPath;
+    private static bool isGameProcess;
     internal static ModSession? Session { get; set; }
 
-    internal static void Initialize(string filesDirectory)
+    internal static void Initialize(string filesDirectory, bool gameProcess)
     {
         lock (gate)
         {
             if (logPath is not null) return;
-            logPath = Path.Combine(filesDirectory, "ivy-session.txt");
+            filesPath = filesDirectory;
+            isGameProcess = gameProcess;
+            logPath = Path.Combine(filesDirectory, gameProcess ? "ivy-session.txt" : "ivy-launcher.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.3.0 · C# PID={Environment.ProcessId}");
+            Write($"Ivy 0.3.1 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
         }
     }
 
@@ -41,11 +45,23 @@ internal static class ProcessHost
     {
         lock (gate)
         {
-            var text = NativeWorldBridge.Snapshot() + "\n" + report.ToString();
+            var text = isGameProcess ? NativeWorldBridge.Snapshot() + "\n" + report : report.ToString();
+            if (!isGameProcess && filesPath is not null)
+            {
+                text += ReadLog(Path.Combine(filesPath, "ivy-session.txt"), "Jogo — última sessão registrada");
+                text += ReadLog(Path.Combine(filesPath, "ivy-session.txt.previous"), "Jogo — sessão anterior");
+                return text;
+            }
             var previous = logPath + ".previous";
             if (File.Exists(previous))
                 text += "\n--- Sessão anterior ---\n" + File.ReadAllText(previous);
             return text;
         }
+    }
+
+    private static string ReadLog(string path, string title)
+    {
+        try { return File.Exists(path) ? $"\n--- {title} ---\n" + File.ReadAllText(path) : ""; }
+        catch (IOException) { return $"\n{title}: arquivo sendo atualizado.\n"; }
     }
 }
