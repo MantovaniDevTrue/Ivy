@@ -20,6 +20,7 @@ public sealed class GameControlService : Service
     {
         base.OnCreate();
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: true);
+        NativeCrashTrace.Configure(FilesDir!.AbsolutePath);
         ProcessHost.Write("Serviço C# criado; runtime Android inicializado.");
     }
     public override IBinder? OnBind(Intent? intent) => null;

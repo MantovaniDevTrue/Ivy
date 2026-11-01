@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "auditedMain": "3b7154724457d8d5a9af75d58d7294cc7a43dad3",
-  "candidate": "0.8.0 feat/struct-fields-bool-hooks",
+  "candidate": "0.8.1 diag/native-signal-slot-isolation",
   "states": [
     "catalogued",
     "generated",
@@ -241,6 +241,12 @@
     "newColorFields": 22,
     "additionalStructArrayFields": 3,
     "nativeBoolHook": "Player.IsItemSlotUnlockedAndUsable(int)",
+    "androidAcceptance": "partial: structs and hook executed; PID 13014 SIGSEGV after 600 world ticks (Ivy-relatorio (7).txt)"
+  },
+  "batch081": {
+    "status": "diagnostic candidate, not a confirmed fix",
+    "slotHookInstallation": false,
+    "nativeSignalCapture": "register snapshot + mappings + original handler forwarding",
     "androidAcceptance": "pending"
   }
 }

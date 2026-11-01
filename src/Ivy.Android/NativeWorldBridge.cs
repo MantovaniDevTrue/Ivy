@@ -50,6 +50,7 @@ internal static partial class NativeWorldBridge
     private static bool dispatchRequested;
     private static int available;
     private static long managedCalls;
+    private static int nativeTraceArmed;
     private static IntPtr menuMethod, playerIndexMethod, playerMethod, lifeField;
     private static IntGetter? menuGetter, playerIndexGetter;
     private static PointerGetter? playerGetter;
@@ -147,6 +148,7 @@ internal static partial class NativeWorldBridge
     {
         try
         {
+            if(Interlocked.CompareExchange(ref nativeTraceArmed,1,0)==0)NativeCrashTrace.Arm();
             Interlocked.Increment(ref managedCalls);
             var self = backend!.Enter(instance);
             try

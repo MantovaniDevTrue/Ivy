@@ -172,3 +172,5 @@ IVY_EXPORT void ivy_native_test_tick(void *instance, const void *method_info) { 
 #include "runtime_ready.h"
 
 #include "return_hooks.g.inc"
+
+#include "crash_trace.h"
