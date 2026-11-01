@@ -1,8 +1,12 @@
-# Ivy — 0.6.0 (candidata)
+# Ivy — 0.6.1 (candidata)
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
 A 0.5.0 foi validada no Android 14: seleção persistida, zero mods e carga automática. A 0.6.0 acrescenta geração real de acessos para Entity/Main/Player/Item/NPC/Projectile e On_Player.HealEffect(int,bool). Compilação e testes locais passaram; a nova ponte ABI 3 ainda precisa de aceite no aparelho. [Cobertura e limites](docs/GENERATED_ACCESS_0.6.0.md).
+
+## Correção de inicialização 0.6.1
+
+A 0.6.0 apresentou fechamento nativo no início da consulta IL2CPP; preparar manualmente alterava o resultado. A [0.6.1 aguarda o retorno real de il2cpp_init e anexa a thread antes dos metadados](docs/STARTUP_0.6.1.md). Também reúne as telas em uma tarefa Android, mantendo painel e jogo em processos distintos. Testes locais passaram; a correção ainda precisa do aparelho. Pode manter a DLL ExampleMod 1.1.0.0 e o SDK 0.6.0. Teste Jogar diretamente, sem Preparar sessão.
 
 ## Teste integrado
 

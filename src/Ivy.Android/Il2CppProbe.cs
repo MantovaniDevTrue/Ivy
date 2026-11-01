@@ -11,30 +11,37 @@ internal static class Il2CppProbe
         if (stages.Add(name)) ProcessHost.Write("Inicialização IL2CPP: " + name);
     }
 
+    internal static void ArmRuntime()
+    {
+        var result = WatchRuntime();
+        if (result != 0) throw new InvalidOperationException($"Não foi possível observar a inicialização IL2CPP: {result}.");
+    }
     internal static void Start()
     {
         if (Interlocked.Exchange(ref started, 1) != 0) return;
+        ArmRuntime();
         stages.Clear();
         _ = Task.Run(async () =>
         {
             try
             {
                 ProcessHost.Write("Aguardando libil2cpp.so no processo do Ivy (limite: 90 s).");
+                ProcessHost.Write("Aguardando retorno bem-sucedido de il2cpp_init; nenhuma API de metadados será consultada antes disso.");
                 var detected = false;
                 for (var attempt = 0; attempt < 180; attempt++)
                 {
-                    if (File.ReadLines("/proc/self/maps").Any(line => line.Contains("libil2cpp.so", StringComparison.Ordinal)))
+                    if (RuntimeReady() == 1)
                     {
                         if (!detected)
                         {
-                            ProcessHost.Write("libil2cpp.so detectada; aguardando Assembly-CSharp antes de anexar a thread.");
+                            ProcessHost.Write("Inicialização IL2CPP confirmada pelo observador nativo; consultando Assembly-CSharp.");
                             detected = true;
                         }
                         if (TryInspect()) return;
                     }
                     await Task.Delay(500);
                 }
-                ProcessHost.Write("Diagnóstico encerrado: o runtime IL2CPP não ficou pronto em 90 s.");
+                ProcessHost.Write("Ponte não ativada: não foi observado um il2cpp_init concluído em 90 s. Feche o jogo e reabra pelo Ivy; consultas antecipadas foram bloqueadas.");
             }
             catch (Exception ex) { ProcessHost.Write($"Diagnóstico IL2CPP falhou: {ex}"); }
             finally { Interlocked.Exchange(ref started, 0); }
@@ -43,36 +50,14 @@ internal static class Il2CppProbe
 
     private static bool TryInspect()
     {
-        Stage("abrindo referência da biblioteca");
+        if (RuntimeReady() != 1) return false;
+        Stage("abrindo referência da biblioteca após init concluído");
         if (!NativeLibrary.TryLoad("libil2cpp.so", out var library)) return false;
         try
         {
-            var domainGet = Resolve<DomainGet>(library, "il2cpp_domain_get");
-            Stage("il2cpp_domain_get");
-            var domain = domainGet();
+            Stage("domínio capturado na thread Unity; anexando thread Ivy antes de consultar metadados");
+            var domain = RuntimeDomain();
             if (domain == IntPtr.Zero) return false;
-            var assembliesGet = Resolve<AssembliesGet>(library, "il2cpp_domain_get_assemblies");
-            var assemblyGetImage = Resolve<AssemblyGetImage>(library, "il2cpp_assembly_get_image");
-            var imageGetName = Resolve<ImageGetName>(library, "il2cpp_image_get_name");
-            Stage("il2cpp_domain_get_assemblies");
-            var assemblies = assembliesGet(domain, out var count);
-            Stage("enumeração de imagens");
-            if (assemblies == IntPtr.Zero || count == 0) return false;
-            if (count > 1024) throw new InvalidOperationException($"Quantidade de assemblies inválida: {count}.");
-            var gameImage = IntPtr.Zero;
-            string? gameImageName = null;
-            for (var i = 0; i < (int)count; i++)
-            {
-                var image = assemblyGetImage(Marshal.ReadIntPtr(assemblies, i * IntPtr.Size));
-                if (image == IntPtr.Zero) continue;
-                var imageName = Marshal.PtrToStringUTF8(imageGetName(image));
-                if (imageName is not ("Assembly-CSharp.dll" or "Assembly-CSharp")) continue;
-                gameImage = image;
-                gameImageName = imageName;
-                break;
-            }
-            if (gameImage == IntPtr.Zero) return false;
-            ProcessHost.Write("Assembly-CSharp disponível; anexando thread de diagnóstico.");
             var threadCurrent = Resolve<ThreadCurrent>(library, "il2cpp_thread_current");
             var threadAttach = Resolve<ThreadAttach>(library, "il2cpp_thread_attach");
             var threadDetach = Resolve<ThreadDetach>(library, "il2cpp_thread_detach");
@@ -81,6 +66,27 @@ internal static class Il2CppProbe
             if (thread == IntPtr.Zero) return false;
             try
             {
+                var assembliesGet = Resolve<AssembliesGet>(library, "il2cpp_domain_get_assemblies");
+                var assemblyGetImage = Resolve<AssemblyGetImage>(library, "il2cpp_assembly_get_image");
+                var imageGetName = Resolve<ImageGetName>(library, "il2cpp_image_get_name");
+                Stage("il2cpp_domain_get_assemblies");
+                var assemblies = assembliesGet(domain, out var count);
+                Stage("enumeração de imagens");
+                if (assemblies == IntPtr.Zero || count == 0) return false;
+                if (count > 1024) throw new InvalidOperationException($"Quantidade de assemblies inválida: {count}.");
+                var gameImage = IntPtr.Zero;
+                string? gameImageName = null;
+                for (var i = 0; i < (int)count; i++)
+                {
+                    var image = assemblyGetImage(Marshal.ReadIntPtr(assemblies, i * IntPtr.Size));
+                    if (image == IntPtr.Zero) continue;
+                    var imageName = Marshal.PtrToStringUTF8(imageGetName(image));
+                    if (imageName is not ("Assembly-CSharp.dll" or "Assembly-CSharp")) continue;
+                    gameImage = image;
+                    gameImageName = imageName;
+                    break;
+                }
+                if (gameImage == IntPtr.Zero) return false;
                 var classFromName = Resolve<ClassFromName>(library, "il2cpp_class_from_name");
                 var methodFromName = Resolve<MethodFromName>(library, "il2cpp_class_get_method_from_name");
                 var main = classFromName(gameImage, "Terraria", "Main");
@@ -104,7 +110,9 @@ internal static class Il2CppProbe
         return Marshal.GetDelegateForFunctionPointer<T>(address);
     }
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate IntPtr DomainGet();
+    [DllImport("ivy-native", EntryPoint = "ivy_native_watch_runtime", CallingConvention = CallingConvention.Cdecl)] private static extern int WatchRuntime();
+    [DllImport("ivy-native", EntryPoint = "ivy_native_runtime_ready", CallingConvention = CallingConvention.Cdecl)] private static extern int RuntimeReady();
+    [DllImport("ivy-native", EntryPoint = "ivy_native_runtime_domain", CallingConvention = CallingConvention.Cdecl)] private static extern IntPtr RuntimeDomain();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate IntPtr ThreadCurrent();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate IntPtr ThreadAttach(IntPtr domain);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate void ThreadDetach(IntPtr thread);

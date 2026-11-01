@@ -168,3 +168,5 @@ IVY_EXPORT void ivy_native_test_tick(void *instance, const void *method_info) { 
 #endif
 
 #include "heal_hook.h"
+
+#include "runtime_ready.h"
