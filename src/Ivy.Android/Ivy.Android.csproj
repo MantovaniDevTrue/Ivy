@@ -6,8 +6,8 @@
     <ApplicationId>dev.mantovani.ivy</ApplicationId>
     <ApplicationTitle>Ivy Loader</ApplicationTitle>
     <AndroidManifestPlaceholders>ivyPanelAffinity=$(ApplicationId)</AndroidManifestPlaceholders>
-    <ApplicationVersion>12</ApplicationVersion>
-    <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
+    <ApplicationVersion>13</ApplicationVersion>
+    <ApplicationDisplayVersion>0.7.1</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormats>apk</AndroidPackageFormats>

@@ -30,7 +30,7 @@ public sealed class MainActivity : Activity, View.IOnClickListener
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: false);
         library = new ModLibrary(FilesDir!.AbsolutePath);
         libraryReady = Task.Run(library.Initialize);
-        panel=new NativePanel(this,this,"0.7.0",Assets!.List("")!.Contains("ExampleMod.dll"));
+        panel=new NativePanel(this,this,"0.7.1 diagnóstico",Assets!.List("")!.Contains("ExampleMod.dll"));
         SetContentView(panel.View);
         if(savedInstanceState?.GetString("ivy.panel") is {} savedPanel)panel.RestoreState(savedPanel);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");

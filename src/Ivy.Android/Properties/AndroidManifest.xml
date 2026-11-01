@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-  <application android:allowBackup="false" android:label="Ivy" android:theme="@android:style/Theme.Material.NoActionBar" />
+  <application android:allowBackup="false" android:label="Ivy" android:theme="@android:style/Theme.Material.NoActionBar">
+    <provider android:name="dev.mantovani.ivy.panel.StartupDiagnostics" android:authorities="${applicationId}.ivy.startup" android:exported="false" android:initOrder="2147483647" />
+  </application>
 </manifest>
