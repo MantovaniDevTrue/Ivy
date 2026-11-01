@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><AllowUnsafeBlocks>true</AllowUnsafeBlocks></PropertyGroup>
-  <ItemGroup><Compile Include="../../src/Ivy.Android/Il2CppAccess.cs" Link="Il2CppAccess.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../../src/Ivy.Android/Il2CppAccess.cs" Link="Il2CppAccess.cs" /><Compile Include="../../src/Ivy.Android/CompositeFields.cs" Link="CompositeFields.cs" /></ItemGroup>
   <ItemGroup><ProjectReference Include="../../src/Ivy.Core/Ivy.Core.csproj" /></ItemGroup>
 </Project>

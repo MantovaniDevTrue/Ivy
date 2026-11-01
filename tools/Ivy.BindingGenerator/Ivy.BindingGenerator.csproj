@@ -4,4 +4,4 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup><EmbeddedResource Include="GameplayTemplate.txt" WithCulture="false" LogicalName="Ivy.BindingGenerator.Gameplay.g.cs.txt" /></ItemGroup>
-</Project>
+<ItemGroup><EmbeddedResource Include="../hook-families/profile.json" LogicalName="Ivy.HookFamilies.json" /></ItemGroup></Project>

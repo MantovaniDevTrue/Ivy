@@ -6,7 +6,7 @@ namespace Ivy.AndroidHost;
 
 // These delegates belong to the host, never to a collectible mod assembly.
 // Keep them rooted for the entire process, including callbacks racing with removal.
-internal static class NativeWorldBridge
+internal static partial class NativeWorldBridge
 {
     private static readonly object gate = new();
     private static readonly WorldCallback callback = OnWorldUpdate;
@@ -61,6 +61,7 @@ internal static class NativeWorldBridge
         lock (gate)
         {
             dispatchRequested = requested;
+            DispatchGeneratedFamilies(requested);
             if (healInstalled) SetHealEnabled(requested && HealHooks.HasHandlers ? 1 : 0);
             if (Volatile.Read(ref available) != 0 && Stat(4) != 0)
             {
@@ -129,6 +130,7 @@ internal static class NativeWorldBridge
                 GameRuntime.Backend = backend;
                 NativeAccess.Backend = new Il2CppAccess(library, backend.AccessPointer, backend.Wrap, backend.CheckScope);
                 InstallHeal((Il2CppAccess)NativeAccess.Backend);
+                InstallGeneratedFamilies((Il2CppAccess)NativeAccess.Backend);
                 // All delegates/metadata are published before the native entry point can call back.
                 var result = InstallHook(Marshal.ReadIntPtr(worldMethod), callback);
                 if (result != 0) throw new InvalidOperationException(Error(result));
@@ -167,7 +169,7 @@ internal static class NativeWorldBridge
         }
     }
 
-    private sealed class GameBackend : IGameBackend
+    private sealed partial class GameBackend : IGameBackend
     {
         private sealed class Entry(uint handle, IntPtr address)
         {
@@ -292,6 +294,10 @@ internal static class NativeWorldBridge
                 ProcessHost.Write($"SDK Player.statLife: {before} → {after}; escrita IL2CPP e releitura concluídas.");
                 var targetMana = target.statMana;
                 var buffIndex = target.FindBuffIndex(21);
+                var array = target.inventory;
+                var firstItem = array is not null && array.Length > 0 ? array[0] : null;
+                var position = target.position;
+                ProcessHost.Write($"SDK famílias: inventário={array?.Length}, item[0]={firstItem?.type}, posição=({position.X},{position.Y}); array e Vector2 lidos.");
                 ProcessHost.Write($"SDK gerado: Player.statMana={targetMana}, dead={target.dead}, FindBuffIndex(21)={buffIndex}; leitura de campos e runtime_invoke concluídos.");
             }
         }
@@ -314,6 +320,7 @@ internal static class NativeWorldBridge
         {
             if (Volatile.Read(ref available) == 0) return;
             if (healInstalled) SetHealEnabled(0);
+            DispatchGeneratedFamilies(false);
             var result = UninstallHook();
             ProcessHost.Write(result == 0
                 ? "Hook removido. Um callback já iniciado pode terminar; reinicie o app para instalar novamente."

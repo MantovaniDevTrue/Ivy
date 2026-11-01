@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "auditedMain": "3b7154724457d8d5a9af75d58d7294cc7a43dad3",
-  "candidate": "0.6.0 feat/generated-native-access",
+  "candidate": "0.7.0 feat/native-panel-families",
   "states": [
     "catalogued",
     "generated",
@@ -179,12 +179,50 @@
         "no periodic full-log polling in candidate; ring buffer/file limits pending",
         "no FPS/overhead baseline measured"
       ]
+    },
+    {
+      "area": "Painel Java/XML nativo",
+      "levels": [
+        "yes",
+        "native resources and JNI adapter",
+        "yes",
+        "existing catalog/IPC/SAF connected",
+        "pending 0.7.0",
+        "compilation/resource-merge/JNI checks; device UI not run",
+        "existing mod catalog preserved; UI recreation needs device test"
+      ]
+    },
+    {
+      "area": "Campos arrays SZ e Vector2",
+      "levels": [
+        "yes",
+        "257 array + 28 Vector2 fields",
+        "yes",
+        "IL2CPP field and array access connected",
+        "pending 0.7.0",
+        "local fake-native tests including GC barrier, bounds and layout rejection",
+        "callback-scoped references; save/network not tested"
+      ]
+    },
+    {
+      "area": "Família On_Player.FindBuffIndex int(int)",
+      "levels": [
+        "yes",
+        "C# API/host/C++ generated from profile",
+        "yes",
+        "proxy, original and owner cleanup connected",
+        "pending 0.7.0",
+        "local C# and C++ return/recursion/fallback/drain tests",
+        "not tested"
+      ]
     }
   ],
   "evidence": [
     "Ivy 0.4.1 Android report received 2026-11-01: ready acknowledgement, normal On_Main path and native life readback",
     "User confirmed normal exit without crash on 0.3.1",
     "Local test results are not Android performance measurements",
-    "Ivy 0.5.0 Android report received 2026-11-01: zero selected mods without IL2CPP probe, then 600 callbacks/originals, 19->24->29->34 life writeback, zero C# errors; user confirmed all requested tests passed"
-  ]
+    "Ivy 0.5.0 Android report received 2026-11-01: zero selected mods without IL2CPP probe, then 600 callbacks/originals, 19->24->29->34 life writeback, zero C# errors; user confirmed all requested tests passed",
+    "User accepted 0.6.1; report shows successful init observer, 3600 matching world callbacks/originals and three HealEffect originals with zero managed errors. This does not validate 0.7.0 UI or composite families."
+  ],
+  "basedOn": "a3c3cb0af06ba9e650bf4a59c7d63657a1196037"
 }

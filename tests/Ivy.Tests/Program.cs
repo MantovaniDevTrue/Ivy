@@ -42,6 +42,7 @@ Console.WriteLine("11 verificações passaram.");
 NativeAccessChecks.Run();
 GameplayChecks.Run(args[0]);
 HealHookChecks.Run();
+ReturnHookChecks.Run();
 StartupChecks.Run().GetAwaiter().GetResult();
 LibraryChecks.Run(args[0], args[1], args[2]);
 

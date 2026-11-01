@@ -5,9 +5,15 @@
 struct Type {const char *name; int kind;};
 Type voidType{"System.Void",1}, boolType{"System.Boolean",2}, charType{"System.Char",3}, i1{"System.SByte",4}, u1{"System.Byte",5}, i2{"System.Int16",6}, u2{"System.UInt16",7}, i4{"System.Int32",8}, u4{"System.UInt32",9}, i8{"System.Int64",10}, u8{"System.UInt64",11}, r4{"System.Single",12}, r8{"System.Double",13}, playerType{"Terraria.Player",18},itemType{"Terraria.Item",18};
 struct Class{const char *name;};Class playerClass{"Player"}, itemClass{"Item"}, entityClass{"Entity"}, exceptionClass{"ProbeException"};
+Class vectorClass{"Vector2"},intClass{"Int32"},intArrayClass{"Int32[]"},playerArrayClass{"Player[]"},badArrayClass{"Int32[,]"};
+Type vectorType{"Microsoft.Xna.Framework.Vector2",17},intArrayType{"System.Int32[]",29},playerArrayType{"Terraria.Player[]",29},badArrayType{"System.Int32[,]",20};
+struct Array{Class *klass;void *monitor;void *bounds;uintptr_t length;uint64_t data[8];};
+Array ints{&intArrayClass,nullptr,nullptr,4,{}},players{&playerArrayClass,nullptr,nullptr,2,{}},badArray{&badArrayClass,nullptr,nullptr,4,{}};
+int barriers=0;bool wrong_layout=false;
 struct Object{Class *klass; uint64_t fields[20];};Object player{&playerClass,{}},item{&itemClass,{}},exception{&exceptionClass,{}};
 struct Field{const char *name;Type *type;uint32_t flags;int index;};
-Field fields[]={{"statMana",&i4,0,0},{"dead",&boolType,0,1},{"F1",&i1,0,2},{"F2",&u1,0,3},{"F3",&i2,0,4},{"F4",&u2,0,5},{"F5",&charType,0,6},{"F6",&u4,0,7},{"F7",&i8,0,8},{"F8",&u8,0,9},{"F9",&r4,0,10},{"F10",&r8,0,11},{"global",&i4,0x10,12},{"readonly",&i4,0x20,13},{"reference",&playerType,0x10,14}};
+Field fields[]={{"statMana",&i4,0,0},{"dead",&boolType,0,1},{"F1",&i1,0,2},{"F2",&u1,0,3},{"F3",&i2,0,4},{"F4",&u2,0,5},{"F5",&charType,0,6},{"F6",&u4,0,7},{"F7",&i8,0,8},{"F8",&u8,0,9},{"F9",&r4,0,10},{"F10",&r8,0,11},{"global",&i4,0x10,12},{"readonly",&i4,0x20,13},{"reference",&playerType,0x10,14},{"position",&vectorType,0,15},{"ints",&intArrayType,0x10,15}};
+Field vectorFields[]={{"X",&r4,0,0},{"Y",&r4,0,1}};
 uint64_t globals[20]{};int lookups=0,invocations=0;uint64_t box=0;
 struct Method{void *address;const char *name;Type *result;Type *args[2];uint32_t count,flags;int mode;};
 void dummy(){}
@@ -38,8 +44,11 @@ uint8_t il2cpp_type_is_byref(Type*){return 0;}
 char *il2cpp_type_get_name(Type *t){return strdup(t->name);}
 void il2cpp_free(void *p){free(p);}
 int il2cpp_type_get_type(Type *t){return t->kind;}
-Class *il2cpp_class_from_type(Type *t){return t==&playerType?&playerClass:t==&itemType?&itemClass:nullptr;}
-Field *il2cpp_class_get_field_from_name(Class*,const char *name){lookups++;for(auto &f:fields)if(!std::strcmp(f.name,name))return &f;return nullptr;}
+Class *il2cpp_class_from_type(Type *t){return t==&playerType?&playerClass:t==&itemType?&itemClass:t==&vectorType?&vectorClass:t==&intArrayType?&intArrayClass:t==&playerArrayType?&playerArrayClass:nullptr;}
+Field *il2cpp_class_get_field_from_name(Class *klass,const char *name){
+lookups++;if(klass==&vectorClass){for(auto &f:vectorFields){if(!std::strcmp(f.name,name))return &f;}return nullptr;}
+for(auto &f:fields){if(!std::strcmp(f.name,name))return &f;}return nullptr;}
+
 Type *il2cpp_field_get_type(Field *f){return f->type;}
 uint32_t il2cpp_field_get_flags(Field *f){return f->flags;}
 int size(Type *t){int k=t->kind;return k==2||k==4||k==5?1:k==3||k==6||k==7?2:k==8||k==9||k==12?4:8;}
@@ -65,5 +74,20 @@ Class *il2cpp_object_get_class(Object *o){return o->klass;}
 uint8_t il2cpp_class_is_assignable_from(Class *parent,Class *child){return parent==child||(parent==&entityClass&&(child==&playerClass||child==&itemClass));}
 void il2cpp_runtime_class_init(Class*){}
 const char *il2cpp_class_get_name(Class *c){return c->name;}
+int32_t il2cpp_class_value_size(Class*,uint32_t *align){*align=4;return wrong_layout?12:8;}
+uintptr_t il2cpp_field_get_offset(Field *f){return f==&vectorFields[0]?16:20;}
+uint32_t il2cpp_object_header_size(){return 16;}
+uint32_t il2cpp_array_object_header_size(){return 32;}
+uintptr_t il2cpp_array_length(Array *array){return array->length;}
+int32_t il2cpp_array_element_size(Class *klass){return klass==&intArrayClass?4:8;}
+Type *il2cpp_class_get_type(Class *klass){return klass==&intClass?&i4:klass==&vectorClass?&vectorType:klass==&intArrayClass?&intArrayType:klass==&playerArrayClass?&playerArrayType:klass==&badArrayClass?&badArrayType:&playerType;}
+Class *il2cpp_class_get_element_class(Class *klass){return klass==&intArrayClass?&intClass:&playerClass;}
+uint32_t il2cpp_class_get_rank(Class *klass){return klass==&badArrayClass?2:1;}
+void il2cpp_gc_wbarrier_set_field(void*,void **field,void *value){barriers++;*field=value;}
+void *ivy_test_int_array(){globals[15]=reinterpret_cast<uintptr_t>(&ints);return &ints;}
+void *ivy_test_player_array(){return &players;}
+void *ivy_test_bad_array(){return &badArray;}
+void ivy_test_wrong_layout(int flag){wrong_layout=flag!=0;}
+int ivy_test_barriers(){return barriers;}
 void *ivy_test_player(){return &player;} void *ivy_test_item(){return &item;}int ivy_test_lookups(){return lookups;}int ivy_test_invocations(){return invocations;}
 }

@@ -49,10 +49,12 @@ Check(typed.Source.Contains("@Optional(int @amount = 7, bool @broadcast = true)"
 Check(typed.Source.Contains("global::Terraria.Item? @HeldItem"),"propriedade de referência nativa tipada");
 Check(!typed.Source.Contains("@Reference(") && !typed.Source.Contains("@Generic("),"ref/out e genéricos não viram stubs");
 Check(typed.Omitted.Any(x=>x.Contains("UnsupportedText")) && typed.Omitted.Any(x=>x.Contains("Reference(")),"assinaturas omitidas ficam no relatório");
-Check(typed.Source.Contains("public static class On_Player") && typed.Source.Contains("hook_HealEffect"),"hook com int e bool emitido após validar assinatura");
+Check(typed.Source.Contains("public static partial class On_Player") && typed.Source.Contains("hook_HealEffect"),"hook com int e bool emitido após validar assinatura");
 var wrongHeal=gameplay with { Types=gameplay.Types.Select(t=>t.Name!="Terraria.Player"?t:t with{ Methods=t.Methods.Select(m=>m.Name!="HealEffect"?m:m with{IsStatic=true}).ToArray() }).ToArray() };
 try{TypedAccessGenerator.Generate(gameCatalog with{Assemblies=[wrongHeal]});throw new Exception("Hook divergente aceito");}catch(InvalidDataException){Check(true,"gerador recusa assinatura divergente do hook HealEffect");}
-Console.WriteLine("28 verificações do gerador passaram.");
+Check(typed.Source.Contains("NativeArray<int>") && typed.Source.Contains("NativeArray<global::Terraria.Player?>"),"campos de arrays tipados gerados");
+Check(typed.Source.Contains(".Vector()"),"campo Vector2 ligado ao backend");
+Console.WriteLine("30 verificações do gerador passaram.");
 
 static void Check(bool condition, string name)
 {

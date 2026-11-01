@@ -21,3 +21,7 @@ Painel e Unity agora compartilham taskAffinity. A abertura remove NEW_TASK e a a
 Build ARM64 e checks JNI/processos passaram; 110 verificações C# existentes e 16 testes Python passaram. O teste nativo cobre bloqueio antes do init, retorno falso, captura do domínio após sucesso, preservação do resultado/argumentos, caminho UTF16 e preparação repetida sem duplicar os registros. Os testes anteriores de hooks também passaram. Estes testes não reproduzem o startup real da Unity no Xiaomi.
 
 Instale sobre a 0.6.0 (mesmo pacote/chave). Pode manter ExampleMod 1.1.0.0 já importado e o SDK 0.6.0. Primeiro teste **Jogar diretamente**, sem Preparar sessão; depois reentrada e o caminho manual. Confira no relatório `Inicialização IL2CPP confirmada pelo observador nativo`, domínio capturado/anexação da thread e os callbacks dos hooks. Nenhuma melhoria de FPS é declarada. A confirmação da correção do crash depende desse teste Android.
+
+## Aceite Android
+
+Mantovani confirmou a resolução. O relatório da 0.6.1 mostrou readiness observado antes dos metadados, 3.600 callbacks e originais, zero falhas C#, campos statMana/dead e FindBuffIndex funcionais, e três HealEffect com originais correspondentes. A validação vale para o cenário registrado, sem medição de FPS.

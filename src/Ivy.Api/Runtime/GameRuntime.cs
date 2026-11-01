@@ -3,7 +3,7 @@ using Terraria;
 namespace Ivy.Runtime;
 
 // Host-only boundary. No pointers or IL2CPP metadata are part of the mod API.
-internal interface IGameBackend
+internal partial interface IGameBackend
 {
     Player? LocalPlayer { get; }
     int MenuMode { get; }

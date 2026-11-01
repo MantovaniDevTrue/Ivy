@@ -5,7 +5,7 @@ namespace Ivy.AndroidHost;
 
 // Uses the IL2CPP C API rather than guessing each generated method's machine ABI.
 // All metadata lookup happens on first use and is cached by the SDK descriptor.
-internal sealed unsafe class Il2CppAccess
+internal sealed unsafe partial class Il2CppAccess
     : INativeAccessBackend
 {
     private sealed record Resolved(IntPtr Member, IntPtr Class, int Kind, IntPtr ReferenceClass, bool Static);
@@ -41,6 +41,7 @@ internal sealed unsafe class Il2CppAccess
     private readonly ClassName className;
     internal Il2CppAccess(IntPtr library, Func<object, IntPtr> pointer, Func<IntPtr, object> wrap, Action scope)
     {
+        InitializeComposite(library);
         this.pointer=pointer; this.wrap=wrap; this.scope=scope;
         T Load<T>(string name) where T:Delegate => Marshal.GetDelegateForFunctionPointer<T>(NativeLibrary.GetExport(library,"il2cpp_"+name));
         classFromName=Load<ClassFromName>("class_from_name");classMethods=Load<ClassMethods>("class_get_methods");
@@ -111,8 +112,9 @@ internal sealed unsafe class Il2CppAccess
             if(matches!=1)member=IntPtr.Zero;
         }
         if(member==IntPtr.Zero)throw new MissingMemberException($"Assinatura IL2CPP divergente: {m.Type}.{m.Name}.");
-        var kind=typeKind(valueType);var reference=kind==18?classFromType(valueType):IntPtr.Zero;
-        if(kind!=1&&kind is not (>=2 and <=13)&&kind!=18)throw new NotSupportedException("Tipo IL2CPP não suportado neste perfil.");
+        var kind=typeKind(valueType);var reference=kind is 18 or 29?classFromType(valueType):IntPtr.Zero;
+        if(kind==17)ValidateVector(valueType);
+        if(kind!=1&&kind is not (>=2 and <=13)&&kind is not (17 or 18 or 29))throw new NotSupportedException("Tipo IL2CPP não suportado neste perfil.");
         found=new(member,klass,kind,reference,m.Static);cache.Add(m,found);return found;
     }
     private IntPtr Instance(Resolved r,object? identity)
@@ -124,10 +126,10 @@ internal sealed unsafe class Il2CppAccess
         return target;
     }
     private static int Size(int kind)=>kind switch{2 or 4 or 5=>1,3 or 6 or 7=>2,8 or 9 or 12=>4,10 or 11 or 13 or 18=>8,_=>0};
-    private NativeValue Result(ulong bits, Resolved r)=>r.Kind==18?new(0,bits==0?null:wrap((IntPtr)bits)):new(bits);
+    private NativeValue Result(ulong bits, Resolved r)=>r.Kind is 18 or 29?new(0,bits==0?null:wrap((IntPtr)bits)):new(bits);
     private ulong Input(NativeValue value,string type)
     {
-        if(!type.StartsWith("System.",StringComparison.Ordinal))
+        if(!type.StartsWith("System.",StringComparison.Ordinal)||type.EndsWith("[]",StringComparison.Ordinal))
         {
             if(value.Reference is null)return 0;
             return unchecked((ulong)pointer(value.Reference));
@@ -144,7 +146,7 @@ internal sealed unsafe class Il2CppAccess
     public void Write(NativeMember member,object? identity,NativeValue value)
     {
         if(!member.Writable)throw new InvalidOperationException("Campo readonly.");
-        var r=Resolve(member);var target=Instance(r,identity);var bits=Input(value,member.ValueType);
+        var r=Resolve(member);var target=Instance(r,identity);var bits=r.Kind==17?value.Bits:Input(value,member.ValueType);
         if(r.ReferenceClass!=IntPtr.Zero&&bits!=0&&assignable(r.ReferenceClass,objectClass((IntPtr)bits))==0)throw new InvalidOperationException("Tipo da referência incompatível com o campo.");
         // field_set_value performs the IL2CPP write barrier for reference fields.
         if(r.Static)staticWrite(r.Member,&bits);else fieldWrite(target,r.Member,&bits);

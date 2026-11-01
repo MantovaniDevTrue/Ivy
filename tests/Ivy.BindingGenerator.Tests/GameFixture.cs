@@ -8,6 +8,10 @@ public class Main
 }
 public class Entity { public bool active; public float width; }
 public class Player : Entity { public int statLife; public int statLifeMax2; public int statMana; public bool dead; public void HealEffect(int amount, bool broadcast = true) { }
+    public int FindBuffIndex(int type)=>-1;
+    public int[] Buffs=[];
+    public Player[] Players=[];
+    public Microsoft.Xna.Framework.Vector2 position;
     public readonly int ReadonlyProbe;
     public string? UnsupportedText;
     public int Overload(int number) => number;

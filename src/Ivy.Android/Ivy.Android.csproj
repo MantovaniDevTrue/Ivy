@@ -4,10 +4,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <OutputType>Exe</OutputType>
     <ApplicationId>dev.mantovani.ivy</ApplicationId>
-    <ApplicationTitle>Ivy</ApplicationTitle>
+    <ApplicationTitle>Ivy Loader</ApplicationTitle>
     <AndroidManifestPlaceholders>ivyPanelAffinity=$(ApplicationId)</AndroidManifestPlaceholders>
-    <ApplicationVersion>11</ApplicationVersion>
-    <ApplicationDisplayVersion>0.6.1</ApplicationDisplayVersion>
+    <ApplicationVersion>12</ApplicationVersion>
+    <ApplicationDisplayVersion>0.7.0</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormats>apk</AndroidPackageFormats>
@@ -17,6 +17,8 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
+    <AndroidJavaSource Include="Java/**/*.java" />
+    <ProguardConfiguration Include="Properties/ivy-panel.pro" />
     <ProjectReference Include="../Ivy.Core/Ivy.Core.csproj" />
     <AndroidAsset Include="../../samples/ExampleMod/bin/$(Configuration)/net10.0/ExampleMod.dll" Link="ExampleMod.dll" Condition="'$(IncludeDevelopmentExample)' == 'true'" />
     <AndroidAsset Include="../../native/third-party/ShadowHook-LICENSE.txt" Link="licenses/ShadowHook-LICENSE.txt" />

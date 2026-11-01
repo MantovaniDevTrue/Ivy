@@ -24,11 +24,16 @@ internal readonly record struct NativeValue(ulong Bits, object? Reference = null
     internal static NativeValue From(ulong v) => new(v);
     internal static NativeValue From(float v) => new(BitConverter.SingleToUInt32Bits(v));
     internal static NativeValue From(double v) => new(BitConverter.DoubleToUInt64Bits(v));
+    internal static NativeValue From(Microsoft.Xna.Framework.Vector2 v)=>new((ulong)BitConverter.SingleToUInt32Bits(v.X)|((ulong)BitConverter.SingleToUInt32Bits(v.Y)<<32));
+    internal Microsoft.Xna.Framework.Vector2 Vector()=>new(BitConverter.UInt32BitsToSingle((uint)Bits),BitConverter.UInt32BitsToSingle((uint)(Bits>>32)));
     internal static NativeValue From(NativeObject? v) => new(0, v?.Identity);
 }
 
 internal interface INativeAccessBackend
 {
+    int ArrayLength(object identity)=>throw new NotSupportedException("Array backend unavailable.");
+    NativeValue ReadElement(object identity,int index,string type)=>throw new NotSupportedException("Array backend unavailable.");
+    void WriteElement(object identity,int index,string type,NativeValue value)=>throw new NotSupportedException("Array backend unavailable.");
     NativeValue Read(NativeMember member, object? instance);
     void Write(NativeMember member, object? instance, NativeValue value);
     NativeValue Invoke(NativeMember member, object? instance, ReadOnlySpan<NativeValue> arguments);

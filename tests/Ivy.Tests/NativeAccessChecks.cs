@@ -55,10 +55,32 @@ internal static class NativeAccessChecks
         for(var i=0;i<10000;i++)warm=player.statMana;
         var delta=GC.GetAllocatedBytesForCurrentThread()-allocated;
         Check(warm==-123 && delta==0,"10000 warmed scalar reads allocate zero managed bytes in local fake-native test");
+        var vectorField=Field("position","Microsoft.Xna.Framework.Vector2");
+        var vector=new Microsoft.Xna.Framework.Vector2(12.25f,-9.5f);
+        backend.Write(vectorField,identity,NativeValue.From(vector));var vectorRead=backend.Read(vectorField,identity).Vector();
+        Check(vectorRead.X==vector.X&&vectorRead.Y==vector.Y,"Vector2 layout checked and native field roundtrip");
+        var intsIdentity=Export<Pointer>("ivy_test_int_array")();
+        var intsArray=new NativeArray<int>(intsIdentity,"System.Int32",v=>unchecked((int)v.Bits),v=>NativeValue.From(v));
+        Check(intsArray.Length==4,"native array length");intsArray[1]=-231;Check(intsArray[1]==-231,"native int array signed read/write");
+        var arrayField=Field("ints","System.Int32[]",true);Check(Equals(backend.Read(arrayField,null).Reference,intsIdentity),"array field returns opaque native identity");
+        Reject<IndexOutOfRangeException>(()=>{var ignored=intsArray[-1];},"negative index rejected");
+        Reject<IndexOutOfRangeException>(()=>intsArray[4]=7,"upper bound rejected");
+        Reject<InvalidOperationException>(()=>backend.ReadElement(intsIdentity,0,"System.Boolean"),"wrong array element type rejected");
+        var refs=Export<Pointer>("ivy_test_player_array")();var barriers=Export<Counter>("ivy_test_barriers");var beforeBarrier=barriers();
+        backend.WriteElement(refs,0,"Terraria.Player",new(0,identity));
+        Check(Equals(backend.ReadElement(refs,0,"Terraria.Player").Reference,identity)&&barriers()==beforeBarrier+1,"reference array write uses native GC barrier");
+        backend.WriteElement(refs,0,"Terraria.Player",default);Check(backend.ReadElement(refs,0,"Terraria.Player").Reference is null,"reference array null write");
+        Reject<InvalidOperationException>(()=>backend.WriteElement(refs,0,"Terraria.Player",new(0,wrong)),"reference array rejects wrong class");
+        Reject<NotSupportedException>(()=>backend.ArrayLength(Export<Pointer>("ivy_test_bad_array")()),"multidimensional array rejected");
+        var layoutSwitch=Export<Flag>("ivy_test_wrong_layout");layoutSwitch(1);
+        var fresh=new Il2CppAccess(lib,o=>(IntPtr)o,p=>p,()=>{});
+        Reject<NotSupportedException>(()=>fresh.Read(vectorField,identity),"changed Vector2 layout rejected before field read");layoutSwitch(0);
+        scope=false;Reject<InvalidOperationException>(()=>{var ignored=intsArray.Length;},"cached native array outside callback rejected");scope=true;
         scope=false;Reject<InvalidOperationException>(()=>backend.Read(global,null),"cached static access outside gameplay rejected");scope=true;
         live=false;Reject<ObjectDisposedException>(()=>backend.Read(Field("statMana","System.Int32"),identity),"expired native identity rejected");
         Console.WriteLine($"{checks} native-access checks passed (real C# marshaller, fake IL2CPP exports).");
     }
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]private delegate void Flag(int value);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]private delegate IntPtr Pointer();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]private delegate int Counter();
 }

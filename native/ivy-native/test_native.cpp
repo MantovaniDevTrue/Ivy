@@ -33,8 +33,10 @@ extern "C" const char *shadowhook_to_errmsg(int) { return "mock"; }
 static void tick() { ivy_native_test_tick(self, reinterpret_cast<void *>(2)); }
 static void test_heal();
 static void test_runtime_ready();
+static void test_return_hook();
 int main() {
     test_runtime_ready();
+    test_return_hook();
     auto address = reinterpret_cast<void *>(original);
     assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_install_world_hook(nullptr, managed) == -1);
@@ -125,4 +127,33 @@ static void test_runtime_ready(){
  assert(ivy_native_test_init(self,true)&&ivy_native_runtime_init_returns()==3&&domain_calls==2);
  assert(ivy_native_watch_runtime()==0&&watches==2&&ivy_native_runtime_ready());
  std::cout<<"Runtime readiness tests passed: pre-init blocked, failed init blocked, original result preserved, domain captured after success, UTF16 and idempotent manual/automatic preparation.\n";
+}
+
+using return_callback=int32_t(*)(void*,int32_t,int32_t*);
+extern "C" int32_t ivy_install_find_buff(void*,return_callback);
+extern "C" int32_t ivy_original_find_buff(void*,int32_t,int32_t*);
+extern "C" void ivy_enable_find_buff(int32_t);
+extern "C" int32_t ivy_test_find_buff(void*,int32_t,const void*);
+static int ret_originals=0,ret_mode=0;
+static int32_t ret_original(void *target,int32_t value,const void *method){assert(target==self&&method==reinterpret_cast<void*>(2));ret_originals++;return value*2+3;}
+static int32_t ret_managed(void *target,int32_t argument,int32_t *result){
+ if(ret_mode==1){*result=42;return 0;}if(ret_mode==3)return -1;
+ assert(ivy_original_find_buff(target,argument+1,result)==0);
+ if(ret_mode==2)assert(ivy_original_find_buff(target,argument+2,result)==0);
+ if(ret_mode==4)return -1;
+ if(ret_mode==5){ret_mode=1;assert(ivy_test_find_buff(target,argument,reinterpret_cast<void*>(2))==42);assert(ivy_original_find_buff(target,argument,result)==0);}
+ *result+=7;return 0;
+}
+static void test_return_hook(){
+ int value=0;assert(ivy_original_find_buff(self,5,&value)==-8);
+ assert(ivy_install_find_buff(reinterpret_cast<void*>(ret_original),ret_managed)==0);
+ auto call=[](){return ivy_test_find_buff(self,5,reinterpret_cast<void*>(2));};
+ assert(call()==22&&ret_originals==1);
+ ret_mode=1;assert(call()==42&&ret_originals==1);
+ ret_mode=2;assert(call()==24&&ret_originals==3);
+ ret_mode=3;assert(call()==13&&ret_originals==4);
+ ivy_enable_find_buff(1);ret_mode=4;assert(call()==15&&ret_originals==5);
+ ivy_enable_find_buff(1);ret_mode=5;assert(call()==20&&ret_originals==7);
+ ivy_enable_find_buff(0);assert(call()==13&&ret_originals==8);
+ std::cout<<"Generated int(int) hook tests passed: return/argument changes, omission, multiple originals, recursion and nonduplicating fallback.\n";
 }

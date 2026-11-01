@@ -10,12 +10,15 @@ public sealed class ExampleMod : Mod
     {
         On_Main.DoUpdateInWorld += UpdateWorld;
         On_Player.HealEffect += HealEffect;
+        On_Player.FindBuffIndex += FindBuffIndex;
     }
     public override void Unload()
     {
         On_Main.DoUpdateInWorld -= UpdateWorld;
         On_Player.HealEffect -= HealEffect;
+        On_Player.FindBuffIndex -= FindBuffIndex;
     }
+    private int FindBuffIndex(On_Player.orig_FindBuffIndex orig,Player self,int type)=>orig(self,type);
     private void HealEffect(On_Player.orig_HealEffect orig, Player self, int amount, bool broadcast)
     {
         // Argumentos e chamada ao original seguem o mesmo padrão dos hooks On_ do PC.
@@ -29,6 +32,11 @@ public sealed class ExampleMod : Mod
         if (++ticks % 120 != 0) return;
         var player = Main.LocalPlayer;
         if (player is null || player.dead || player.statLife <= 0) return;
+        var inventory=player.inventory;
+        if(inventory is null||inventory.Length==0)return;
+        var first=inventory[0];
+        var position=player.position;
+        if(!float.IsFinite(position.X)||!float.IsFinite(position.Y))return;
         var life = player.statLife;
         var next = Math.Min(life + 5, player.statLifeMax2);
         if (next > life)
