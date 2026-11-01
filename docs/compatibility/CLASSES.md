@@ -61,7 +61,7 @@ Referência: perfil em [baseline.json](baseline.json), fases em [ROADMAP.md](../
 | Hooks universais | On.Terraria.*, delegates orig/hook | 11 | ABI, cadeia, ref/out, original e unhook |
 | Alteração de IL | IL.*, MonoMod/Cecil/ILCursor quando exigidos | 11/12 | Categoria experimental, diagnóstico por padrão suportado |
 | Gráficos avançados | Effect, RenderTarget2D, filtros, shaders e estados avançados | 11 | Efeito real, conversão quando necessária e contexto gráfico |
-| Build/pacotes | Manifest, referências, generators, dependências, assets e formato .tmod/Ivy | 0/12 | Mesmos fontes, diagnóstico e carregamento reproduzível |
+| Build/pacotes | Manifest, referências, generators, dependências, assets e formato próprio Ivy | 0/12 | Mesmos fontes, diagnóstico e carregamento reproduzível |
 
 Implementação atual: `Mod` e `ModSystem` têm somente o ciclo inicial de DLL e vínculo básico. Isso é suporte parcial, sem a hierarquia e todos os contratos do perfil. As demais linhas são trabalho planejado. Tipos internos só entram quando forem necessários para um contrato público ou para um recurso de compatibilidade explicitamente suportado.
 
@@ -106,7 +106,7 @@ public sealed class IvyBlade : ModItem
 }
 ```
 
-A configuração de build seleciona as referências Ivy; o código do item conserva os nomes e a estrutura esperados. Mudanças de plataforma, quando necessárias, aparecem no relatório de port.
+A API e o pacote são próprios do Ivy. A configuração de build seleciona as referências Ivy; o código do item conserva os nomes e a estrutura esperados. O port parte de fontes e assets e é recompilado para Ivy. Mudanças de plataforma, quando necessárias, aparecem no relatório de port. Não há meta de carregar arquivos .tmod ou DLLs de mods já compiladas para tModLoader.
 
 ## Corpus real já consultado
 

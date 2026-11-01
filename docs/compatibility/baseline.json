@@ -10,7 +10,11 @@
   "ivy_validated_version": "0.2.1",
   "status": "planning-reference-not-implemented",
   "goal": "source-and-behavior-compatibility",
-  "binary_tmod_support": "future-experimental",
+  "binary_tmod_support": "out-of-scope",
   "docs_channel_is_moving": true,
-  "upstream_implementation_imported": false
+  "upstream_implementation_imported": false,
+  "api_implementation": "independent-ivy-api-with-familiar-public-contracts",
+  "mod_package_format": "ivy-owned",
+  "porting_model": "rebuild-mod-sources-and-assets-against-ivy-sdk",
+  "compiled_pc_mod_support": "out-of-scope"
 }

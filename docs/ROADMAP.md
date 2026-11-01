@@ -2,7 +2,7 @@
 
 Plano de 31/10/2026. Autor do projeto: Mantovani.
 
-Objetivo: recompilar fontes de mods PC preservando namespaces, classes, assinaturas e comportamento. A meta dos exemplos de API pura é nenhuma mudança nos arquivos C#. Adaptações de plataforma devem ficar concentradas em build, dependências, assets e entrada.
+Objetivo: desenvolver uma API própria do Ivy, muito fiel à experiência e aos contratos públicos do tModLoader, para recompilar fontes de mods PC preservando namespaces, classes, assinaturas e comportamento. A meta dos exemplos de API pura é nenhuma mudança nos arquivos C#. Adaptações de plataforma devem ficar concentradas em build, dependências, assets e entrada.
 
 ## Base validada
 
@@ -20,9 +20,12 @@ Dados: [baseline.json](compatibility/baseline.json). O plano usa contratos públ
 | Comportamento | Mesmas regras de hooks, instâncias e resultados | Sequências de eventos e resultados comparados |
 | Dados | Estado do mod sobrevive aos ciclos do Ivy | Save/reload, atualização e recuperação |
 | Rede | Instâncias Ivy mantêm estado consistente | Testes cliente/servidor por perfil |
-| Binária | DLL PC roda sem recompilar | Objetivo posterior; exige todas as dependências e identidades de tipos/assemblies |
 
-Ler um `.tmod` apenas abre o pacote. Não resolve suas DLLs, shaders, dependências ou referências. Compatibilidade de fonte também não implica importar saves PC ou conectar em servidor PC tModLoader.
+O formato de distribuição será próprio do Ivy. O fluxo de port parte dos fontes e assets do mod, seleciona as referências do SDK Ivy, resolve as diferenças de plataforma e gera um pacote Ivy. Leitura/importação de `.tmod`, execução de DLLs de mods já compiladas para tModLoader e compatibilidade binária com seus assemblies ficam fora do escopo. Bibliotecas .NET comuns podem ser usadas quando forem compatíveis com o runtime e as referências do projeto.
+
+Classes como `ModItem`, `ModProjectile` e `ModPlayer`, hooks como `SetDefaults`/`AI` e o padrão de receitas permanecem familiares. A autoria e a implementação da API, seus assemblies, runtime e pacote são do Ivy. Os nomes públicos compatíveis reduzem alterações no C#; extensões exclusivas do Ivy ficam separadas para não se tornarem uma exigência desnecessária de cada port.
+
+Compatibilidade de fonte não implica importar saves PC ou conectar em servidor PC tModLoader.
 
 ## Arquitetura proposta
 
@@ -189,7 +192,8 @@ Aceite: dois mods encadeiam hook e restauram original; recursos gráficos sobrev
 - Cache por hash de fontes, referências, perfil e opções. Carga termina antes do mundo; recompilar apenas o necessário.
 - Source generators/analyzers executados em pipeline suportado ou resultados gerados incorporados corretamente; nunca ignorar código gerado.
 - Pacote Ivy com manifest/dependências/fontes/DLLs/assets, instalação, ativação/desativação e atualização.
-- Importação/análise de .tmod; execução de DLL PC somente quando suas referências e contratos estiverem comprovados. Type forwarding/reescrita de IL ficam experimentais até seus testes passarem.
+- Ferramentas de port trabalham com fontes e assets, geram a configuração de build Ivy e apontam adaptações pequenas por arquivo/linha. Dependências específicas do tModLoader precisam de equivalentes ou recompilação para Ivy.
+- Suporte a contêineres `.tmod` e execução de DLLs de mods compiladas para PC não integram este lote nem os marcos futuros deste roadmap.
 - Relatório por mod concentra diferenças de plataforma e mudanças necessárias, preservando os fontes de gameplay nos casos suportados.
 
 Aceite: mod pequeno e intermediário compilados/importados no celular; segunda carga usa cache; dependências ausentes impedem ativação com diagnóstico; troca de mods não deixa callbacks nativos ativos.
