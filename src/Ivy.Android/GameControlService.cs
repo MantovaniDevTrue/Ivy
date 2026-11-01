@@ -20,6 +20,7 @@ public sealed class GameControlService : Service
     {
         base.OnCreate();
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: true);
+        ProcessHost.Write("Serviço C# criado; runtime Android inicializado.");
     }
     public override IBinder? OnBind(Intent? intent) => null;
     public override StartCommandResult OnStartCommand(Intent? intent, StartCommandFlags flags, int startId)
@@ -35,6 +36,7 @@ public sealed class GameControlService : Service
             {
                 case Prepare:
                 case Load:
+                    ProcessHost.Write("Preparação: armando gate nativo antes de carregar a seleção.");
                     // Both manual preparation and Play arm the same native gate before Unity can load.
                     Il2CppProbe.ArmRuntime();
                     var selection = library.Selection();
@@ -42,6 +44,7 @@ public sealed class GameControlService : Service
                         throw new InvalidOperationException("A seleção mudou. Descarregue a sessão antes de carregar a nova seleção.");
                     if (ProcessHost.Session is null)
                     {
+                        ProcessHost.Write("Preparação: carregando DLLs da seleção.");
                         ProcessHost.Session = ModLibrary.LoadSelection(selection, ProcessHost.Write);
                         ProcessHost.SelectionFingerprint = selection.Fingerprint;
                     }
