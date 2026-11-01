@@ -23,7 +23,7 @@ internal static class ProcessHost
             logPath = Path.Combine(filesDirectory, gameProcess ? "ivy-session.txt" : "ivy-launcher.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.5.0 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
+            Write($"Ivy 0.6.0 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
         }
     }
 

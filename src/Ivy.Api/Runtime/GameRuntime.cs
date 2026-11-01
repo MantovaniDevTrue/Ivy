@@ -13,6 +13,7 @@ internal interface IGameBackend
     int GetMaxLife(Player player);
     void InvokeWorld(Main self);
     void CallOriginal(Main self);
+    void CallHealOriginal(Player self, int amount, bool broadcast);
 }
 
 internal static class GameRuntime

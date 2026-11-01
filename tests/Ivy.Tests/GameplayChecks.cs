@@ -14,6 +14,7 @@ public static class GameplayChecks
     public static void Run(string example)
     {
         GameRuntime.Backend = backend;
+        NativeAccess.Backend = new FakeAccess();
         var a = new HookOwner(); var b = new HookOwner();
         On_Main.hook_DoUpdateInWorld first = (orig, target) => { events.Add("a+"); orig(target); events.Add("a-"); };
         On_Main.hook_DoUpdateInWorld second = (orig, target) => { events.Add("b+"); orig(target); events.Add("b-"); };
@@ -88,6 +89,17 @@ public static class GameplayChecks
     }
     private static void Tick() => WorldHooks.Invoke(self);
     private static void Check(bool condition, string name) { if (!condition) throw new Exception(name); count++; Console.WriteLine("OK: " + name); }
+    private sealed class FakeAccess : INativeAccessBackend
+    {
+        public NativeValue Read(NativeMember m, object? identity) => m.Name=="dead" ? NativeValue.From(false) : throw new NotSupportedException(m.Name);
+        public void Write(NativeMember m, object? identity, NativeValue v) => throw new NotSupportedException(m.Name);
+        public NativeValue Invoke(NativeMember m, object? identity, ReadOnlySpan<NativeValue> args)
+        {
+            if(m.Name=="FindBuffIndex") return NativeValue.From(-1);
+            if(m.Name=="HealEffect") { HealHooks.Invoke(backend.LocalPlayer,(int)args[0].Bits,args[1].Bits!=0); return default; }
+            throw new NotSupportedException(m.Name);
+        }
+    }
     private sealed class FakeBackend : IGameBackend
     {
         internal int Life = 100, Originals;
@@ -99,6 +111,7 @@ public static class GameplayChecks
         public void SetLife(Player p, int value) => Life = value;
         public int GetMaxLife(Player p) => 100;
         public void InvokeWorld(Main target) => WorldHooks.Invoke(target);
+        public void CallHealOriginal(Player target, int amount, bool broadcast) { }
         public void CallOriginal(Main target) { Interlocked.Increment(ref Originals); events.Add("orig"); }
     }
 }

@@ -5,10 +5,9 @@ using Ivy.Runtime;
 namespace Terraria;
 
 /// <summary>Acesso ao Main nativo dentro de um hook de gameplay.</summary>
-public partial class Main
+public partial class Main : NativeObject
 {
-    internal object Identity { get; }
-    internal Main(object identity) => Identity = identity;
+    internal Main(object identity) : base(identity) { }
     /// <summary>Jogador local real do IL2CPP; não é uma cópia gerenciada.</summary>
     public static Player? LocalPlayer => GameRuntime.Backend.LocalPlayer;
     public static int menuMode => GameRuntime.Backend.MenuMode;
@@ -17,10 +16,9 @@ public partial class Main
 }
 
 /// <summary>Fachada tipada para o jogador nativo atual.</summary>
-public partial class Player
+public partial class Player : Entity
 {
-    internal object Identity { get; }
-    internal Player(object identity) => Identity = identity;
+    internal Player(object identity) : base(identity) { }
     // Native fields are accessors in this initial profile; ref field access is not supported yet.
     /// <summary>Lê/escreve o campo nativo statLife. Ref ao campo ainda não é suportado.</summary>
     public int statLife { get => GameRuntime.Backend.GetLife(this); set => GameRuntime.Backend.SetLife(this, value); }

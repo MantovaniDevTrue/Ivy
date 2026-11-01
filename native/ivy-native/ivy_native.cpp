@@ -71,7 +71,7 @@ int32_t finish(int32_t result) {
 }
 }
 
-IVY_EXPORT uint32_t ivy_native_abi_version() { return 2; }
+IVY_EXPORT uint32_t ivy_native_abi_version() { return 3; }
 
 IVY_EXPORT int32_t ivy_native_call_world_original(void *instance) {
     if (instance == nullptr || current_frame == nullptr) return -8;
@@ -166,3 +166,5 @@ IVY_EXPORT const char *ivy_native_error_message(int32_t error) {
 #ifdef IVY_NATIVE_TEST
 IVY_EXPORT void ivy_native_test_tick(void *instance, const void *method_info) { world_proxy(instance, method_info); }
 #endif
+
+#include "heal_hook.h"

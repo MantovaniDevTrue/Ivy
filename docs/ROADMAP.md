@@ -231,7 +231,7 @@ Em todos os lotes:
 
 Os lotes são dependências, não datas prometidas. Fazer CI entre alterações e consolidar APKs por comportamento completo ou bloqueador nativo, evitando um APK por classe.
 
-**Próxima validação:** testar a ponte 0.3.0 no aparelho: original, callbacks C#, leitura de vida, pausa/retomada e saída/reentrada. Depois conectar os descritores gerados à resolução/marshalling, provar escrita e identidade de entidades e oferecer os primeiros hooks públicos antes de expandir o registro de conteúdo.
+**Próxima validação (0.6.0):** o fluxo 0.5.0 foi aceito no Android. Testar o perfil gerado de seis classes, runtime_invoke e On_Player.HealEffect com o exemplo atualizado. Depois ampliar famílias de marshalling (arrays/structs/ref/out), identidade persistente e HookGen, antes de declarar acesso universal. [Estado atual](GENERATED_ACCESS_0.6.0.md).
 
 ## Referências
 

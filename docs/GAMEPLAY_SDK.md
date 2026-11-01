@@ -96,3 +96,7 @@ O usuário relatou funcionamento após carregar manualmente na 0.4.0. A [0.4.1](
 ## Evidência posterior — 0.4.1
 
 O relatório recebido em 01/11/2026 confirmou carga automática, 3.600 chamadas com originais correspondentes e escrita/leitura 86 → 91 → 96 → 100 no Android 14. A seleção, a migração e o modo sem mods da candidata 0.5.0 têm validação separada em [MOD_SELECTION_0.5.0.md](MOD_SELECTION_0.5.0.md).
+
+## Evolução 0.6.0
+
+O perfil fixo continua compatível com mods do SDK anterior. Agora há um [gerador real de fachadas para seis classes e backend runtime_invoke](GENERATED_ACCESS_0.6.0.md), além de On_Player.HealEffect(int,bool). A ABI interna passa a 3; o runtime e a biblioteca nativa devem ser atualizados juntos. O aceite da 0.5.0 não valida esses acessos novos.

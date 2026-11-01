@@ -29,3 +29,7 @@ Depois da validação desse lote: generalizar contratos/resolução/marshalling 
 HookGen por famílias verificáveis de assinatura; em paralelo evoluir limites de
 logs, recuperação, perfis e SDK de fontes. O plano completo recebido continua
 sendo um objetivo de várias etapas, não uma descrição de recursos já entregues.
+
+## Atualização 0.6.0
+
+Seleção/zero mods da 0.5.0 foram aceitos no aparelho pelo usuário. O novo perfil gera 2.030 campos, 1.844 métodos e 409 propriedades em seis classes; são declarações ligadas ao backend, com validação nativa sob demanda, e não 4.283 comportamentos Android validados. [Detalhes e exclusões](GENERATED_ACCESS_0.6.0.md).
