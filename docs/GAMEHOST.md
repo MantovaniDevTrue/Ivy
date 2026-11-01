@@ -23,7 +23,7 @@ O script reconstrói os recursos mantendo os IDs públicos, acrescenta os DEX do
 
 ## Diagnóstico
 
-Ao abrir o jogo, o C# aguarda por até 90 segundos a biblioteca IL2CPP. O diagnóstico usa os exports do runtime e anexa a thread de trabalho ao domínio apenas para consultar metadados. Resolve `Assembly-CSharp`, `Terraria.Main` e `get_menuMode`, sem executar métodos do jogo. Não usa RVAs fixos. A thread é desanexada ao concluir.
+Ao abrir o jogo, o C# aguarda por até 90 segundos a biblioteca IL2CPP. Antes de anexar a thread, espera a imagem Assembly-CSharp ficar disponível. O diagnóstico usa os exports do runtime e anexa a thread de trabalho ao domínio apenas para consultar metadados. Resolve `Assembly-CSharp`, `Terraria.Main` e `get_menuMode`, sem executar métodos do jogo. Não usa RVAs fixos. A thread é desanexada ao concluir.
 
 A sessão C# pertence ao processo e não é descartada quando o painel é recriado. O relatório atual é salvo em `files/ivy-session.txt`; a sessão anterior fica em `.previous` e é incluída na exportação. O ciclo completo ainda depende do teste no aparelho.
 
