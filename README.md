@@ -2,7 +2,7 @@
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A base já carregou uma DLL externa no Android 14: 1 mod e 1 sistema. A 0.2.1 corrige o registro JNI da tela inicial do host Terraria. A inicialização integrada ainda precisa ser validada no aparelho.
+A base já carregou uma DLL externa no Android 14: 1 mod e 1 sistema. A 0.2.1 corrige o registro JNI da tela inicial do host Terraria. Mantovani confirmou a entrada normal em um mundo no Android 14; o diagnóstico encontrou C# e IL2CPP no mesmo processo.
 
 ## Teste no celular
 
@@ -41,3 +41,7 @@ Ainda faltam registro de conteúdo no jogo, hooks, compilação no celular, depe
 - `tests`: verificações C# e de empacotamento.
 
 Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementação própria, sem código tModLoader incorporado.
+
+## Roadmap de compatibilidade
+
+[Plano completo por lotes](docs/ROADMAP.md), [catálogo inicial de classes](docs/compatibility/CLASSES.md) e [perfil de referência fixado](docs/compatibility/baseline.json). A meta é compatibilidade de fontes e comportamento com o mínimo de alterações por mod.
