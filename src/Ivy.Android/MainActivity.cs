@@ -31,7 +31,7 @@ public sealed class MainActivity : Activity
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.6.0", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.6.1", TextSize = 24 };
         layout.AddView(title);
         layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSeleção de mods · modo sem mods disponível", TextSize = 15 });
         counts = new TextView(this) { Text = "Lendo biblioteca de mods…", TextSize = 15 };
@@ -155,7 +155,6 @@ public sealed class MainActivity : Activity
         {
             var intent = new Intent();
             intent.SetClassName(PackageName!, "com.unity3d.player.UnityPlayerActivity");
-            intent.AddFlags(ActivityFlags.NewTask);
             if (intent.ResolveActivity(PackageManager!) is null)
                 throw new InvalidOperationException("Este APK contém apenas o runtime. Use o APK GameHost para abrir o Terraria.");
             Log("Preparando mods automaticamente; aguardando confirmação do processo do jogo.");

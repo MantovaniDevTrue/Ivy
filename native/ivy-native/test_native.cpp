@@ -1,6 +1,7 @@
 #include <cassert>
 #include <cstdint>
 #include <iostream>
+#include <cstring>
 #include "hook_backend.h"
 using callback_type = int32_t (*)(void *, const void *, uint64_t, int32_t);
 extern "C" int32_t ivy_native_install_world_hook(void *, callback_type);
@@ -31,7 +32,9 @@ extern "C" int shadowhook_get_errno() { return 0; }
 extern "C" const char *shadowhook_to_errmsg(int) { return "mock"; }
 static void tick() { ivy_native_test_tick(self, reinterpret_cast<void *>(2)); }
 static void test_heal();
+static void test_runtime_ready();
 int main() {
+    test_runtime_ready();
     auto address = reinterpret_cast<void *>(original);
     assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_install_world_hook(nullptr, managed) == -1);
@@ -92,4 +95,34 @@ static void test_heal(){
  ivy_native_set_heal_enabled(0);tick();assert(heal_originals==8);
  assert(ivy_native_heal_stat(2)==2&&ivy_native_call_heal_original(self,1,1)==-8);
  std::cout<<"Native ABI 3 heal tests passed: int/bool changes, zero/two originals, recursion, fallback and disable.\n";
+}
+
+extern "C" int32_t ivy_native_watch_runtime();
+extern "C" int32_t ivy_native_runtime_ready();
+extern "C" void *ivy_native_runtime_domain();
+extern "C" uint64_t ivy_native_runtime_init_returns();
+extern "C" bool ivy_native_test_init(const void*,bool);
+static int watches=0,domain_calls=0;static bool init_success=false,inside_original=false;
+static bool init_original(const void *name){assert(name==self);inside_original=true;assert(ivy_native_runtime_ready()==0);inside_original=false;return init_success;}
+static bool utf16_original(const void *name){assert(name==self);return true;}
+static void *domain_original(){assert(!inside_original);domain_calls++;return reinterpret_cast<void*>(7);}
+extern "C" void *shadowhook_hook_sym_name(const char *lib,const char *symbol,void*,void **original){
+ assert(!std::strcmp(lib,"libil2cpp.so"));watches++;
+ *original=!std::strcmp(symbol,"il2cpp_init")?reinterpret_cast<void*>(init_original):reinterpret_cast<void*>(utf16_original);
+ return reinterpret_cast<void*>(8);
+}
+extern "C" void *shadowhook_dlopen(const char *name){assert(!std::strcmp(name,"libil2cpp.so"));return self;}
+extern "C" void *shadowhook_dlsym(void *handle,const char *symbol){assert(handle==self&&!std::strcmp(symbol,"il2cpp_domain_get"));return reinterpret_cast<void*>(domain_original);}
+extern "C" void shadowhook_dlclose(void *handle){assert(handle==self);}
+static void test_runtime_ready(){
+ assert(!ivy_native_runtime_ready()&&ivy_native_runtime_domain()==nullptr);
+ assert(ivy_native_watch_runtime()==0&&watches==2);
+ assert(ivy_native_watch_runtime()==0&&watches==2);
+ assert(!ivy_native_test_init(self,false)&&!ivy_native_runtime_ready()&&domain_calls==0);
+ init_success=true;
+ assert(ivy_native_test_init(self,false)&&ivy_native_runtime_ready()&&domain_calls==1);
+ assert(ivy_native_runtime_domain()==reinterpret_cast<void*>(7));
+ assert(ivy_native_test_init(self,true)&&ivy_native_runtime_init_returns()==3&&domain_calls==2);
+ assert(ivy_native_watch_runtime()==0&&watches==2&&ivy_native_runtime_ready());
+ std::cout<<"Runtime readiness tests passed: pre-init blocked, failed init blocked, original result preserved, domain captured after success, UTF16 and idempotent manual/automatic preparation.\n";
 }

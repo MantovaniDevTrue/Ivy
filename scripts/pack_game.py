@@ -46,8 +46,10 @@ def verify_host_processes(manifest, require_unity=False):
         unity = next(a for a in app.findall("activity") if a.get(ANDROID + "name") == UNITY)
         if process(unity) != package:
             raise ValueError("Unity e serviço C# precisam do mesmo processo.")
-        if panel.get(ANDROID + "taskAffinity", package) == unity.get(ANDROID + "taskAffinity", package):
-            raise ValueError("Painel e Unity precisam de tarefas independentes.")
+        if panel.get(ANDROID + "taskAffinity", package) != unity.get(ANDROID + "taskAffinity", package):
+            raise ValueError("Painel e Unity precisam compartilhar a tarefa Android.")
+        if unity.get(ANDROID + "launchMode") != "singleTop":
+            raise ValueError("Unity precisa de singleTop para navegação na mesma tarefa.")
 
 
 def load_decoded_manifest(folder):
@@ -91,6 +93,8 @@ def merge_manifests(base, host, label="Ivy"):
     if app.get(ANDROID + "process") not in (None, old_package, package):
         raise ValueError("Processo personalizado no APK base não suportado nesta etapa.")
     app.attrib.pop(ANDROID + "process", None)
+    unity.set(ANDROID + "taskAffinity", package)
+    unity.set(ANDROID + "launchMode", "singleTop")
     for activity in app.findall("activity") + app.findall("activity-alias"):
         for intent in list(activity.findall("intent-filter")):
             if any(x.get(ANDROID + "name") in (

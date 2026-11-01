@@ -35,6 +35,8 @@ public sealed class GameControlService : Service
             {
                 case Prepare:
                 case Load:
+                    // Both manual preparation and Play arm the same native gate before Unity can load.
+                    Il2CppProbe.ArmRuntime();
                     var selection = library.Selection();
                     if (ProcessHost.Session is not null && ProcessHost.SelectionFingerprint != selection.Fingerprint)
                         throw new InvalidOperationException("A seleção mudou. Descarregue a sessão antes de carregar a nova seleção.");

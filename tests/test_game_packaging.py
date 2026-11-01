@@ -47,7 +47,7 @@ class GamePackagingTests(unittest.TestCase):
         app = host.find("application")
         panel = app.find("activity")
         panel.set(A + "process", ":launcher")
-        panel.set(A + "taskAffinity", "ivy.launcher")
+        panel.set(A + "taskAffinity", "dev.mantovani.ivy")
         ET.SubElement(app, "service", {A + "name": "ivy.GameControlService", A + "exported": "false"})
         ET.SubElement(app, "provider", {A + "name": "mono.MonoRuntimeProvider_1", A + "process": ":launcher"})
         return pack.merge_manifests(base, host)
@@ -69,10 +69,18 @@ class GamePackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Inicialização Mono"):
             pack.verify_host_processes(manifest)
 
-    def test_reject_shared_tasks(self):
+    def test_reject_separate_tasks(self):
         manifest = self.isolated_manifest()
-        manifest.find("application").findall("activity")[1].attrib.pop(A + "taskAffinity")
-        with self.assertRaisesRegex(ValueError, "tarefas independentes"):
+        manifest.find("application").findall("activity")[1].set(A + "taskAffinity", "other.task")
+        with self.assertRaisesRegex(ValueError, "compartilhar a tarefa"):
+            pack.verify_host_processes(manifest, require_unity=True)
+
+    def test_unity_single_top_in_shared_task(self):
+        manifest = self.isolated_manifest()
+        unity = manifest.find("application/activity")
+        self.assertEqual(unity.get(A + "launchMode"), "singleTop")
+        unity.set(A + "launchMode", "singleTask")
+        with self.assertRaisesRegex(ValueError, "singleTop"):
             pack.verify_host_processes(manifest, require_unity=True)
 
     def test_reject_exported_game_commands(self):
