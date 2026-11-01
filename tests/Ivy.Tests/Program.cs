@@ -3,6 +3,12 @@ using System.Reflection.Emit;
 using Ivy.Loader;
 using Terraria.ModLoader;
 
+if (args is ["--hold-library-lock", var directory])
+{
+    using var file = new FileStream(Path.Combine(directory, "mod-library", "catalog.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+    Console.WriteLine("locked"); Console.ReadLine(); return;
+}
+
 var events = Probe.Events;
 var logs = new List<string>();
 var assembly = MakeAssembly("Lifecycle", true, false);
@@ -26,7 +32,7 @@ using (var session = new ModSession(logs.Add))
     Check(events.SequenceEqual(new[] { "Mod.Load", "System.Load", "System.Unload", "Mod.Unload" }), "rollback após falha parcial");
     Throws<InvalidOperationException>(() => session.LoadAssembly(typeof(string).Assembly), "DLL sem Mod rejeitada");
 }
-if (args.Length != 1) throw new ArgumentException("Informe o caminho de ExampleMod.dll.");
+if (args.Length != 3) throw new ArgumentException("Informe o caminho de ExampleMod.dll.");
 using (var session = new ModSession(logs.Add))
 {
     session.LoadFile(args[0]);
@@ -35,6 +41,7 @@ using (var session = new ModSession(logs.Add))
 Console.WriteLine("11 verificações passaram.");
 GameplayChecks.Run(args[0]);
 StartupChecks.Run().GetAwaiter().GetResult();
+LibraryChecks.Run(args[0], args[1], args[2]);
 
 static void Check(bool condition, string name)
 {

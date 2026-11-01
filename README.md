@@ -1,17 +1,21 @@
-# Ivy — 0.4.1
+# Ivy — 0.5.0 (candidata)
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A 0.3.1 teve a saída normal confirmada sem crash. A 0.4.0 acrescenta o primeiro SDK Main/Player tipado, evento On_Main.DoUpdateInWorld com original controlado pelo handler, unload de registros por mod e ExampleMod externo com recuperação de vida. A ABI nativa 2 e a escrita no jogo ainda aguardam teste no aparelho. [Escopo, limites e teste](docs/GAMEPLAY_SDK.md).
+A 0.4.1 foi validada no Android 14: abertura automática, 3.600 callbacks/originais e escrita de vida com releitura nativa. Esta candidata 0.5.0 implementa seleção persistida, modo sem mods e exemplo opcional. O novo fluxo está testado localmente e ainda depende do aparelho. [Auditoria e limites](docs/CAPABILITY_MATRIX.md).
 
-## Teste no celular
+## Teste integrado
 
-1. Instale Ivy_0.4.1_SDK_Test.apk ao lado do Ivy anterior (pacote dev.mantovani.ivy.sdktest).
-2. Toque diretamente em Abrir Terraria: a 0.4.1 espera a confirmação dos mods antes de abrir o jogo. No mundo de teste, receba dano e confira a recuperação adicional de até 5 de vida a cada 120 ticks.
-3. Descarregue os mods pelo painel e confirme que o efeito para; carregue novamente.
-4. Salve, saia/reentre e exporte o relatório. Procure On_Main concluído e SDK Player.statLife.
+Esta branch implementa [seleção de mods e modo sem mods](docs/MOD_SELECTION_0.5.0.md). A main 0.4.1 permanece validada.
 
-A chave antiga não estava disponível no ambiente recriado; este APK de teste usa pacote/assinatura separados e tem dados próprios. Não precisa desinstalar o Ivy validado.
+1. Atualize Ivy SDK Test. DLLs legadas são preservadas e migradas como desativadas.
+2. Toque Jogar sem ativar mods: deve confirmar 0 mods e abrir normalmente.
+3. Descarregue a sessão; em Meus mods, ative ExampleMod e teste a cura no mundo.
+4. Descarregue a sessão, desative o exemplo e teste novamente sem o efeito.
+5. Exporte o relatório, que agora inclui a biblioteca e a seleção persistida.
+
+O exemplo não é mais obrigatório. Em builds de desenvolvimento ele pode ser instalado explicitamente; builds públicos não embutem a DLL. Nenhuma DLL importada é substituída pelo exemplo. Novas importações começam desativadas.
+
 
 O pacote `dev.mantovani.ivy` é separado do Terraria original. O APK `RuntimeTest` dos Actions contém somente o runtime: o jogo é empacotado localmente com o APK base fornecido pelo usuário.
 
@@ -62,3 +66,7 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 ## Abertura automática — 0.4.1
 
 [Confirmação entre painel e serviço](docs/STARTUP_0.4.1.md): o painel abre a Unity somente após os mods concluírem a carga no processo do jogo. O SDK e a ponte ABI 2 não mudaram. A atualização usa o mesmo pacote e chave do Ivy SDK Test 0.4.0.
+
+## Auditoria do plano completo
+
+[Matriz de capacidade e evidência](docs/CAPABILITY_MATRIX.md). A ABI 2, a abertura automática e a escrita de vida da 0.4.1 foram validadas no aparelho. A seleção/migração/zero mods da 0.5.0 ainda precisam do teste Android. Fontes .cs, gerador universal, conteúdo e Workshop continuam pendentes.

@@ -92,3 +92,7 @@ painel permanece isolado, como na 0.3.1.
 ## Atualização 0.4.1
 
 O usuário relatou funcionamento após carregar manualmente na 0.4.0. A [0.4.1](STARTUP_0.4.1.md) corrige a ordem de abertura automática com confirmação do serviço. A API e a ponte C++ são as mesmas; o ZIP SDK 0.4.0 continua sendo a referência deste perfil.
+
+## Evidência posterior — 0.4.1
+
+O relatório recebido em 01/11/2026 confirmou carga automática, 3.600 chamadas com originais correspondentes e escrita/leitura 86 → 91 → 96 → 100 no Android 14. A seleção, a migração e o modo sem mods da candidata 0.5.0 têm validação separada em [MOD_SELECTION_0.5.0.md](MOD_SELECTION_0.5.0.md).

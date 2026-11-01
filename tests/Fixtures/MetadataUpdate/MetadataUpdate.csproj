@@ -1,0 +1,4 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><AssemblyName>ExampleMod</AssemblyName><AssemblyVersion>2.0.0.0</AssemblyVersion></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../../../src/Ivy.Api/Ivy.Api.csproj" /></ItemGroup>
+</Project>

@@ -12,6 +12,7 @@ internal static class NativeWorldBridge
     private static readonly WorldCallback callback = OnWorldUpdate;
     private static GameBackend? backend;
     private static bool attempted;
+    private static bool dispatchRequested;
     private static int available;
     private static long managedCalls;
     private static IntPtr menuMethod, playerIndexMethod, playerMethod, lifeField;
@@ -20,11 +21,24 @@ internal static class NativeWorldBridge
     private static FieldGetValue? fieldGetValue;
     private static ThreadCurrent? threadCurrent;
 
+    internal static void RequestDispatch(bool requested)
+    {
+        lock (gate)
+        {
+            dispatchRequested = requested;
+            if (Volatile.Read(ref available) != 0 && Stat(4) != 0)
+            {
+                var result = SetCallbacksEnabled(requested ? 1 : 0);
+                if (result != 0) throw new InvalidOperationException(Error(result));
+            }
+        }
+    }
+
     internal static void Install(IntPtr library, IntPtr gameImage, IntPtr main)
     {
         lock (gate)
         {
-            if (attempted) return;
+            if (attempted || !dispatchRequested) return;
             attempted = true;
             try
             {
@@ -249,6 +263,7 @@ internal static class NativeWorldBridge
         Marshal.GetDelegateForFunctionPointer<T>(NativeLibrary.GetExport(library, name));
 
     [DllImport("ivy-native", EntryPoint = "ivy_native_call_world_original", CallingConvention = CallingConvention.Cdecl)] private static extern int CallWorldOriginal(IntPtr instance);
+    [DllImport("ivy-native", EntryPoint = "ivy_native_set_callbacks_enabled", CallingConvention = CallingConvention.Cdecl)] private static extern int SetCallbacksEnabled(int value);
     [DllImport("ivy-native", EntryPoint = "ivy_native_abi_version", CallingConvention = CallingConvention.Cdecl)] private static extern uint AbiVersion();
     [DllImport("ivy-native", EntryPoint = "ivy_native_install_world_hook", CallingConvention = CallingConvention.Cdecl)] private static extern int InstallHook(IntPtr target, WorldCallback callback);
     [DllImport("ivy-native", EntryPoint = "ivy_native_uninstall_world_hook", CallingConvention = CallingConvention.Cdecl)] private static extern int UninstallHook();
