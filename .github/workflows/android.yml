@@ -1,6 +1,8 @@
 name: Android ARM64
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
 permissions:
@@ -8,6 +10,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: ${{ runner.temp }}/android-sdk
+      ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -18,9 +23,12 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: dotnet workload install android --skip-manifest-update
-      - run: sdkmanager "ndk;27.3.13750724"
-      - run: dotnet build src/Ivy.Android/Ivy.Android.csproj -t:InstallAndroidDependencies -p:AndroidSdkDirectory="$ANDROID_HOME" -p:AcceptAndroidSdkLicenses=True
-      - run: IVY_NDK_DIR="$ANDROID_HOME/ndk/27.3.13750724" bash scripts/build.sh
+      - uses: android-actions/setup-android@v4
+        with:
+          cmdline-tools-version: '12266719'
+          log-accepted-android-sdk-licenses: 'false'
+      - run: sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools" "ndk;27.3.13750724"
+      - run: IVY_NDK_DIR="$ANDROID_HOME/ndk/27.3.13750724" bash scripts/build.sh -p:AndroidSdkDirectory="$ANDROID_HOME" -p:JavaSdkDirectory="$JAVA_HOME"
       - run: python3 -m unittest discover -s tests -p 'test_*.py'
       - run: bash scripts/generate_bindings.sh tests/Ivy.BindingGenerator.Tests/bin/Release/net10.0 generated/fixture-api Terraria generated/MainPlayer.g.cs
       - run: cmp generated/MainPlayer.g.cs src/Ivy.Api/Generated/MainPlayer.g.cs

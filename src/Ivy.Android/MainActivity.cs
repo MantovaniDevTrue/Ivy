@@ -2,7 +2,6 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using System.Security.Cryptography;
 using System.Text;
 using Ivy.Loader;
 
@@ -12,11 +11,14 @@ namespace Ivy.AndroidHost;
 public sealed class MainActivity : Activity
 {
     private TextView output = null!;
-    private CancellationTokenSource? refresh;
+    private ModLibrary library = null!;
+    private Task libraryReady = Task.CompletedTask;
+    private TextView counts = null!;
+    private int libraryRefreshVersion;
     private CancellationTokenSource? launchCancellation;
     private readonly GameLaunchCoordinator launchCoordinator = new();
     private readonly HashSet<string> reportedExits = new();
-    private string modsPath = "";
+
     private const int ImportRequest = 10;
     private const int ExportRequest = 11;
 
@@ -24,18 +26,25 @@ public sealed class MainActivity : Activity
     {
         base.OnCreate(savedInstanceState);
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: false);
-        modsPath = Path.Combine(FilesDir!.AbsolutePath, "mods");
-        Directory.CreateDirectory(modsPath);
+        library = new ModLibrary(FilesDir!.AbsolutePath);
+        libraryReady = Task.Run(library.Initialize);
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.4.1", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.5.0", TextSize = 24 };
         layout.AddView(title);
-        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSDK Main/Player + hooks On_Main", TextSize = 15 });
-        AddButton(layout, "Abrir Terraria", OpenGame);
-        AddButton(layout, "Carregar mods C#", () => SendCommand(GameControlService.Load));
-        AddButton(layout, "Descarregar mods", () => SendCommand(GameControlService.Unload));
-        AddButton(layout, "Parar ponte On_Main", () => SendCommand(GameControlService.StopHook));
+        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSeleção de mods · modo sem mods disponível", TextSize = 15 });
+        counts = new TextView(this) { Text = "Lendo biblioteca de mods…", TextSize = 15 };
+        layout.AddView(counts);
+        AddButton(layout, "Jogar", OpenGame);
+        AddButton(layout, "Meus mods", () => StartActivity(new Intent(this, typeof(ModsActivity))));
+        AddButton(layout, "Preparar seleção", () => SendCommand(GameControlService.Load));
+        AddButton(layout, "Descarregar sessão", () => SendCommand(GameControlService.Unload));
+        if (Assets!.List("")!.Contains("ExampleMod.dll"))
+        {
+            AddButton(layout, "Instalar exemplo (opcional)", InstallExample);
+            AddButton(layout, "Parar ponte On_Main (desenvolvimento)", () => SendCommand(GameControlService.StopHook));
+        }
         AddButton(layout, "Importar mod (.dll)", () =>
         {
             var intent = new Intent(Intent.ActionOpenDocument);
@@ -59,15 +68,41 @@ public sealed class MainActivity : Activity
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
         Log($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
         Log("Runtime Mono/.NET pronto. On_Main e acessos tipados Main/Player; API de conteúdo ainda pendente.");
+        _ = RefreshLibrary();
+    }
+
+    private async Task RefreshLibrary()
+    {
+        var version = ++libraryRefreshVersion;
         try
         {
-            var samplePath = Path.Combine(modsPath, "ExampleMod.dll");
-            using var input = Assets!.Open("ExampleMod.dll");
-            using var destination = File.Create(samplePath);
-            input.CopyTo(destination);
-            Log("ExampleMod.dll preparado para carregamento externo.");
+            await libraryReady;
+            var list = await Task.Run(library.List);
+            if (version != libraryRefreshVersion) return;
+            counts.Text = $"{list.Count} instalado(s) · {list.Count(m => m.Enabled)} selecionado(s) · {list.Count(m => m.Problem is not null)} incompatível(is)";
         }
-        catch (Exception ex) { Log($"Falha ao preparar exemplo: {ex}"); }
+        catch (Exception ex) { counts.Text = "Biblioteca indisponível"; Log(ex.Message); }
+    }
+
+    private async void InstallExample()
+    {
+        try
+        {
+            await libraryReady;
+            var list = await Task.Run(library.List);
+            if (list.Any(m => m.Name.Equals("ExampleMod", StringComparison.OrdinalIgnoreCase)))
+            {
+                Log("Já existe ExampleMod instalado; sua DLL foi preservada. Ative-o em Meus mods se desejar.");
+                return;
+            }
+            using var input = Assets!.Open("ExampleMod.dll");
+            using var bytes = new MemoryStream();
+            await input.CopyToAsync(bytes);
+            var installed = await Task.Run(() => library.Install(bytes.ToArray(), "development", replaceExisting: false));
+            Log($"{installed.Name} disponível na biblioteca. A seleção existente foi preservada; confira em Meus mods.");
+            await RefreshLibrary();
+        }
+        catch (Exception ex) { Log($"Falha ao instalar exemplo: {ex.Message}"); }
     }
 
     private void AddButton(LinearLayout parent, string text, Action action)
@@ -85,12 +120,30 @@ public sealed class MainActivity : Activity
         parent.AddView(button);
     }
 
-    private void SendCommand(string action)
+    private async Task<Bundle> RequestCommand(string action, CancellationToken token)
     {
-        launchCancellation?.Cancel();
+        await libraryReady.WaitAsync(token);
+        var receiver = new StartupResultReceiver(new Handler(Looper.MainLooper!));
         var command = new Intent(this, typeof(GameControlService));
         command.SetAction(action);
+        command.PutExtra(GameControlService.ReplyKey, receiver);
         StartService(command);
+        using var registration = token.Register(() => receiver.Completion.TrySetCanceled(token));
+        var result = await receiver.Completion.Task.WaitAsync(token);
+        GC.KeepAlive(receiver);
+        return result;
+    }
+
+    private async void SendCommand(string action)
+    {
+        launchCancellation?.Cancel();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+        try
+        {
+            var result = await RequestCommand(action, timeout.Token);
+            Log($"Comando concluído: {result.GetInt("mods")} mod(s) na sessão.");
+        }
+        catch (Exception ex) { Log($"Comando não concluído: {ex.Message}"); }
     }
 
     private async void OpenGame()
@@ -108,14 +161,10 @@ public sealed class MainActivity : Activity
             Log("Preparando mods automaticamente; aguardando confirmação do processo do jogo.");
             await launchCoordinator.LaunchAsync(async token =>
             {
-                var receiver = new StartupResultReceiver(new Handler(Looper.MainLooper!));
-                var command = new Intent(this, typeof(GameControlService));
-                command.SetAction(GameControlService.Prepare);
-                command.PutExtra(GameControlService.ReplyKey, receiver);
-                StartService(command);
-                using var registration = token.Register(() => receiver.Completion.TrySetCanceled(token));
-                var ready = await receiver.Completion.Task.WaitAsync(token);
-                GC.KeepAlive(receiver);
+                var ready = await RequestCommand(GameControlService.Prepare, token);
+                var current = await Task.Run(library.Selection, token);
+                if (ready.GetString("selection") != current.Fingerprint)
+                    throw new InvalidOperationException("A seleção mudou. Descarregue a sessão e prepare novamente.");
                 Log($"Mods confirmados antes de abrir: {ready.GetInt("mods")} mod(s), {ready.GetInt("systems")} sistema(s), PID={ready.GetInt("pid")}.");
             }, () =>
             {
@@ -131,7 +180,7 @@ public sealed class MainActivity : Activity
         finally { if (ReferenceEquals(launchCancellation, cancellation)) launchCancellation = null; }
     }
 
-    protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
+    protected override async void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
         if (resultCode != Result.Ok || data?.Data is null) return;
@@ -142,28 +191,41 @@ public sealed class MainActivity : Activity
                 using var stream = ContentResolver!.OpenOutputStream(data.Data)!;
                 using var writer = new StreamWriter(stream, Encoding.UTF8);
                 writer.Write(ProcessHost.GetReport());
+                writer.WriteLine("\n--- Biblioteca instalada / seleção para a próxima sessão ---");
+                try
+                {
+                    await libraryReady;
+                    var installed = await Task.Run(library.List);
+                    var notes = await Task.Run(library.MigrationNotes);
+                    foreach (var mod in installed)
+                        writer.WriteLine($"{mod.Name} {mod.Version} · {(mod.Enabled ? "selecionado" : "desativado")} · {(mod.Problem ?? "metadados aceitos pelo SDK")} · SHA256={mod.Hash}");
+                    foreach (var note in notes) writer.WriteLine("Migração: " + note);
+                }
+                catch (Exception ex) { writer.WriteLine("Falha na biblioteca (logs preservados): " + ex); }
                 Log("Relatório exportado.");
             }
             else if (requestCode == ImportRequest)
             {
-                using var stream = ContentResolver!.OpenInputStream(data.Data)!;
-                using var bytes = new MemoryStream();
-                var buffer = new byte[8192];
-                int count;
-                while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
+                await libraryReady;
+                var uri = data.Data;
+                var installed = await Task.Run(() =>
                 {
-                    if (bytes.Length + count > 32 * 1024 * 1024)
-                        throw new InvalidDataException("Limite inicial: 32 MB por DLL.");
-                    bytes.Write(buffer, 0, count);
-                }
-                var content = bytes.ToArray();
-                if (content.Length < 2 || content[0] != 'M' || content[1] != 'Z')
-                    throw new InvalidDataException("Selecione uma DLL .NET compilada para esta API.");
-                var hash = Convert.ToHexString(SHA256.HashData(content));
-                var temporary = Path.Combine(modsPath, $"mod-{hash}.pending");
-                File.WriteAllBytes(temporary, content);
-                File.Move(temporary, Path.Combine(modsPath, $"mod-{hash}.dll"), overwrite: true);
-                Log("DLL importada. Descarregue e carregue os mods para iniciar uma nova sessão.");
+                    using var stream = ContentResolver!.OpenInputStream(uri)!;
+                    using var bytes = new MemoryStream();
+                    var buffer = new byte[8192];
+                    int count;
+                    while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        if (bytes.Length + count > ModLibrary.MaxDllBytes)
+                            throw new InvalidDataException("Limite inicial: 32 MB por DLL.");
+                        bytes.Write(buffer, 0, count);
+                    }
+                    return library.Install(bytes.ToArray());
+                });
+                Log(installed.Problem is null
+                    ? $"{installed.Name} instalado. Escolha os mods em Meus mods; uma atualização mantém a seleção anterior."
+                    : $"{installed.Name} instalado e incompatível: {installed.Problem}");
+                await RefreshLibrary();
             }
         }
         catch (Exception ex) { Log(ex.ToString()); }
@@ -180,30 +242,13 @@ public sealed class MainActivity : Activity
         base.OnResume();
         RecordGameExits();
         if (output is not null) output.Text = ProcessHost.GetReport();
-        refresh = new CancellationTokenSource();
-        _ = RefreshReport(refresh.Token);
+        _ = RefreshLibrary();
     }
 
     protected override void OnPause()
     {
         launchCancellation?.Cancel();
-        refresh?.Cancel();
-        refresh?.Dispose();
-        refresh = null;
         base.OnPause();
-    }
-
-    private async Task RefreshReport(CancellationToken token)
-    {
-        try
-        {
-            while (true)
-            {
-                await Task.Delay(1000, token);
-                output.Text = ProcessHost.GetReport();
-            }
-        }
-        catch (System.OperationCanceledException) when (token.IsCancellationRequested) { }
     }
 
     private void RecordGameExits()

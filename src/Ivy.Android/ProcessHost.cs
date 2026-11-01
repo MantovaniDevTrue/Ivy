@@ -11,7 +11,7 @@ internal static class ProcessHost
     private static string? filesPath;
     private static bool isGameProcess;
     internal static ModSession? Session { get; set; }
-    internal static int LoadFailures { get; set; }
+    internal static string? SelectionFingerprint { get; set; }
 
     internal static void Initialize(string filesDirectory, bool gameProcess)
     {
@@ -23,7 +23,7 @@ internal static class ProcessHost
             logPath = Path.Combine(filesDirectory, gameProcess ? "ivy-session.txt" : "ivy-launcher.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.4.1 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
+            Write($"Ivy 0.5.0 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
         }
     }
 

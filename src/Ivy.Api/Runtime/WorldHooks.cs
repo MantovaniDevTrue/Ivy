@@ -44,6 +44,8 @@ internal static class WorldHooks
     [ThreadStatic] private static HookOwner? current;
     private static readonly On_Main.orig_DoUpdateInWorld original = self => GameRuntime.Backend.CallOriginal(self);
     private static On_Main.orig_DoUpdateInWorld chain = original;
+    private static int handlerCount;
+    internal static bool HasHandlers => Volatile.Read(ref handlerCount) != 0;
     internal static OwnerScope EnterOwner(HookOwner owner)
     {
         var previous = current;
@@ -97,6 +99,7 @@ internal static class WorldHooks
             };
         }
         Volatile.Write(ref chain, next);
+        Volatile.Write(ref handlerCount, entries.Count);
     }
     internal static void Invoke(Main self) => Volatile.Read(ref chain)(self);
     internal readonly struct OwnerScope(HookOwner? previous) : IDisposable { public void Dispose() => current = previous; }
