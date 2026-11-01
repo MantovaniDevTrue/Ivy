@@ -18,7 +18,7 @@ internal static class ProcessHost
             logPath = Path.Combine(filesDirectory, "ivy-session.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.2.1 · C# PID={Environment.ProcessId}");
+            Write($"Ivy 0.3.0 · C# PID={Environment.ProcessId}");
         }
     }
 
@@ -41,7 +41,7 @@ internal static class ProcessHost
     {
         lock (gate)
         {
-            var text = report.ToString();
+            var text = NativeWorldBridge.Snapshot() + "\n" + report.ToString();
             var previous = logPath + ".previous";
             if (File.Exists(previous))
                 text += "\n--- Sessão anterior ---\n" + File.ReadAllText(previous);

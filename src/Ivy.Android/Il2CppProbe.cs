@@ -78,7 +78,7 @@ internal static class Il2CppProbe
                 var menuGetter = methodFromName(main, "get_menuMode", 0);
                 ProcessHost.Write($"IL2CPP e C# no mesmo processo: PID={Environment.ProcessId}, {count} assemblies.");
                 ProcessHost.Write($"Metadados encontrados: {gameImageName}, Terraria.Main; get_menuMode={(menuGetter != IntPtr.Zero ? "OK" : "ausente")}.");
-                ProcessHost.Write("Diagnóstico de metadados concluído. Nenhum método de gameplay foi executado; hooks ainda pendentes.");
+                NativeWorldBridge.Install(library, gameImage, main);
                 return true;
             }
             finally { if (owned) threadDetach(thread); }

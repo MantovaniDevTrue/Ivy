@@ -4,8 +4,8 @@
     <OutputType>Exe</OutputType>
     <ApplicationId>dev.mantovani.ivy</ApplicationId>
     <ApplicationTitle>Ivy</ApplicationTitle>
-    <ApplicationVersion>4</ApplicationVersion>
-    <ApplicationDisplayVersion>0.2.1</ApplicationDisplayVersion>
+    <ApplicationVersion>5</ApplicationVersion>
+    <ApplicationDisplayVersion>0.3.0</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
     <AndroidPackageFormats>apk</AndroidPackageFormats>
@@ -17,5 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="../Ivy.Core/Ivy.Core.csproj" />
     <AndroidAsset Include="../../samples/ExampleMod/bin/$(Configuration)/net10.0/ExampleMod.dll" Link="ExampleMod.dll" />
+    <AndroidAsset Include="../../native/third-party/ShadowHook-LICENSE.txt" Link="licenses/ShadowHook-LICENSE.txt" />
+    <AndroidNativeLibrary Include="../../native/artifacts/arm64-v8a/*.so" Abi="arm64-v8a" />
   </ItemGroup>
 </Project>

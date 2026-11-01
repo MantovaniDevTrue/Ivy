@@ -12,3 +12,4 @@ local.properties
 local-game/
 __pycache__/
 generated/
+native/build/

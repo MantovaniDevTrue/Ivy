@@ -6,7 +6,7 @@ Objetivo: desenvolver uma API própria do Ivy, muito fiel à experiência e aos 
 
 ## Base validada
 
-Ivy 0.2.1 iniciou no Android 14 ARM64, carregou uma DLL externa (1 mod/1 sistema), encontrou C# e IL2CPP no mesmo PID, 303 assemblies, Terraria.Main e get_menuMode. Mantovani confirmou a entrada normal em um mundo. Hooks de gameplay e registro de conteúdo ainda estão pendentes. Os 19 testes atuais não representam 19 recursos tModLoader completos.
+Ivy 0.2.1 iniciou no Android 14 ARM64, carregou uma DLL externa (1 mod/1 sistema), encontrou C# e IL2CPP no mesmo PID, 303 assemblies, Terraria.Main e get_menuMode. Mantovani confirmou a entrada normal em um mundo. A 0.3.0 implementa a primeira ponte C++ de gameplay, com callback diagnóstico C# após DoUpdateInWorld; a execução desse hook ainda aguarda teste no aparelho. Hooks públicos e registro de conteúdo continuam pendentes. Testes locais não equivalem a recursos tModLoader completos. Veja [NATIVE_BRIDGE.md](NATIVE_BRIDGE.md).
 
 Perfil inicial: **tModLoader v2026.08.3.0**, commit **c9545cf27d56c456321e1896274c02adf67d0140**, release identificado como linha **Terraria 1.4.4**. Backend: **Terraria Android 1.4.5.8.6, build 301720**. As diferenças vanilla entre versões serão adaptadas dentro do Ivy. A documentação `/stable/` é móvel; o contrato deve ser extraído da revisão fixada, que prevalece em divergências. Novos perfis serão separados.
 
@@ -60,6 +60,8 @@ Entregar um perfil reproduzível de API e um analisador do que cada mod exige.
 Aceite: uma mudança incompatível de assinatura falha no CI; o mesmo perfil produz sempre o mesmo inventário; os exemplos usam os nomes originais da API.
 
 ## Lote 1 — ponte e primeiro hook real
+
+Primeiro adaptador implementado na 0.3.0: libivy-native.so + ShadowHook 2.0.1, contadores e leitura diagnóstica na thread do mundo. O aceite completo abaixo continua pendente; não há dispatch para mods nesta versão.
 
 Entregar execução C# no ponto correto do loop do Terraria.
 
@@ -229,7 +231,7 @@ Em todos os lotes:
 
 Os lotes são dependências, não datas prometidas. Fazer CI entre alterações e consolidar APKs por comportamento completo ou bloqueador nativo, evitando um APK por classe.
 
-**Próxima entrega:** conectar o gerador à resolução e ao marshalling do backend, validar chamadas pequenas na thread do jogo e então ligar o hook de atualização usando as assinaturas geradas. Preservar o original, provar leitura/escrita e identidade de entidades e testar saída/reentrada antes de expandir o registro de conteúdo.
+**Próxima validação:** testar a ponte 0.3.0 no aparelho: original, callbacks C#, leitura de vida, pausa/retomada e saída/reentrada. Depois conectar os descritores gerados à resolução/marshalling, provar escrita e identidade de entidades e oferecer os primeiros hooks públicos antes de expandir o registro de conteúdo.
 
 ## Referências
 

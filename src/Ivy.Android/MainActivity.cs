@@ -26,12 +26,13 @@ public sealed class MainActivity : Activity
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.2.1", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.3.0", TextSize = 24 };
         layout.AddView(title);
-        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste de inicialização e metadados IL2CPP", TextSize = 15 });
+        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nTeste do hook C++ → C# no mundo", TextSize = 15 });
         AddButton(layout, "Abrir Terraria", OpenGame);
         AddButton(layout, "Carregar mods C#", LoadMods);
         AddButton(layout, "Descarregar mods", () => { session?.Dispose(); session = null; });
+        AddButton(layout, "Parar hook de diagnóstico", NativeWorldBridge.Stop);
         AddButton(layout, "Importar mod (.dll)", () =>
         {
             var intent = new Intent(Intent.ActionOpenDocument);
@@ -54,7 +55,7 @@ public sealed class MainActivity : Activity
         SetContentView(layout);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
         Log($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
-        Log("Runtime Mono/.NET pronto. Mods .tmod e hooks de gameplay ainda não são suportados.");
+        Log("Runtime Mono/.NET pronto. Ponte de gameplay em diagnóstico; API de conteúdo ainda pendente.");
         try
         {
             var samplePath = Path.Combine(modsPath, "ExampleMod.dll");
@@ -94,7 +95,7 @@ public sealed class MainActivity : Activity
             try { session.LoadFile(path); }
             catch (Exception ex) { Log($"Erro em {Path.GetFileName(path)}: {ex}"); }
         }
-        Log($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). Hooks de gameplay: pendentes.");
+        Log($"Resultado: {session.ModCount} mod(s), {session.SystemCount} sistema(s). API de gameplay dos mods: pendente.");
     }
 
     private void OpenGame()

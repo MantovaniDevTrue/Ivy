@@ -1,6 +1,6 @@
 # Geração automática dos acessos nativos
 
-O próximo trabalho prioriza o gerador de bindings. A entrada é o conjunto de DummyDlls do dump fornecido; a leitura usa System.Reflection.Metadata/PEReader e não executa essas DLLs. Não há implementação do jogo embutida nos arquivos gerados.
+O gerador automatiza o inventário dos acessos; a primeira [ponte nativa diagnóstica](NATIVE_BRIDGE.md) usa um adaptador específico, separado da saída gerada. A entrada é o conjunto de DummyDlls do dump fornecido; a leitura usa System.Reflection.Metadata/PEReader e não executa essas DLLs. Não há implementação do jogo embutida nos arquivos gerados.
 
 A organização fica em três partes: metadados e assinaturas gerados; resolução/marshalling/chamadas e hooks no backend Mono/IL2CPP; fachadas públicas C# que os mods usam. Os mesmos metadados devem alimentar as três partes, evitando cadastrar manualmente milhares de métodos.
 
