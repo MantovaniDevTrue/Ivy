@@ -2,7 +2,7 @@
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A versão 0.3.0 executou o primeiro hook C++ → C# no Android 14: ticks 1 e 60, original e callback correspondentes, leitura de vida 100. A 0.3.1 separa o painel do processo Unity para que o encerramento do jogo não encerre o painel. A mudança de ciclo de vida ainda precisa de teste no aparelho.
+A versão 0.3.0 executou o primeiro hook C++ → C# no Android 14: ticks 1 e 60, original e callback correspondentes, leitura de vida 100. A 0.3.1 separa o painel do processo Unity para que o encerramento do jogo não encerre o painel. Mantovani confirmou a saída normal sem crash na 0.3.1.
 
 ## Teste no celular
 
@@ -55,3 +55,7 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 ## Saída do jogo
 
 [Correção de ciclo de vida da 0.3.1](docs/LIFECYCLE_0.3.1.md): painel em processo/tarefa independentes, inicialização Mono nos dois processos, comandos internos para mods e diagnóstico de saídas pelo Android.
+
+## Objetivo do SDK
+
+[Contrato de acesso tipado e hooks On_](docs/SDK_TARGET.md): C# no Mono dentro do jogo, fachadas geradas com autocomplete e acesso ao estado IL2CPP real, com originais tipados e encadeamento por mod. Esse contrato define o objetivo; as fachadas e os eventos On_ ainda não estão implementados.
