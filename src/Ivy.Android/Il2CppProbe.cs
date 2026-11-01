@@ -5,10 +5,16 @@ namespace Ivy.AndroidHost;
 internal static class Il2CppProbe
 {
     private static int started;
+    private static readonly HashSet<string> stages = [];
+    private static void Stage(string name)
+    {
+        if (stages.Add(name)) ProcessHost.Write("Inicialização IL2CPP: " + name);
+    }
 
     internal static void Start()
     {
         if (Interlocked.Exchange(ref started, 1) != 0) return;
+        stages.Clear();
         _ = Task.Run(async () =>
         {
             try
@@ -37,16 +43,20 @@ internal static class Il2CppProbe
 
     private static bool TryInspect()
     {
+        Stage("abrindo referência da biblioteca");
         if (!NativeLibrary.TryLoad("libil2cpp.so", out var library)) return false;
         try
         {
             var domainGet = Resolve<DomainGet>(library, "il2cpp_domain_get");
+            Stage("il2cpp_domain_get");
             var domain = domainGet();
             if (domain == IntPtr.Zero) return false;
             var assembliesGet = Resolve<AssembliesGet>(library, "il2cpp_domain_get_assemblies");
             var assemblyGetImage = Resolve<AssemblyGetImage>(library, "il2cpp_assembly_get_image");
             var imageGetName = Resolve<ImageGetName>(library, "il2cpp_image_get_name");
+            Stage("il2cpp_domain_get_assemblies");
             var assemblies = assembliesGet(domain, out var count);
+            Stage("enumeração de imagens");
             if (assemblies == IntPtr.Zero || count == 0) return false;
             if (count > 1024) throw new InvalidOperationException($"Quantidade de assemblies inválida: {count}.");
             var gameImage = IntPtr.Zero;
@@ -78,6 +88,7 @@ internal static class Il2CppProbe
                 var menuGetter = methodFromName(main, "get_menuMode", 0);
                 ProcessHost.Write($"IL2CPP e C# no mesmo processo: PID={Environment.ProcessId}, {count} assemblies.");
                 ProcessHost.Write($"Metadados encontrados: {gameImageName}, Terraria.Main; get_menuMode={(menuGetter != IntPtr.Zero ? "OK" : "ausente")}.");
+                Stage("metadados resolvidos; instalando ponte SDK");
                 NativeWorldBridge.Install(library, gameImage, main);
                 return true;
             }

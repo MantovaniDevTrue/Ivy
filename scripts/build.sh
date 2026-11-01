@@ -9,6 +9,7 @@ dotnet build src/Ivy.Android/Ivy.Android.csproj -c Release -t:SignAndroidPackage
 python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src
 python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src GameControlService
 python3 scripts/verify_android_host.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/AndroidManifest.xml
+python3 scripts/verify_jni.py src/Ivy.Android/obj/Release/net10.0-android/android-arm64/android/src StartupResultReceiver n_onReceiveResult
 mkdir -p artifacts
-cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.4.0_RuntimeTest.apk
+cp src/Ivy.Android/bin/Release/net10.0-android/android-arm64/*-Signed.apk artifacts/Ivy_0.4.1_RuntimeTest.apk
 cp samples/ExampleMod/bin/Release/net10.0/ExampleMod.dll artifacts/

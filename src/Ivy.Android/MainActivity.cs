@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Widget;
 using System.Security.Cryptography;
 using System.Text;
+using Ivy.Loader;
 
 namespace Ivy.AndroidHost;
 
@@ -12,6 +13,8 @@ public sealed class MainActivity : Activity
 {
     private TextView output = null!;
     private CancellationTokenSource? refresh;
+    private CancellationTokenSource? launchCancellation;
+    private readonly GameLaunchCoordinator launchCoordinator = new();
     private readonly HashSet<string> reportedExits = new();
     private string modsPath = "";
     private const int ImportRequest = 10;
@@ -26,7 +29,7 @@ public sealed class MainActivity : Activity
         var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
         var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
         layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.4.0", TextSize = 24 };
+        var title = new TextView(this) { Text = "Ivy · 0.4.1", TextSize = 24 };
         layout.AddView(title);
         layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSDK Main/Player + hooks On_Main", TextSize = 15 });
         AddButton(layout, "Abrir Terraria", OpenGame);
@@ -84,21 +87,48 @@ public sealed class MainActivity : Activity
 
     private void SendCommand(string action)
     {
+        launchCancellation?.Cancel();
         var command = new Intent(this, typeof(GameControlService));
         command.SetAction(action);
         StartService(command);
     }
 
-    private void OpenGame()
+    private async void OpenGame()
     {
-        var intent = new Intent();
-        intent.SetClassName(PackageName!, "com.unity3d.player.UnityPlayerActivity");
-        intent.AddFlags(ActivityFlags.NewTask);
-        if (intent.ResolveActivity(PackageManager!) is null)
-            throw new InvalidOperationException("Este APK contém apenas o runtime. Use o APK GameHost para abrir o Terraria.");
-        SendCommand(GameControlService.Prepare);
-        Log($"Abrindo Terraria em processo separado do painel PID={System.Environment.ProcessId}.");
-        StartActivity(intent);
+        if (launchCoordinator.IsPending) { Log("Aguardando confirmação dos mods; abertura já solicitada."); return; }
+        using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+        launchCancellation = cancellation;
+        try
+        {
+            var intent = new Intent();
+            intent.SetClassName(PackageName!, "com.unity3d.player.UnityPlayerActivity");
+            intent.AddFlags(ActivityFlags.NewTask);
+            if (intent.ResolveActivity(PackageManager!) is null)
+                throw new InvalidOperationException("Este APK contém apenas o runtime. Use o APK GameHost para abrir o Terraria.");
+            Log("Preparando mods automaticamente; aguardando confirmação do processo do jogo.");
+            await launchCoordinator.LaunchAsync(async token =>
+            {
+                var receiver = new StartupResultReceiver(new Handler(Looper.MainLooper!));
+                var command = new Intent(this, typeof(GameControlService));
+                command.SetAction(GameControlService.Prepare);
+                command.PutExtra(GameControlService.ReplyKey, receiver);
+                StartService(command);
+                using var registration = token.Register(() => receiver.Completion.TrySetCanceled(token));
+                var ready = await receiver.Completion.Task.WaitAsync(token);
+                GC.KeepAlive(receiver);
+                Log($"Mods confirmados antes de abrir: {ready.GetInt("mods")} mod(s), {ready.GetInt("systems")} sistema(s), PID={ready.GetInt("pid")}.");
+            }, () =>
+            {
+                Log($"Abrindo Terraria após confirmação, painel PID={System.Environment.ProcessId}.");
+                StartActivity(intent);
+            }, cancellation.Token);
+        }
+        catch (System.OperationCanceledException)
+        {
+            Log("Abertura cancelada: painel saiu de foco ou o serviço não confirmou em 20 segundos. O Terraria não foi aberto automaticamente.");
+        }
+        catch (Exception ex) { Log($"Não foi possível preparar o jogo: {ex}"); }
+        finally { if (ReferenceEquals(launchCancellation, cancellation)) launchCancellation = null; }
     }
 
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
@@ -156,6 +186,7 @@ public sealed class MainActivity : Activity
 
     protected override void OnPause()
     {
+        launchCancellation?.Cancel();
         refresh?.Cancel();
         refresh?.Dispose();
         refresh = null;

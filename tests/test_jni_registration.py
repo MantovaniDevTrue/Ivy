@@ -30,6 +30,19 @@ class JniRegistrationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "n_onResume"):
             verify.verify_source(source)
 
+    def test_receiver_callback_registration(self):
+        source = '''static { __md_methods = "n_onReceiveResult:(ILandroid/os/Bundle;)V:GetOnReceiveResultHandler\\n";
+          mono.android.Runtime.register("Ivy.StartupResultReceiver, Ivy.Android", StartupResultReceiver.class, __md_methods); }
+          private native void n_onReceiveResult(int result, android.os.Bundle data);'''
+        self.assertEqual(verify.verify_source(source, "n_onReceiveResult"), {"n_onReceiveResult"})
+
+    def test_receiver_requires_expected_callback(self):
+        source = '''static { __md_methods = "n_onCreate:(Landroid/os/Bundle;)V:GetOnCreateHandler\\n";
+          mono.android.Runtime.register("Ivy.StartupResultReceiver, Ivy.Android", StartupResultReceiver.class, __md_methods); }
+          private native void n_onCreate(android.os.Bundle data);'''
+        with self.assertRaisesRegex(ValueError, "n_onReceiveResult"):
+            verify.verify_source(source, "n_onReceiveResult")
+
 
 if __name__ == "__main__":
     unittest.main()

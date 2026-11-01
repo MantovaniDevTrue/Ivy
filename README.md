@@ -1,4 +1,4 @@
-# Ivy — 0.4.0
+# Ivy — 0.4.1
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
@@ -6,8 +6,8 @@ A 0.3.1 teve a saída normal confirmada sem crash. A 0.4.0 acrescenta o primeiro
 
 ## Teste no celular
 
-1. Instale Ivy_0.4.0_SDK_Test.apk ao lado do Ivy anterior (pacote dev.mantovani.ivy.sdktest).
-2. Abra um mundo de teste, receba dano e confira a recuperação adicional de até 5 de vida a cada 120 ticks.
+1. Instale Ivy_0.4.1_SDK_Test.apk ao lado do Ivy anterior (pacote dev.mantovani.ivy.sdktest).
+2. Toque diretamente em Abrir Terraria: a 0.4.1 espera a confirmação dos mods antes de abrir o jogo. No mundo de teste, receba dano e confira a recuperação adicional de até 5 de vida a cada 120 ticks.
 3. Descarregue os mods pelo painel e confirme que o efeito para; carregue novamente.
 4. Salve, saia/reentre e exporte o relatório. Procure On_Main concluído e SDK Player.statLife.
 
@@ -58,3 +58,7 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 ## Objetivo do SDK
 
 [Contrato de acesso tipado e hooks On_](docs/SDK_TARGET.md): C# no Mono dentro do jogo, fachadas geradas com autocomplete e acesso ao estado IL2CPP real, com originais tipados e encadeamento por mod. Esse contrato define o objetivo; a primeira fatia Main/Player/On_Main está implementada na 0.4.0; a cobertura geral continua pendente.
+
+## Abertura automática — 0.4.1
+
+[Confirmação entre painel e serviço](docs/STARTUP_0.4.1.md): o painel abre a Unity somente após os mods concluírem a carga no processo do jogo. O SDK e a ponte ABI 2 não mudaram. A atualização usa o mesmo pacote e chave do Ivy SDK Test 0.4.0.

@@ -34,6 +34,7 @@ using (var session = new ModSession(logs.Add))
 }
 Console.WriteLine("11 verificações passaram.");
 GameplayChecks.Run(args[0]);
+StartupChecks.Run().GetAwaiter().GetResult();
 
 static void Check(bool condition, string name)
 {

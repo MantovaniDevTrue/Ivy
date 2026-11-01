@@ -88,3 +88,7 @@ SDK Player.statLife com releitura. Volte ao painel e descarregue os mods; ao vol
 ao mundo a recuperação adicional deve parar. Carregue novamente, teste salvar,
 sair/reentrar e exporte o relatório. A ponte continua no processo do jogo e o
 painel permanece isolado, como na 0.3.1.
+
+## Atualização 0.4.1
+
+O usuário relatou funcionamento após carregar manualmente na 0.4.0. A [0.4.1](STARTUP_0.4.1.md) corrige a ordem de abertura automática com confirmação do serviço. A API e a ponte C++ são as mesmas; o ZIP SDK 0.4.0 continua sendo a referência deste perfil.
