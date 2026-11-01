@@ -1,1 +1,22 @@
-[{"type":"Terraria.Player","method":"FindBuffIndex","name":"FindBuff","export":"find_buff","result":"System.Int32","parameters":["System.Int32"]}]
+[
+  {
+    "type": "Terraria.Player",
+    "method": "FindBuffIndex",
+    "name": "FindBuff",
+    "export": "find_buff",
+    "result": "System.Int32",
+    "parameters": [
+      "System.Int32"
+    ]
+  },
+  {
+    "type": "Terraria.Player",
+    "method": "IsItemSlotUnlockedAndUsable",
+    "name": "ItemSlotUsable",
+    "export": "item_slot_usable",
+    "result": "System.Boolean",
+    "parameters": [
+      "System.Int32"
+    ]
+  }
+]

@@ -54,7 +54,9 @@ var wrongHeal=gameplay with { Types=gameplay.Types.Select(t=>t.Name!="Terraria.P
 try{TypedAccessGenerator.Generate(gameCatalog with{Assemblies=[wrongHeal]});throw new Exception("Hook divergente aceito");}catch(InvalidDataException){Check(true,"gerador recusa assinatura divergente do hook HealEffect");}
 Check(typed.Source.Contains("NativeArray<int>") && typed.Source.Contains("NativeArray<global::Terraria.Player?>"),"campos de arrays tipados gerados");
 Check(typed.Source.Contains(".Vector()"),"campo Vector2 ligado ao backend");
-Console.WriteLine("30 verificações do gerador passaram.");
+Check(typed.Source.Contains(".Rectangle()")&&typed.Source.Contains("global::Microsoft.Xna.Framework.Rectangle"),"Rectangle fields emitted with 128-bit codec");
+Check(typed.Source.Contains(".Color()")&&typed.Source.Contains("global::Microsoft.Xna.Framework.Color"),"native Graphics.Color mapped to PC-style public Color");
+Console.WriteLine("32 verificações do gerador passaram.");
 
 static void Check(bool condition, string name)
 {

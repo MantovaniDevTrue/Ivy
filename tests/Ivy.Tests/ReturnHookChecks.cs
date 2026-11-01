@@ -16,6 +16,9 @@ internal static class ReturnHookChecks
   var dispatch=Task.Run(()=>FindBuffHooks.Invoke(player,4));if(!entered.Wait(3000))throw new Exception("Return hook did not enter");
   var stop=Task.Run(c.Stop);if(stop.Wait(100))throw new Exception("Return hook did not drain");release.Set();if(!Task.WaitAll([dispatch,stop],3000)||dispatch.Result!=71)throw new Exception("Return hook drain failed");
   if(FindBuffHooks.HasHandlers)throw new Exception("Return handler leaked");
-  Console.WriteLine("4 return-hook checks passed: arguments/result, owner removal, in-flight drain and no leaked handlers.");
+  var d=new HookOwner();using(WorldHooks.EnterOwner(d))On_Player.IsItemSlotUnlockedAndUsable+=(orig,self,value)=>!orig(self,value-1);
+  if(!ItemSlotUsableHooks.Invoke(player,0)||ItemSlotUsableHooks.Invoke(player,2))throw new Exception("Bool hook result/argument chain failed");
+  d.Stop();if(ItemSlotUsableHooks.HasHandlers)throw new Exception("Bool hook owner leaked");
+  Console.WriteLine("6 return-hook checks passed: arguments/result, owner removal, in-flight drain and no leaked handlers.");
  }
 }

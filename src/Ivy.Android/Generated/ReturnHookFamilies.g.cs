@@ -2,6 +2,6 @@
 using Ivy.Runtime;
 namespace Ivy.AndroidHost;
 internal static partial class NativeWorldBridge {
- private static void InstallGeneratedFamilies(Il2CppAccess access){InstallFindBuff(access);}
- private static void DispatchGeneratedFamilies(bool enabled){if(installedFindBuff)SetFindBuffNative(enabled && FindBuffHooks.HasHandlers?1:0);}
+ private static void InstallGeneratedFamilies(Il2CppAccess access){InstallFindBuff(access);InstallItemSlotUsable(access);}
+ private static void DispatchGeneratedFamilies(bool enabled){if(installedFindBuff)SetFindBuffNative(enabled && FindBuffHooks.HasHandlers?1:0);if(installedItemSlotUsable)SetItemSlotUsableNative(enabled && ItemSlotUsableHooks.HasHandlers?1:0);}
 }

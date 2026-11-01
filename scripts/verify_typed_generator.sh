@@ -12,7 +12,7 @@ cat > "$out/TypedFixture.csproj" <<'PROJECT'
   <ItemGroup>
     <Compile Include="*.g.cs" />
     <Compile Include="../../src/Ivy.Api/Mod.cs" />
-    <Compile Include="../../src/Ivy.Api/Generated/FindBuffHooks.g.cs" /><Compile Include="../../src/Ivy.Api/Generated/ReturnHookFamilies.g.cs" />
+    <Compile Include="../../src/Ivy.Api/Generated/*Hooks.g.cs" /><Compile Include="../../src/Ivy.Api/Generated/ReturnHookFamilies.g.cs" />
     <Compile Include="../../src/Ivy.Api/Runtime/*.cs" />
   </ItemGroup>
 </Project>

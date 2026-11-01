@@ -8,6 +8,10 @@ public class Main
 }
 public class Entity { public bool active; public float width; }
 public class Player : Entity { public int statLife; public int statLifeMax2; public int statMana; public bool dead; public void HealEffect(int amount, bool broadcast = true) { }
+    public bool IsItemSlotUnlockedAndUsable(int slot)=>slot>=0;
+    public Microsoft.Xna.Framework.Rectangle rectangle;
+    public Microsoft.Xna.Framework.Graphics.Color color;
+    public Microsoft.Xna.Framework.Rectangle[] rectangles=[];
     public int FindBuffIndex(int type)=>-1;
     public int[] Buffs=[];
     public Player[] Players=[];

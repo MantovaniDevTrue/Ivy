@@ -35,7 +35,7 @@ public final class StartupDiagnostics extends ContentProvider {
 
     @Override public boolean onCreate() {
         output = new File(getContext().getFilesDir(), "ivy-android-startup.txt");
-        append("\n--- Android bootstrap Ivy 0.7.1, PID=" + android.os.Process.myPid()
+        append("\n--- Android bootstrap Ivy 0.8.0, PID=" + android.os.Process.myPid()
                 + ", timestamp=" + System.currentTimeMillis() + " ---\nBefore MonoRuntimeProvider\n");
         final Thread.UncaughtExceptionHandler original = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {

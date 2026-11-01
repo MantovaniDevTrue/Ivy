@@ -10,7 +10,7 @@ public abstract class NativeObject
 internal sealed record NativeMember(string Assembly, string Type, string Name, string ValueType,
     bool Static, bool Field, bool Writable, params string[] Parameters);
 
-internal readonly record struct NativeValue(ulong Bits, object? Reference = null)
+internal readonly record struct NativeValue(ulong Bits, object? Reference = null, ulong High = 0)
 {
     internal static NativeValue From(bool v) => new(v ? 1UL : 0UL);
     internal static NativeValue From(byte v) => new(v);
@@ -26,6 +26,10 @@ internal readonly record struct NativeValue(ulong Bits, object? Reference = null
     internal static NativeValue From(double v) => new(BitConverter.DoubleToUInt64Bits(v));
     internal static NativeValue From(Microsoft.Xna.Framework.Vector2 v)=>new((ulong)BitConverter.SingleToUInt32Bits(v.X)|((ulong)BitConverter.SingleToUInt32Bits(v.Y)<<32));
     internal Microsoft.Xna.Framework.Vector2 Vector()=>new(BitConverter.UInt32BitsToSingle((uint)Bits),BitConverter.UInt32BitsToSingle((uint)(Bits>>32)));
+    internal static NativeValue From(Microsoft.Xna.Framework.Rectangle v)=>new((uint)v.X|((ulong)(uint)v.Y<<32),null,(uint)v.Width|((ulong)(uint)v.Height<<32));
+    internal Microsoft.Xna.Framework.Rectangle Rectangle()=>new(unchecked((int)Bits),unchecked((int)(Bits>>32)),unchecked((int)High),unchecked((int)(High>>32)));
+    internal static NativeValue From(Microsoft.Xna.Framework.Color v)=>new((uint)(v.A|(v.B<<8)|(v.G<<16)|(v.R<<24)));
+    internal Microsoft.Xna.Framework.Color Color()=>new((byte)(Bits>>24),(byte)(Bits>>16),(byte)(Bits>>8),(byte)Bits);
     internal static NativeValue From(NativeObject? v) => new(0, v?.Identity);
 }
 

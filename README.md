@@ -1,31 +1,21 @@
-# Ivy — 0.7.0 (candidata)
+# Ivy — 0.8.0 (candidata)
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A 0.5.0 foi validada no Android 14: seleção persistida, zero mods e carga automática. A 0.6.0 acrescenta geração real de acessos para Entity/Main/Player/Item/NPC/Projectile e On_Player.HealEffect(int,bool). Compilação e testes locais passaram; a nova ponte ABI 3 ainda precisa de aceite no aparelho. [Cobertura e limites](docs/GENERATED_ACCESS_0.6.0.md).
+Painel nativo Java/XML, seleção de mods persistida, preparação automática e runtime Mono no processo Unity. API inspirada no tModLoader para facilitar ports de código; não carrega mods `.tmod` nem garante compatibilidade binária.
 
-## Painel e famílias 0.7.0
+O teste da 0.7.1 confirmou ExampleMod, 600 callbacks/originais sem falhas C#, inventário, Vector2 e hooks FindBuffIndex/HealEffect. Os crashes anteriores à criação do serviço continuam sem causa confirmada; o capturador de diagnóstico foi preservado.
 
-[Painel Java/XML e lote técnico](docs/NATIVE_PANEL_FAMILIES_0.7.0.md): quatro telas nativas conectadas ao núcleo existente, campos de arrays/Vector2 e geração da família de hook int(int). A 0.6.1 foi aceita no aparelho; a UI e as famílias novas da 0.7.0 ainda precisam de teste Android. Não há Avalonia nem segundo framework de UI.
+A [0.8.0](docs/STRUCTS_BOOL_0.8.0.md) acrescenta campos/arrays Rectangle e Color, além da geração de hooks bool(int). São 2.350 campos, 1.844 métodos e 409 propriedades nas seis classes do perfil. Esses totais medem declarações, não comportamentos aceitos no aparelho. Tipos XNA oferecem um subconjunto inicial.
 
-## Correção de inicialização 0.6.1
+## Teste
 
-A 0.6.0 apresentou fechamento nativo no início da consulta IL2CPP; preparar manualmente alterava o resultado. A [0.6.1 aguarda o retorno real de il2cpp_init e anexa a thread antes dos metadados](docs/STARTUP_0.6.1.md). Também reúne as telas em uma tarefa Android, mantendo painel e jogo em processos distintos. Testes locais passaram; a correção ainda precisa do aparelho. Pode manter a DLL ExampleMod 1.1.0.0 e o SDK 0.6.0. Teste Jogar diretamente, sem Preparar sessão.
+1. Atualize o APK e descarregue a sessão se ainda estiver ativa.
+2. Importe ExampleMod_0.8.0.dll (assembly 1.3.0.0), ative e toque Jogar.
+3. Entre num mundo. Confira `SDK structs` e `On_Player.IsItemSlotUnlockedAndUsable` no relatório.
+4. Teste também zero mods e reentrada; exporte o relatório.
 
-## Teste integrado
-
-Esta branch parte da 0.5.0 validada, preservando a main. Veja [o roteiro de teste 0.6.0](docs/GENERATED_ACCESS_0.6.0.md#teste-no-aparelho).
-
-1. Atualize Ivy SDK Test e descarregue a sessão ativa.
-2. Importe **ExampleMod_0.6.0.dll** (assembly ExampleMod 1.1.0.0); a atualização é explícita, pois o botão de exemplo preserva a DLL já instalada.
-3. Ative ExampleMod em Meus mods e entre em um mundo. A cura de 5 de vida agora mostra o efeito vanilla e passa por On_Player.
-4. Exporte o relatório: procure SDK gerado e On_Player.HealEffect sem falhas.
-5. Descarregue/desative e confira novamente zero mods.
-
-O exemplo não é mais obrigatório. Em builds de desenvolvimento ele pode ser instalado explicitamente; builds públicos não embutem a DLL. Nenhuma DLL importada é substituída pelo exemplo. Novas importações começam desativadas.
-
-
-O pacote `dev.mantovani.ivy` é separado do Terraria original. O APK `RuntimeTest` dos Actions contém somente o runtime: o jogo é empacotado localmente com o APK base fornecido pelo usuário.
+A DLL instalada é preservada nas atualizações: importar o exemplo novo é explícito. O APK RuntimeTest dos Actions inclui apenas o runtime; a versão integrada é empacotada localmente com o APK base fornecido pelo usuário. Jogo, dumps e chaves ficam fora do repositório.
 
 ## Compilação
 

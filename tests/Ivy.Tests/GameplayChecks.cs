@@ -95,10 +95,11 @@ public static class GameplayChecks
         public int ArrayLength(object identity)=>10;
         public NativeValue ReadElement(object identity,int index,string type)=>default;
         public void WriteElement(object identity,int index,string type,NativeValue value)=>throw new NotSupportedException();
-        public NativeValue Read(NativeMember m, object? identity) => m.Name switch {"dead"=>NativeValue.From(false),"inventory"=>new(0,inventory),"position"=>NativeValue.From(new Microsoft.Xna.Framework.Vector2(10,20)),_=>throw new NotSupportedException(m.Name)};
+        public NativeValue Read(NativeMember m, object? identity) => m.Name switch {"bodyFrame"=>NativeValue.From(new Microsoft.Xna.Framework.Rectangle(0,0,40,56)),"hairColor"=>NativeValue.From(new Microsoft.Xna.Framework.Color(1,2,3)),"dead"=>NativeValue.From(false),"inventory"=>new(0,inventory),"position"=>NativeValue.From(new Microsoft.Xna.Framework.Vector2(10,20)),_=>throw new NotSupportedException(m.Name)};
         public void Write(NativeMember m, object? identity, NativeValue v) => throw new NotSupportedException(m.Name);
         public NativeValue Invoke(NativeMember m, object? identity, ReadOnlySpan<NativeValue> args)
         {
+            if(m.Name=="IsItemSlotUnlockedAndUsable")return NativeValue.From(ItemSlotUsableHooks.Invoke(backend.LocalPlayer,(int)args[0].Bits));
             if(m.Name=="FindBuffIndex") return NativeValue.From(FindBuffHooks.Invoke(backend.LocalPlayer,(int)args[0].Bits));
             if(m.Name=="HealEffect") { HealHooks.Invoke(backend.LocalPlayer,(int)args[0].Bits,args[1].Bits!=0); return default; }
             throw new NotSupportedException(m.Name);
@@ -115,6 +116,7 @@ public static class GameplayChecks
         public void SetLife(Player p, int value) => Life = value;
         public int GetMaxLife(Player p) => 100;
         public void InvokeWorld(Main target) => WorldHooks.Invoke(target);
+        public bool CallItemSlotUsableOriginal(Player self,int value)=>value>=0;
         public int CallFindBuffOriginal(Player self,int value)=>-1;
         public void CallHealOriginal(Player target, int amount, bool broadcast) { }
         public void CallOriginal(Main target) { Interlocked.Increment(ref Originals); events.Add("orig"); }
