@@ -113,7 +113,7 @@ internal sealed unsafe partial class Il2CppAccess
         }
         if(member==IntPtr.Zero)throw new MissingMemberException($"Assinatura IL2CPP divergente: {m.Type}.{m.Name}.");
         var kind=typeKind(valueType);var reference=kind is 18 or 29?classFromType(valueType):IntPtr.Zero;
-        if(kind==17)ValidateVector(valueType);
+        if(kind==17){if(!m.Field)throw new NotSupportedException("Struct method marshalling pending.");ValidateStruct(valueType);}
         if(kind!=1&&kind is not (>=2 and <=13)&&kind is not (17 or 18 or 29))throw new NotSupportedException("Tipo IL2CPP não suportado neste perfil.");
         found=new(member,klass,kind,reference,m.Static);cache.Add(m,found);return found;
     }
@@ -126,7 +126,7 @@ internal sealed unsafe partial class Il2CppAccess
         return target;
     }
     private static int Size(int kind)=>kind switch{2 or 4 or 5=>1,3 or 6 or 7=>2,8 or 9 or 12=>4,10 or 11 or 13 or 18=>8,_=>0};
-    private NativeValue Result(ulong bits, Resolved r)=>r.Kind is 18 or 29?new(0,bits==0?null:wrap((IntPtr)bits)):new(bits);
+    private NativeValue Result(ulong bits, Resolved r,ulong high=0)=>r.Kind is 18 or 29?new(0,bits==0?null:wrap((IntPtr)bits)):new(bits,null,high);
     private ulong Input(NativeValue value,string type)
     {
         if(!type.StartsWith("System.",StringComparison.Ordinal)||type.EndsWith("[]",StringComparison.Ordinal))
@@ -139,17 +139,18 @@ internal sealed unsafe partial class Il2CppAccess
     }
     public NativeValue Read(NativeMember member,object? identity)
     {
-        var r=Resolve(member);var target=Instance(r,identity);ulong bits=0;
-        if(r.Static)staticRead(r.Member,&bits);else fieldRead(target,r.Member,&bits);
-        return Result(bits,r);
+        var r=Resolve(member);var target=Instance(r,identity);var bits=stackalloc ulong[2];bits[0]=bits[1]=0;
+        if(r.Static)staticRead(r.Member,bits);else fieldRead(target,r.Member,bits);
+        return Result(bits[0],r,bits[1]);
     }
     public void Write(NativeMember member,object? identity,NativeValue value)
     {
         if(!member.Writable)throw new InvalidOperationException("Campo readonly.");
         var r=Resolve(member);var target=Instance(r,identity);var bits=r.Kind==17?value.Bits:Input(value,member.ValueType);
         if(r.ReferenceClass!=IntPtr.Zero&&bits!=0&&assignable(r.ReferenceClass,objectClass((IntPtr)bits))==0)throw new InvalidOperationException("Tipo da referência incompatível com o campo.");
+        var payload=stackalloc ulong[2];payload[0]=bits;payload[1]=r.Kind==17?value.High:0;
         // field_set_value performs the IL2CPP write barrier for reference fields.
-        if(r.Static)staticWrite(r.Member,&bits);else fieldWrite(target,r.Member,&bits);
+        if(r.Static)staticWrite(r.Member,payload);else fieldWrite(target,r.Member,payload);
     }
     public NativeValue Invoke(NativeMember member,object? identity,ReadOnlySpan<NativeValue> arguments)
     {

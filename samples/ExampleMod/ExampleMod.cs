@@ -11,13 +11,16 @@ public sealed class ExampleMod : Mod
         On_Main.DoUpdateInWorld += UpdateWorld;
         On_Player.HealEffect += HealEffect;
         On_Player.FindBuffIndex += FindBuffIndex;
+        On_Player.IsItemSlotUnlockedAndUsable += ItemSlotUsable;
     }
     public override void Unload()
     {
         On_Main.DoUpdateInWorld -= UpdateWorld;
         On_Player.HealEffect -= HealEffect;
         On_Player.FindBuffIndex -= FindBuffIndex;
+        On_Player.IsItemSlotUnlockedAndUsable -= ItemSlotUsable;
     }
+    private bool ItemSlotUsable(On_Player.orig_IsItemSlotUnlockedAndUsable orig,Player self,int slot)=>orig(self,slot);
     private int FindBuffIndex(On_Player.orig_FindBuffIndex orig,Player self,int type)=>orig(self,type);
     private void HealEffect(On_Player.orig_HealEffect orig, Player self, int amount, bool broadcast)
     {
@@ -37,6 +40,9 @@ public sealed class ExampleMod : Mod
         var first=inventory[0];
         var position=player.position;
         if(!float.IsFinite(position.X)||!float.IsFinite(position.Y))return;
+        var frame=player.bodyFrame;
+        var hair=player.hairColor;
+        _=player.IsItemSlotUnlockedAndUsable(0);
         var life = player.statLife;
         var next = Math.Min(life + 5, player.statLifeMax2);
         if (next > life)

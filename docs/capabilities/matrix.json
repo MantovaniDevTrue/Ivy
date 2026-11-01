@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "auditedMain": "3b7154724457d8d5a9af75d58d7294cc7a43dad3",
-  "candidate": "0.7.0 feat/native-panel-families",
+  "candidate": "0.8.0 feat/struct-fields-bool-hooks",
   "states": [
     "catalogued",
     "generated",
@@ -224,5 +224,23 @@
     "Ivy 0.5.0 Android report received 2026-11-01: zero selected mods without IL2CPP probe, then 600 callbacks/originals, 19->24->29->34 life writeback, zero C# errors; user confirmed all requested tests passed",
     "User accepted 0.6.1; report shows successful init observer, 3600 matching world callbacks/originals and three HealEffect originals with zero managed errors. This does not validate 0.7.0 UI or composite families."
   ],
-  "basedOn": "a3c3cb0af06ba9e650bf4a59c7d63657a1196037"
+  "basedOn": "a3c3cb0af06ba9e650bf4a59c7d63657a1196037",
+  "acceptance071": {
+    "source": "Ivy-relatorio (6).txt supplied 2026-11-01",
+    "observed": [
+      "ExampleMod 1.2.0.0 prepared before Unity",
+      "600 world callbacks and originals; zero C# failures",
+      "inventory length 59, first item type 3507, Vector2 read",
+      "FindBuffIndex hook executed, no errors; HealEffect executed 5 originals"
+    ],
+    "limits": "Earlier pre-service crashes remain unexplained; no FPS or full lifecycle acceptance."
+  },
+  "batch080": {
+    "generatedFields": 2350,
+    "newRectangleFields": 10,
+    "newColorFields": 22,
+    "additionalStructArrayFields": 3,
+    "nativeBoolHook": "Player.IsItemSlotUnlockedAndUsable(int)",
+    "androidAcceptance": "pending"
+  }
 }

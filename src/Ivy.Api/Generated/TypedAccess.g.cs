@@ -495,6 +495,12 @@ public partial class Item : global::Ivy.Runtime.NativeObject
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003233, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003233, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003234 = new("Assembly-CSharp", "Terraria.Item", "color", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @color
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003234, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003234, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003235 = new("Assembly-CSharp", "Terraria.Item", "alpha", "System.Int32", false, true, true);
     public int @alpha
     {
@@ -884,6 +890,12 @@ public partial class Item : global::Ivy.Runtime.NativeObject
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400327B, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f0400327B, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400327F = new("Assembly-CSharp", "Terraria.Item", "_phaseColors", "Microsoft.Xna.Framework.Graphics.Color[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>? @_phaseColors
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400327F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>(arrayIdentity, "Microsoft.Xna.Framework.Graphics.Color", static element => element.Color(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400327F, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003281 = new("Assembly-CSharp", "Terraria.Item", "PickupReplacementTime", "System.Int32", true, true, false);
     public static int @PickupReplacementTime
@@ -2475,6 +2487,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003359, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003359, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f0400335C = new("Assembly-CSharp", "Terraria.Main", "tileColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @tileColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400335C, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f0400335C, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400335D = new("Assembly-CSharp", "Terraria.Main", "worldSurface", "System.Double", true, true, true);
     public static double @worldSurface
     {
@@ -3459,6 +3477,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400343B, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f0400343B, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f0400343D = new("Assembly-CSharp", "Terraria.Main", "inventoryBack", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @inventoryBack
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400343D, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f0400343D, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400343E = new("Assembly-CSharp", "Terraria.Main", "mouseText", "System.Boolean", true, true, true);
     public static bool @mouseText
     {
@@ -3602,6 +3626,24 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003455, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003455, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003456 = new("Assembly-CSharp", "Terraria.Main", "ColorOfTheSkies", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @ColorOfTheSkies
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003456, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003456, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003457 = new("Assembly-CSharp", "Terraria.Main", "ColorOfSurfaceBackgroundsBase", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @ColorOfSurfaceBackgroundsBase
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003457, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003457, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003458 = new("Assembly-CSharp", "Terraria.Main", "ColorOfSurfaceBackgroundsModified", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @ColorOfSurfaceBackgroundsModified
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003458, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003458, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f0400345B = new("Assembly-CSharp", "Terraria.Main", "_canShowMeteorFall", "System.Boolean", true, true, true);
     public static bool @_canShowMeteorFall
@@ -3955,6 +3997,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034C1, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040034C1, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040034CA = new("Assembly-CSharp", "Terraria.Main", "OurFavoriteColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @OurFavoriteColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034CA, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034CA, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040034CC = new("Assembly-CSharp", "Terraria.Main", "IsEnginePreloaded", "System.Boolean", true, true, true);
     public static bool @IsEnginePreloaded
     {
@@ -4002,6 +4050,42 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034DC, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040034DC, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034E8 = new("Assembly-CSharp", "Terraria.Main", "mcColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @mcColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034E8, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034E8, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034E9 = new("Assembly-CSharp", "Terraria.Main", "hcColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @hcColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034E9, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034E9, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034EA = new("Assembly-CSharp", "Terraria.Main", "creativeModeColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @creativeModeColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034EA, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034EA, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034EB = new("Assembly-CSharp", "Terraria.Main", "legendaryModeColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @legendaryModeColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034EB, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034EB, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034EC = new("Assembly-CSharp", "Terraria.Main", "highVersionColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @highVersionColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034EC, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034EC, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034ED = new("Assembly-CSharp", "Terraria.Main", "errorColor", "Microsoft.Xna.Framework.Graphics.Color", true, true, true);
+    public static global::Microsoft.Xna.Framework.Color @errorColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034ED, null); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f040034ED, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040034EE = new("Assembly-CSharp", "Terraria.Main", "afterPartyOfDoom", "System.Boolean", true, true, true);
     public static bool @afterPartyOfDoom
@@ -4092,6 +4176,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003514, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003514, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003515 = new("Assembly-CSharp", "Terraria.Main", "teamColor", "Microsoft.Xna.Framework.Graphics.Color[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>? @teamColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003515, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>(arrayIdentity, "Microsoft.Xna.Framework.Graphics.Color", static element => element.Color(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003515, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003518 = new("Assembly-CSharp", "Terraria.Main", "autoGen", "System.Boolean", true, true, true);
     public static bool @autoGen
@@ -5167,6 +5257,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400363B, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f0400363B, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f0400363C = new("Assembly-CSharp", "Terraria.Main", "backgroundColorSlicesStatic", "Microsoft.Xna.Framework.Graphics.Color[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>? @backgroundColorSlicesStatic
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400363C, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Color>(arrayIdentity, "Microsoft.Xna.Framework.Graphics.Color", static element => element.Color(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400363C, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003640 = new("Assembly-CSharp", "Terraria.Main", "tempBack", "System.Int32[]", false, true, true);
     public global::Ivy.Runtime.NativeArray<int>? @tempBack
     {
@@ -5202,6 +5298,18 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003647, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003647, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003648 = new("Assembly-CSharp", "Terraria.Main", "backgroundItemRectangle", "Microsoft.Xna.Framework.Rectangle", true, true, true);
+    public static global::Microsoft.Xna.Framework.Rectangle @backgroundItemRectangle
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003648, null); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003648, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003649 = new("Assembly-CSharp", "Terraria.Main", "clampedBackgroundItemRectangle", "Microsoft.Xna.Framework.Rectangle", true, true, true);
+    public static global::Microsoft.Xna.Framework.Rectangle @clampedBackgroundItemRectangle
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003649, null); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003649, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f0400364A = new("Assembly-CSharp", "Terraria.Main", "screenOff", "System.Single", false, true, true);
     public float @screenOff
@@ -11047,11 +11155,29 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003800, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003800, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003801 = new("Assembly-CSharp", "Terraria.NPC", "targetRect", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @targetRect
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003801, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003801, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003802 = new("Assembly-CSharp", "Terraria.NPC", "frameCounter", "System.Double", false, true, true);
     public double @frameCounter
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003802, this.Identity); return global::System.BitConverter.UInt64BitsToDouble(__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003802, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003803 = new("Assembly-CSharp", "Terraria.NPC", "frame", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @frame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003803, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003803, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003804 = new("Assembly-CSharp", "Terraria.NPC", "color", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @color
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003804, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003804, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003805 = new("Assembly-CSharp", "Terraria.NPC", "alpha", "System.Int32", false, true, true);
     public int @alpha
@@ -16100,6 +16226,30 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A87, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
         set => NativeAccess.Backend.Write(__ivy_f04003A87, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003A89 = new("Assembly-CSharp", "Terraria.Player", "headFrame", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @headFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A89, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A89, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A8A = new("Assembly-CSharp", "Terraria.Player", "bodyFrame", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @bodyFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A8A, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A8A, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A8B = new("Assembly-CSharp", "Terraria.Player", "legFrame", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @legFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A8B, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A8B, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A8C = new("Assembly-CSharp", "Terraria.Player", "hairFrame", "Microsoft.Xna.Framework.Rectangle", false, true, true);
+    public global::Microsoft.Xna.Framework.Rectangle @hairFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A8C, this.Identity); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A8C, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003A8E = new("Assembly-CSharp", "Terraria.Player", "blockUseItem", "System.Boolean", false, true, true);
     public bool @blockUseItem
     {
@@ -18529,6 +18679,12 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C39, this.Identity); return unchecked((byte)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003C39, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003C3A = new("Assembly-CSharp", "Terraria.Player", "hairDyeColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @hairDyeColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C3A, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C3A, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003C3B = new("Assembly-CSharp", "Terraria.Player", "hairDyeVar", "System.Single", false, true, true);
     public float @hairDyeVar
     {
@@ -18540,6 +18696,48 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C3C, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003C3C, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C3D = new("Assembly-CSharp", "Terraria.Player", "hairColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @hairColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C3D, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C3D, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C3E = new("Assembly-CSharp", "Terraria.Player", "skinColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @skinColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C3E, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C3E, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C3F = new("Assembly-CSharp", "Terraria.Player", "eyeColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @eyeColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C3F, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C3F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C40 = new("Assembly-CSharp", "Terraria.Player", "shirtColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @shirtColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C40, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C40, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C41 = new("Assembly-CSharp", "Terraria.Player", "underShirtColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @underShirtColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C41, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C41, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C42 = new("Assembly-CSharp", "Terraria.Player", "pantsColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @pantsColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C42, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C42, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C43 = new("Assembly-CSharp", "Terraria.Player", "shoeColor", "Microsoft.Xna.Framework.Graphics.Color", false, true, true);
+    public global::Microsoft.Xna.Framework.Color @shoeColor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C43, this.Identity); return __ivyValue.Color(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C43, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003C44 = new("Assembly-CSharp", "Terraria.Player", "hair", "System.Int32", false, true, true);
     public int @hair
@@ -24652,6 +24850,18 @@ public partial class Projectile : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E84, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
         set => NativeAccess.Backend.Write(__ivy_f04003E84, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003E8A = new("Assembly-CSharp", "Terraria.Projectile", "_whipHitboxBounds", "Microsoft.Xna.Framework.Rectangle", true, true, true);
+    public static global::Microsoft.Xna.Framework.Rectangle @_whipHitboxBounds
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E8A, null); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003E8A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003E8C = new("Assembly-CSharp", "Terraria.Projectile", "_lanceHitboxBounds", "Microsoft.Xna.Framework.Rectangle", true, true, true);
+    public static global::Microsoft.Xna.Framework.Rectangle @_lanceHitboxBounds
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E8C, null); return __ivyValue.Rectangle(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003E8C, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003E93 = new("Assembly-CSharp", "Terraria.Projectile", "kiteSoundPitch", "System.Single", true, true, true);
     public static float @kiteSoundPitch

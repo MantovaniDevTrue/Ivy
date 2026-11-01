@@ -8,12 +8,14 @@ def generate(check=False):
     profile=json.loads((ROOT/'tools/hook-families/profile.json').read_text())
     outputs={}
     for hook in profile:
-        if hook['type']!='Terraria.Player' or hook['result']!='System.Int32' or hook['parameters']!=['System.Int32']:
+        if hook['type']!='Terraria.Player' or hook['result'] not in ('System.Int32','System.Boolean') or hook['parameters']!=['System.Int32']:
             raise ValueError('Unsupported hook ABI family: '+hook['method'])
         if not all(re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',hook[k])for k in ['name','method','export']):raise ValueError('Invalid generated identifier')
         for template,target in [('api','src/Ivy.Api/Generated/'+hook['name']+'Hooks.g.cs'),('host','src/Ivy.Android/Generated/'+hook['name']+'Bridge.g.cs'),('native','native/ivy-native/'+hook['export']+'.g.inc')]:
             content=(ROOT/('tools/hook-families/'+template+'.txt')).read_text()
-            for key in ['type','name','method','export']:content=content.replace('@@'+key.upper()+'@@',hook[key])
+            for key in ['type','name','method','export','result']:content=content.replace('@@'+key.upper()+'@@',hook[key])
+            boolean=hook['result']=='System.Boolean'
+            for key,value in {'CS_RESULT':'bool' if boolean else 'int','NATIVE_RESULT':'bool' if boolean else 'int32_t','ENCODE':('@@NAME@@Hooks.Invoke(self,argument)?1:0' if boolean else '@@NAME@@Hooks.Invoke(self,argument)').replace('@@NAME@@',hook['name']),'DECODE':'result!=0' if boolean else 'result','DEFAULT':'0' if boolean else '-1','FAMILY':'bool(int)' if boolean else 'int(int)'}.items():content=content.replace('@@'+key+'@@',value)
             outputs[ROOT/target]=content
     names=[h['name']for h in profile]
     if len(names)!=len(set(names)) or len({h['export']for h in profile})!=len(profile):raise ValueError('Duplicate hook family name/export')

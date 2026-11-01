@@ -59,6 +59,21 @@ internal static class NativeAccessChecks
         var vector=new Microsoft.Xna.Framework.Vector2(12.25f,-9.5f);
         backend.Write(vectorField,identity,NativeValue.From(vector));var vectorRead=backend.Read(vectorField,identity).Vector();
         Check(vectorRead.X==vector.X&&vectorRead.Y==vector.Y,"Vector2 layout checked and native field roundtrip");
+        var rectangle=new Microsoft.Xna.Framework.Rectangle(-101,202,303,404);
+        var rf=Field("rectangle","Microsoft.Xna.Framework.Rectangle");
+        backend.Write(rf,identity,NativeValue.From(rectangle));var rr=backend.Read(rf,identity).Rectangle();
+        Check(rr.X==-101&&rr.Y==202&&rr.Width==303&&rr.Height==404,"16-byte Rectangle preserves all signed components");
+        var color=new Microsoft.Xna.Framework.Color(11,37,83,129);
+        var cf=Field("color","Microsoft.Xna.Framework.Graphics.Color");
+        backend.Write(cf,identity,NativeValue.From(color));var cr=backend.Read(cf,identity).Color();
+        Check(cr.R==11&&cr.G==37&&cr.B==83&&cr.A==129,"native ABGR channels converted to public RGBA");
+        Check(NativeValue.From(color).Bits==0x0b255381,"native Color bytes use verified A/B/G/R order");
+        foreach(var (symbol,type,value) in new[]{("ivy_test_rectangle_array","Microsoft.Xna.Framework.Rectangle",NativeValue.From(rectangle)),("ivy_test_color_array","Microsoft.Xna.Framework.Graphics.Color",NativeValue.From(color))})
+        {
+            var array=Export<Pointer>(symbol)();backend.WriteElement(array,1,type,value);
+            Check(backend.ReadElement(array,1,type)==value,"struct array roundtrip "+type);
+            Check(backend.ReadElement(array,0,type)==default(NativeValue),"adjacent array element preserved "+type);
+        }
         var intsIdentity=Export<Pointer>("ivy_test_int_array")();
         var intsArray=new NativeArray<int>(intsIdentity,"System.Int32",v=>unchecked((int)v.Bits),v=>NativeValue.From(v));
         Check(intsArray.Length==4,"native array length");intsArray[1]=-231;Check(intsArray[1]==-231,"native int array signed read/write");
@@ -74,7 +89,9 @@ internal static class NativeAccessChecks
         Reject<NotSupportedException>(()=>backend.ArrayLength(Export<Pointer>("ivy_test_bad_array")()),"multidimensional array rejected");
         var layoutSwitch=Export<Flag>("ivy_test_wrong_layout");layoutSwitch(1);
         var fresh=new Il2CppAccess(lib,o=>(IntPtr)o,p=>p,()=>{});
-        Reject<NotSupportedException>(()=>fresh.Read(vectorField,identity),"changed Vector2 layout rejected before field read");layoutSwitch(0);
+        Reject<NotSupportedException>(()=>fresh.Read(vectorField,identity),"changed Vector2 layout rejected before field read");
+        Reject<NotSupportedException>(()=>fresh.Read(rf,identity),"changed Rectangle layout rejected");
+        Reject<NotSupportedException>(()=>fresh.Read(cf,identity),"changed Color layout rejected");layoutSwitch(0);
         scope=false;Reject<InvalidOperationException>(()=>{var ignored=intsArray.Length;},"cached native array outside callback rejected");scope=true;
         scope=false;Reject<InvalidOperationException>(()=>backend.Read(global,null),"cached static access outside gameplay rejected");scope=true;
         live=false;Reject<ObjectDisposedException>(()=>backend.Read(Field("statMana","System.Int32"),identity),"expired native identity rejected");

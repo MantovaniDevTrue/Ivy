@@ -297,6 +297,9 @@ internal static partial class NativeWorldBridge
                 var array = target.inventory;
                 var firstItem = array is not null && array.Length > 0 ? array[0] : null;
                 var position = target.position;
+                var frame = target.bodyFrame;
+                var hair = target.hairColor;
+                ProcessHost.Write($"SDK structs: bodyFrame=({frame.X},{frame.Y},{frame.Width},{frame.Height}); hairColor RGBA=({hair.R},{hair.G},{hair.B},{hair.A}); Rectangle e Color lidos.");
                 ProcessHost.Write($"SDK famílias: inventário={array?.Length}, item[0]={firstItem?.type}, posição=({position.X},{position.Y}); array e Vector2 lidos.");
                 ProcessHost.Write($"SDK gerado: Player.statMana={targetMana}, dead={target.dead}, FindBuffIndex(21)={buffIndex}; leitura de campos e runtime_invoke concluídos.");
             }

@@ -34,9 +34,11 @@ static void tick() { ivy_native_test_tick(self, reinterpret_cast<void *>(2)); }
 static void test_heal();
 static void test_runtime_ready();
 static void test_return_hook();
+static void test_bool_hook();
 int main() {
     test_runtime_ready();
     test_return_hook();
+    test_bool_hook();
     auto address = reinterpret_cast<void *>(original);
     assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_install_world_hook(nullptr, managed) == -1);
@@ -156,4 +158,31 @@ static void test_return_hook(){
  ivy_enable_find_buff(1);ret_mode=5;assert(call()==20&&ret_originals==7);
  ivy_enable_find_buff(0);assert(call()==13&&ret_originals==8);
  std::cout<<"Generated int(int) hook tests passed: return/argument changes, omission, multiple originals, recursion and nonduplicating fallback.\n";
+}
+
+extern "C" int32_t ivy_install_item_slot_usable(void*,return_callback);
+extern "C" int32_t ivy_original_item_slot_usable(void*,int32_t,int32_t*);
+extern "C" void ivy_enable_item_slot_usable(int32_t);
+extern "C" bool ivy_test_item_slot_usable(void*,int32_t,const void*);
+static int bool_originals=0,bool_mode=0;
+static bool bool_original(void *target,int32_t value,const void *method){assert(target==self&&method==reinterpret_cast<void*>(2));bool_originals++;return value==7;}
+static int32_t bool_managed(void *target,int32_t value,int32_t *result){
+ if(bool_mode==1){*result=1;return 0;}
+ if(bool_mode==2)return -1;
+ assert(ivy_original_item_slot_usable(target,value+1,result)==0);
+ if(bool_mode==3)return -1;
+ if(bool_mode==4)assert(ivy_original_item_slot_usable(target,value,result)==0);
+ *result=*result==0?1:0;return 0;
+}
+static void test_bool_hook(){
+ int result=0;assert(ivy_original_item_slot_usable(self,6,&result)==-8);
+ assert(ivy_install_item_slot_usable(reinterpret_cast<void*>(bool_original),bool_managed)==0);
+ auto call=[](int value){return ivy_test_item_slot_usable(self,value,reinterpret_cast<void*>(2));};
+ assert(!call(6)&&bool_originals==1);assert(call(5)&&bool_originals==2);
+ bool_mode=1;assert(call(5)&&bool_originals==2);
+ bool_mode=2;assert(call(7)&&bool_originals==3);
+ ivy_enable_item_slot_usable(1);bool_mode=3;assert(call(6)&&bool_originals==4);
+ ivy_enable_item_slot_usable(1);bool_mode=4;assert(call(6)&&bool_originals==6);
+ ivy_enable_item_slot_usable(0);assert(!call(6)&&bool_originals==7);
+ std::cout<<"Generated bool(int) hook passed: real native bool ABI, true/false, argument/result changes, zero/multiple originals, fallback and disable.\n";
 }
