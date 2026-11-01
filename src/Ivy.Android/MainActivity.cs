@@ -30,7 +30,7 @@ public sealed class MainActivity : Activity, View.IOnClickListener
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: false);
         library = new ModLibrary(FilesDir!.AbsolutePath);
         libraryReady = Task.Run(library.Initialize);
-        panel=new NativePanel(this,this,"0.8.0",Assets!.List("")!.Contains("ExampleMod.dll"));
+        panel=new NativePanel(this,this,"0.8.1",Assets!.List("")!.Contains("ExampleMod.dll"));
         SetContentView(panel.View);
         if(savedInstanceState?.GetString("ivy.panel") is {} savedPanel)panel.RestoreState(savedPanel);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
@@ -268,12 +268,31 @@ public sealed class MainActivity : Activity, View.IOnClickListener
         try
         {
             var manager = (ActivityManager)GetSystemService(ActivityService)!;
+            var nativeTraceCaptured=false;
             foreach (var exit in manager.GetHistoricalProcessExitReasons(PackageName, 0, 8))
             {
                 if (exit.ProcessName != PackageName || !reportedExits.Add($"{exit.Pid}:{exit.Timestamp}")) continue;
                 ProcessHost.Write($"Saída do jogo registrada pelo Android: PID={exit.Pid}, motivo={exit.Reason}, status={exit.Status}, data={DateTimeOffset.FromUnixTimeMilliseconds(exit.Timestamp):O}, descrição={exit.Description}.");
+                if (!nativeTraceCaptured && (exit.Status == 11 || (int)exit.Reason == 5)){CaptureNativeExit(exit);nativeTraceCaptured=true;}
             }
         }
         catch (Exception ex) { ProcessHost.Write($"Não foi possível consultar a saída do jogo: {ex.Message}"); }
+    }
+
+    [System.Runtime.Versioning.SupportedOSPlatform("android30.0")]
+    private void CaptureNativeExit(ApplicationExitInfo exit)
+    {
+        try
+        {
+            using var trace=exit.TraceInputStream;
+            if(trace is null){ProcessHost.Write($"Android não disponibilizou trace nativo para PID={exit.Pid}.");return;}
+            using var bytes=new MemoryStream();var buffer=new byte[8192];int count;
+            const int limit=262144;
+            while(bytes.Length<limit&&(count=trace.Read(buffer,0,(int)Math.Min(buffer.Length,limit-bytes.Length)))>0)bytes.Write(buffer,0,count);
+            var path=Path.Combine(FilesDir!.AbsolutePath,"ivy-exit-native.txt");
+            File.WriteAllText(path,$"PID={exit.Pid}, timestamp={exit.Timestamp}, até {limit} bytes; formato Android original, Base64.\n"+Convert.ToBase64String(bytes.ToArray()));
+            ProcessHost.Write($"Trace Android preservado no relatório: {bytes.Length} bytes (limite {limit}).");
+        }
+        catch(Exception ex){ProcessHost.Write("Trace Android indisponível: "+ex.Message);}
     }
 }

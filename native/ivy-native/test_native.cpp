@@ -1,3 +1,8 @@
+#include <fstream>
+#include <string>
+#include <sys/wait.h>
+#include <sys/resource.h>
+#include <csignal>
 #include <cassert>
 #include <cstdint>
 #include <iostream>
@@ -35,10 +40,12 @@ static void test_heal();
 static void test_runtime_ready();
 static void test_return_hook();
 static void test_bool_hook();
+static void test_crash_trace();
 int main() {
     test_runtime_ready();
     test_return_hook();
     test_bool_hook();
+    test_crash_trace();
     auto address = reinterpret_cast<void *>(original);
     assert(ivy_native_call_world_original(self) == -8);
     assert(ivy_native_install_world_hook(nullptr, managed) == -1);
@@ -185,4 +192,25 @@ static void test_bool_hook(){
  ivy_enable_item_slot_usable(1);bool_mode=4;assert(call(6)&&bool_originals==6);
  ivy_enable_item_slot_usable(0);assert(!call(6)&&bool_originals==7);
  std::cout<<"Generated bool(int) hook passed: real native bool ABI, true/false, argument/result changes, zero/multiple originals, fallback and disable.\n";
+}
+
+extern "C" int32_t ivy_crash_trace_configure(const char*);
+extern "C" int32_t ivy_crash_trace_arm();
+static volatile sig_atomic_t signal_forwarded=0;
+static void handled_signal(int signal){if(signal==SIGABRT)signal_forwarded=1;}
+static void test_crash_trace(){
+ char path[]="/tmp/ivy-native-trace-test-XXXXXX";int file=mkstemp(path);assert(file>=0);close(file);
+ assert(ivy_crash_trace_configure(path)==0);
+ struct sigaction previous{},custom{};custom.sa_handler=handled_signal;sigemptyset(&custom.sa_mask);custom.sa_flags=SA_RESTART;
+ assert(sigaction(SIGABRT,&custom,&previous)==0);
+ assert(ivy_crash_trace_arm()==0);raise(SIGABRT);assert(signal_forwarded==1);
+ struct sigaction observed{};assert(sigaction(SIGABRT,nullptr,&observed)==0);assert((observed.sa_flags&SA_RESTART)!=0);
+ pid_t child=fork();assert(child>=0);
+ if(child==0){struct rlimit limit{0,0};setrlimit(RLIMIT_CORE,&limit);struct sigaction action{};action.sa_handler=SIG_DFL;sigemptyset(&action.sa_mask);sigaction(SIGABRT,&action,nullptr);ivy_crash_trace_arm();raise(SIGABRT);_exit(91);}
+ int status=0;assert(waitpid(child,&status,0)==child&&WIFSIGNALED(status)&&WTERMSIG(status)==SIGABRT);
+ std::ifstream stream(path);std::string text((std::istreambuf_iterator<char>(stream)),std::istreambuf_iterator<char>());
+ assert(text.find("SIGNAL OBSERVED")!=std::string::npos&&text.find("signal=0x6")!=std::string::npos&&text.find("pc=0x")!=std::string::npos);
+ assert(sigaction(SIGABRT,&previous,nullptr)==0);
+ unlink(path);std::string older=std::string(path)+".previous";unlink(older.c_str());
+ std::cout<<"Native signal diagnostics passed: register snapshot, handler forwarding, flags preserved and default signal termination in child.\n";
 }

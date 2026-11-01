@@ -23,7 +23,7 @@ internal static class ProcessHost
             logPath = Path.Combine(filesDirectory, gameProcess ? "ivy-session.txt" : "ivy-launcher.txt");
             var previous = logPath + ".previous";
             if (File.Exists(logPath)) File.Move(logPath, previous, overwrite: true);
-            Write($"Ivy 0.8.0 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
+            Write($"Ivy 0.8.1 · {(gameProcess ? "jogo + C#" : "painel")} PID={Environment.ProcessId}");
             if (gameProcess)
                 AppDomain.CurrentDomain.UnhandledException += (_, args) => Write("Exceção C# não tratada: " + args.ExceptionObject);
         }
@@ -53,6 +53,9 @@ internal static class ProcessHost
             {
                 text += ReadLog(Path.Combine(filesPath, "ivy-android-startup.txt"), "Android — inicialização e exceção antes do C#");
                 text += ReadLog(Path.Combine(filesPath, "ivy-android-startup.txt.previous"), "Android — diagnóstico anterior");
+                text += ReadLog(Path.Combine(filesPath, "ivy-native-trace.txt"), "Diagnóstico nativo — mapas e registradores (não é uma pilha completa)");
+                text += ReadLog(Path.Combine(filesPath, "ivy-native-trace.txt.previous"), "Diagnóstico nativo — tentativa anterior");
+                text += ReadLog(Path.Combine(filesPath, "ivy-exit-native.txt"), "Trace nativo fornecido pelo Android (Base64)");
                 text += ReadLog(Path.Combine(filesPath, "ivy-session.txt"), "Jogo — última sessão registrada");
                 text += ReadLog(Path.Combine(filesPath, "ivy-session.txt.previous"), "Jogo — sessão anterior");
                 return text;

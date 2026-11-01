@@ -1,6 +1,8 @@
-# Ivy — 0.8.0 (candidata)
+# Ivy — 0.8.1 (diagnóstico)
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
+
+A 0.8.0 executou structs e hooks no aparelho, mas terminou com SIGSEGV após alguns segundos. A [0.8.1](docs/NATIVE_SIGNAL_0.8.1.md) isola o hook de slots e acrescenta registro de sinais nativos; a causa ainda não foi confirmada. Mantenha ExampleMod 1.3.0.0 e SDK 0.8.0 para esse teste.
 
 Painel nativo Java/XML, seleção de mods persistida, preparação automática e runtime Mono no processo Unity. API inspirada no tModLoader para facilitar ports de código; não carrega mods `.tmod` nem garante compatibilidade binária.
 
