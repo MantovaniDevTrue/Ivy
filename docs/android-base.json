@@ -1,0 +1,27 @@
+{
+  "source_apk": "Terraria-v1.4.5.8.6-full-apkvision.apk",
+  "sha256": "ecee70aa76e95f1db057e8ddb045a3b2f06c154b2a5250cabd343da6479758ee",
+  "native_libraries": [
+    "lib/arm64-v8a/libAPKVISION.so",
+    "lib/arm64-v8a/libGNS_Wrapper.so",
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libil2cpp.so",
+    "lib/arm64-v8a/libmain.so",
+    "lib/arm64-v8a/libpairipcore.so",
+    "lib/arm64-v8a/libstub.so",
+    "lib/arm64-v8a/libunity.so",
+    "lib/armeabi-v7a/libAPKVISION.so",
+    "lib/armeabi-v7a/libGNS_Wrapper.so",
+    "lib/armeabi-v7a/libil2cpp.so",
+    "lib/armeabi-v7a/libmain.so",
+    "lib/armeabi-v7a/libpairipcore.so",
+    "lib/armeabi-v7a/libstub.so",
+    "lib/armeabi-v7a/libunity.so"
+  ],
+  "dex_files": [
+    "classes.dex",
+    "classes2.dex"
+  ],
+  "has_global_metadata": true,
+  "contains_game_binaries_in_repository": false
+}

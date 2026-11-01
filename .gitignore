@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+artifacts/
+*.keystore
+*.jks
+local.properties
+
+*.apk
+*.aab
+*.apks
+*.idsig
+local-game/
