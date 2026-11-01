@@ -30,6 +30,8 @@ def main():
                     str(ROOT / "native/ivy-native/ivy_native.cpp"), str(ROOT / "native/ivy-native/test_native.cpp"),
                     "-pthread", "-ldl", "-o", str(tests)], check=True)
     subprocess.run([str(tests)], check=True)
+    subprocess.run(["g++", "-std=c++17", "-O2", "-shared", "-fPIC", "-Wall", "-Wextra", "-Werror",
+                    str(ROOT / "native/ivy-native/test_il2cpp_access.cpp"), "-o", str(ROOT / "native/build/libtest-il2cpp.so")], check=True)
     ndk = os.environ.get("IVY_NDK_DIR") or os.environ.get("ANDROID_NDK_HOME") or os.environ.get("ANDROID_NDK_ROOT")
     if not ndk:
         raise ValueError("Defina IVY_NDK_DIR para o NDK r27d (27.3.13750724).")

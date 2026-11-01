@@ -39,7 +39,20 @@ var changedMethod = gameplay with { Types = gameplay.Types.Select(t => t.Name !=
 }).ToArray() };
 try { GameplaySdkGenerator.Generate(gameCatalog with { Assemblies = [changedMethod] }); throw new Exception("Método incompatível foi aceito."); }
 catch (InvalidDataException) { Check(true, "perfil rejeita mudança de assinatura do hook"); }
-Console.WriteLine("17 verificações do gerador passaram.");
+var typed=TypedAccessGenerator.Generate(gameCatalog);
+Check(typed.Types==6 && typed.Fields>0 && typed.Methods>0 && typed.Properties>0,"fachadas emitidas dos metadados reais do perfil");
+Check(typed.Source==TypedAccessGenerator.Generate(gameCatalog).Source,"geração tipada determinística");
+Check(typed.Source.Contains("int @statMana") && typed.Source.Contains("NativeAccess.Backend.Write"),"campo tipado ligado a leitura/escrita do backend");
+Check(typed.Source.Contains("bool @dead"),"bool emitido com conversão explícita");
+Check(typed.Source.Contains("@Overload(int @number)") && typed.Source.Contains("@Overload(bool @flag)"),"overloads preservados na fachada");
+Check(typed.Source.Contains("@Optional(int @amount = 7, bool @broadcast = true)"),"nomes e defaults opcionais preservados");
+Check(typed.Source.Contains("global::Terraria.Item? @HeldItem"),"propriedade de referência nativa tipada");
+Check(!typed.Source.Contains("@Reference(") && !typed.Source.Contains("@Generic("),"ref/out e genéricos não viram stubs");
+Check(typed.Omitted.Any(x=>x.Contains("UnsupportedText")) && typed.Omitted.Any(x=>x.Contains("Reference(")),"assinaturas omitidas ficam no relatório");
+Check(typed.Source.Contains("public static class On_Player") && typed.Source.Contains("hook_HealEffect"),"hook com int e bool emitido após validar assinatura");
+var wrongHeal=gameplay with { Types=gameplay.Types.Select(t=>t.Name!="Terraria.Player"?t:t with{ Methods=t.Methods.Select(m=>m.Name!="HealEffect"?m:m with{IsStatic=true}).ToArray() }).ToArray() };
+try{TypedAccessGenerator.Generate(gameCatalog with{Assemblies=[wrongHeal]});throw new Exception("Hook divergente aceito");}catch(InvalidDataException){Check(true,"gerador recusa assinatura divergente do hook HealEffect");}
+Console.WriteLine("28 verificações do gerador passaram.");
 
 static void Check(bool condition, string name)
 {

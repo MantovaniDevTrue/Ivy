@@ -30,9 +30,11 @@ internal sealed class HookOwner
         if (IsExecutingHere) throw new InvalidOperationException("Descarregue o mod fora de seu próprio hook.");
         lock (gate) active = false;
         WorldHooks.RemoveOwner(this);
+        HealHooks.RemoveOwner(this);
         lock (gate) while (calls != 0) Monitor.Wait(gate);
         // A handler which entered before Stop may have attempted registration.
         WorldHooks.RemoveOwner(this);
+        HealHooks.RemoveOwner(this);
     }
 }
 
@@ -45,7 +47,8 @@ internal static class WorldHooks
     private static readonly On_Main.orig_DoUpdateInWorld original = self => GameRuntime.Backend.CallOriginal(self);
     private static On_Main.orig_DoUpdateInWorld chain = original;
     private static int handlerCount;
-    internal static bool HasHandlers => Volatile.Read(ref handlerCount) != 0;
+    internal static HookOwner? CurrentOwner => current;
+    internal static bool HasHandlers => Volatile.Read(ref handlerCount) != 0 || HealHooks.HasHandlers;
     internal static OwnerScope EnterOwner(HookOwner owner)
     {
         var previous = current;

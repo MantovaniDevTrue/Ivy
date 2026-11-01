@@ -39,7 +39,9 @@ using (var session = new ModSession(logs.Add))
     Check(session.ModCount == 1 && session.SystemCount == 1, "DLL externa e identidade compartilhada da API");
 }
 Console.WriteLine("11 verificações passaram.");
+NativeAccessChecks.Run();
 GameplayChecks.Run(args[0]);
+HealHookChecks.Run();
 StartupChecks.Run().GetAwaiter().GetResult();
 LibraryChecks.Run(args[0], args[1], args[2]);
 

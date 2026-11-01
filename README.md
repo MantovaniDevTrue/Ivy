@@ -1,18 +1,18 @@
-# Ivy — 0.5.0 (candidata)
+# Ivy — 0.6.0 (candidata)
 
 Loader C# para Terraria Android ARM64. Autor: Mantovani.
 
-A 0.4.1 foi validada no Android 14: abertura automática, 3.600 callbacks/originais e escrita de vida com releitura nativa. Esta candidata 0.5.0 implementa seleção persistida, modo sem mods e exemplo opcional. O novo fluxo está testado localmente e ainda depende do aparelho. [Auditoria e limites](docs/CAPABILITY_MATRIX.md).
+A 0.5.0 foi validada no Android 14: seleção persistida, zero mods e carga automática. A 0.6.0 acrescenta geração real de acessos para Entity/Main/Player/Item/NPC/Projectile e On_Player.HealEffect(int,bool). Compilação e testes locais passaram; a nova ponte ABI 3 ainda precisa de aceite no aparelho. [Cobertura e limites](docs/GENERATED_ACCESS_0.6.0.md).
 
 ## Teste integrado
 
-Esta branch implementa [seleção de mods e modo sem mods](docs/MOD_SELECTION_0.5.0.md). A main 0.4.1 permanece validada.
+Esta branch parte da 0.5.0 validada, preservando a main. Veja [o roteiro de teste 0.6.0](docs/GENERATED_ACCESS_0.6.0.md#teste-no-aparelho).
 
-1. Atualize Ivy SDK Test. DLLs legadas são preservadas e migradas como desativadas.
-2. Toque Jogar sem ativar mods: deve confirmar 0 mods e abrir normalmente.
-3. Descarregue a sessão; em Meus mods, ative ExampleMod e teste a cura no mundo.
-4. Descarregue a sessão, desative o exemplo e teste novamente sem o efeito.
-5. Exporte o relatório, que agora inclui a biblioteca e a seleção persistida.
+1. Atualize Ivy SDK Test e descarregue a sessão ativa.
+2. Importe **ExampleMod_0.6.0.dll** (assembly ExampleMod 1.1.0.0); a atualização é explícita, pois o botão de exemplo preserva a DLL já instalada.
+3. Ative ExampleMod em Meus mods e entre em um mundo. A cura de 5 de vida agora mostra o efeito vanilla e passa por On_Player.
+4. Exporte o relatório: procure SDK gerado e On_Player.HealEffect sem falhas.
+5. Descarregue/desative e confira novamente zero mods.
 
 O exemplo não é mais obrigatório. Em builds de desenvolvimento ele pode ser instalado explicitamente; builds públicos não embutem a DLL. Nenhuma DLL importada é substituída pelo exemplo. Novas importações começam desativadas.
 
@@ -69,4 +69,4 @@ Referência de contrato: https://docs.tmodloader.net/docs/stable/ . Implementaç
 
 ## Auditoria do plano completo
 
-[Matriz de capacidade e evidência](docs/CAPABILITY_MATRIX.md). A ABI 2, a abertura automática e a escrita de vida da 0.4.1 foram validadas no aparelho. A seleção/migração/zero mods da 0.5.0 ainda precisam do teste Android. Fontes .cs, gerador universal, conteúdo e Workshop continuam pendentes.
+[Matriz de capacidade e evidência](docs/CAPABILITY_MATRIX.md). A ABI 2, a abertura automática e a escrita de vida da 0.4.1 foram validadas no aparelho. A seleção/migração/zero mods da 0.5.0 foram aceitos pelo usuário; o perfil gerado e a ABI 3 da 0.6.0 ainda precisam do teste Android. Fontes .cs, gerador universal, conteúdo e Workshop continuam pendentes.

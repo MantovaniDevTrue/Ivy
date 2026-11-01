@@ -92,3 +92,7 @@ novo e multiplayer continuam na matriz como pendentes.
 O exemplo é opcional e está disponível neste APK de desenvolvimento. A versão
 pública do runtime foi compilada separadamente sem o asset. A instalação usa o
 mesmo pacote/chave do SDK Test 0.4.1 para preservar seus dados.
+
+## Aceite Android — 01/11/2026
+
+Mantovani confirmou que todos os testes solicitados funcionaram sem problemas. O relatório recebido registra zero mods sem iniciar nova sonda IL2CPP; depois 1 mod/1 sistema preparado antes da Unity, 600 callbacks e originais correspondentes, zero falhas C# e vida 19 → 24 → 29 → 34 com releitura nativa. O relato aceita o fluxo de seleção/persistência; o arquivo não contém uma sessão posterior de unload detalhada. FPS e multiplayer não foram medidos.

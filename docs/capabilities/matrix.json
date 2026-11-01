@@ -1,22 +1,190 @@
 {
   "schema": 1,
   "auditedMain": "3b7154724457d8d5a9af75d58d7294cc7a43dad3",
-  "candidate": "0.5.0 feat/mod-selection-vanilla",
-  "states": ["catalogued", "generated", "compiled", "backendConnected", "executedAndroid", "behaviourValidated", "persistenceAndMultiplayer"],
-  "entries": [
-    {"area":"Runtime Mono no processo Unity", "levels":["yes","not-applicable","yes","yes","yes","startup validated on 0.4.1","multiplayer not tested"]},
-    {"area":"Inventário geral de 21.296 métodos", "levels":["yes","descriptors and primitive candidates","yes","no general backend","no","no","not-applicable"]},
-    {"area":"Perfil Main/Player", "levels":["yes","validated fixed template","yes","yes","yes on 0.4.1","local-player reads and life write/readback validated; lifetime transitions pending","mod persistence and multiplayer not tested"]},
-    {"area":"On_Main.DoUpdateInWorld caminho normal", "levels":["yes","yes","yes","yes","yes on 0.4.1","3600 callbacks/originals and life demo validated","multiplayer not tested"]},
-    {"area":"Encadeamento/omitir/múltiplos originais/unload", "levels":["yes","yes","yes","yes","normal orig only","local mock/backend tests; Android edge cases pending","not tested"]},
-    {"area":"Confirmação automática do serviço", "levels":["yes","not-applicable","yes","yes","yes on 0.4.1","one mod/system before game open validated","Android reentry/cancellation cases pending"]},
-    {"area":"Biblioteca/ativação/migração/zero mods", "levels":["yes","not-applicable","yes","yes in 0.5.0 candidate","pending","local filesystem/session tests","persistence and cross-process lock tested locally; Android pending"]},
-    {"area":"Meus mods com linhas recicladas", "levels":["yes","not-applicable","yes","yes in 0.5.0 candidate","pending","pending Android","selection storage tested locally"]},
-    {"area":"Dependências/preflight completo/perfis", "levels":["planned","no","no","no","no","no","no"]},
-    {"area":"Wrappers gerais/structs/arrays/ref/out/HookGen universal", "levels":["metadata partial","no universal facade generator","candidate delegates only","no","no","no","no"]},
-    {"area":"Conteúdo/IDs/assets/saves/multiplayer", "levels":["planned","no","no","no","no","no","no"]},
-    {"area":"Fontes .cs/Roslyn/.ivymod/Workshop/admin app", "levels":["planned","no","no","no","no","no","no"]},
-    {"area":"Diagnóstico bounded/profiling/recuperação", "levels":["partial existing logs","not-applicable","partial","separate process logs and Android exit reasons","existing report export validated","no periodic full-log polling in candidate; ring buffer/file limits pending","no FPS/overhead baseline measured"]}
+  "candidate": "0.6.0 feat/generated-native-access",
+  "states": [
+    "catalogued",
+    "generated",
+    "compiled",
+    "backendConnected",
+    "executedAndroid",
+    "behaviourValidated",
+    "persistenceAndMultiplayer"
   ],
-  "evidence": ["Ivy 0.4.1 Android report received 2026-11-01: ready acknowledgement, normal On_Main path and native life readback", "User confirmed normal exit without crash on 0.3.1", "Local test results are not Android performance measurements"]
+  "entries": [
+    {
+      "area": "Runtime Mono no processo Unity",
+      "levels": [
+        "yes",
+        "not-applicable",
+        "yes",
+        "yes",
+        "yes",
+        "startup validated on 0.4.1",
+        "multiplayer not tested"
+      ]
+    },
+    {
+      "area": "Inventário geral de 21.296 métodos",
+      "levels": [
+        "yes",
+        "descriptors and primitive candidates",
+        "yes",
+        "no general backend",
+        "no",
+        "no",
+        "not-applicable"
+      ]
+    },
+    {
+      "area": "Perfil Main/Player",
+      "levels": [
+        "yes",
+        "validated fixed template",
+        "yes",
+        "yes",
+        "yes on 0.4.1",
+        "local-player reads and life write/readback validated; lifetime transitions pending",
+        "mod persistence and multiplayer not tested"
+      ]
+    },
+    {
+      "area": "On_Main.DoUpdateInWorld caminho normal",
+      "levels": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes on 0.4.1",
+        "3600 callbacks/originals and life demo validated",
+        "multiplayer not tested"
+      ]
+    },
+    {
+      "area": "Encadeamento/omitir/múltiplos originais/unload",
+      "levels": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "normal orig only",
+        "local mock/backend tests; Android edge cases pending",
+        "not tested"
+      ]
+    },
+    {
+      "area": "Confirmação automática do serviço",
+      "levels": [
+        "yes",
+        "not-applicable",
+        "yes",
+        "yes",
+        "yes on 0.4.1",
+        "one mod/system before game open validated",
+        "Android reentry/cancellation cases pending"
+      ]
+    },
+    {
+      "area": "Biblioteca/ativação/migração/zero mods",
+      "levels": [
+        "yes",
+        "not-applicable",
+        "yes",
+        "yes",
+        "yes on 0.5.0",
+        "user confirmed; report proves zero-mod startup without probe and selected mod before Unity",
+        "selection persistence accepted by user; multiplayer pending"
+      ]
+    },
+    {
+      "area": "On_Player.HealEffect(int,bool)",
+      "levels": [
+        "yes",
+        "typed event after signature validation",
+        "yes",
+        "ABI 3 native proxy and orig connected",
+        "pending",
+        "local argument changes/chain/drain/recursion/fallback tests",
+        "not tested"
+      ]
+    },
+    {
+      "area": "Meus mods com linhas recicladas",
+      "levels": [
+        "yes",
+        "not-applicable",
+        "yes",
+        "yes",
+        "yes on 0.5.0",
+        "user confirmed normal operation",
+        "selection accepted by user"
+      ]
+    },
+    {
+      "area": "Dependências/preflight completo/perfis",
+      "levels": [
+        "planned",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ]
+    },
+    {
+      "area": "Wrappers gerais/structs/arrays/ref/out/HookGen universal",
+      "levels": [
+        "metadata partial",
+        "six-class scalar/reference profile in 0.6.0",
+        "yes",
+        "runtime_invoke + field API connected",
+        "pending 0.6.0",
+        "local fake-IL2CPP C API tests only",
+        "structs/arrays/ref/out/generics/strings and broad HookGen pending"
+      ]
+    },
+    {
+      "area": "Conteúdo/IDs/assets/saves/multiplayer",
+      "levels": [
+        "planned",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ]
+    },
+    {
+      "area": "Fontes .cs/Roslyn/.ivymod/Workshop/admin app",
+      "levels": [
+        "planned",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ]
+    },
+    {
+      "area": "Diagnóstico bounded/profiling/recuperação",
+      "levels": [
+        "partial existing logs",
+        "not-applicable",
+        "partial",
+        "separate process logs and Android exit reasons",
+        "existing report export validated",
+        "no periodic full-log polling in candidate; ring buffer/file limits pending",
+        "no FPS/overhead baseline measured"
+      ]
+    }
+  ],
+  "evidence": [
+    "Ivy 0.4.1 Android report received 2026-11-01: ready acknowledgement, normal On_Main path and native life readback",
+    "User confirmed normal exit without crash on 0.3.1",
+    "Local test results are not Android performance measurements",
+    "Ivy 0.5.0 Android report received 2026-11-01: zero selected mods without IL2CPP probe, then 600 callbacks/originals, 19->24->29->34 life writeback, zero C# errors; user confirmed all requested tests passed"
+  ]
 }

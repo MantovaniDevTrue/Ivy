@@ -30,6 +30,7 @@ extern "C" int shadowhook_unhook(void *stub) { assert(stub == reinterpret_cast<v
 extern "C" int shadowhook_get_errno() { return 0; }
 extern "C" const char *shadowhook_to_errmsg(int) { return "mock"; }
 static void tick() { ivy_native_test_tick(self, reinterpret_cast<void *>(2)); }
+static void test_heal();
 int main() {
     auto address = reinterpret_cast<void *>(original);
     assert(ivy_native_call_world_original(self) == -8);
@@ -54,5 +55,41 @@ int main() {
     tick(); assert(originals == 8 && callbacks == 5);
     assert(ivy_native_uninstall_world_hook() == 0);
     assert(ivy_native_install_world_hook(address, managed) == -3);
-    std::cout << "Native ABI 2 control tests passed: zero/one/two originals, error fallback without duplicates, removal (mock backend).\n";
+    test_heal();
+    std::cout << "Native world control tests passed: zero/one/two originals, error fallback without duplicates, removal (mock backend).\n";
+}
+
+using heal_callback_type = int32_t (*)(void *,int32_t,uint8_t);
+extern "C" int32_t ivy_native_install_heal_hook(void*,heal_callback_type);
+extern "C" int32_t ivy_native_call_heal_original(void*,int32_t,uint8_t);
+extern "C" void ivy_native_set_heal_enabled(int32_t);
+extern "C" int64_t ivy_native_heal_stat(int32_t);
+extern "C" void ivy_native_test_heal(void*,int32_t,uint8_t,const void*);
+static int heal_originals=0,heal_mode=0,last_amount=0;static bool last_broadcast=false;
+static void heal_original(void *p,int32_t amount,bool broadcast,const void *method){assert(p==self&&method==reinterpret_cast<void*>(2));heal_originals++;last_amount=amount;last_broadcast=broadcast;}
+static int32_t heal_managed(void *p,int32_t amount,uint8_t broadcast){
+ assert(p==self&&amount==5&&broadcast==1);
+ if(heal_mode==1)return 0;
+ if(heal_mode==3)return -1;
+ assert(ivy_native_call_heal_original(p,amount+7,0)==0);
+ if(heal_mode==2)assert(ivy_native_call_heal_original(p,-9,1)==0);
+ if(heal_mode==5){heal_mode=1;ivy_native_test_heal(p,amount,broadcast,reinterpret_cast<void*>(2));assert(ivy_native_call_heal_original(p,99,0)==0);}
+ return heal_mode==4?-1:0;
+}
+static void test_heal(){
+ auto target=reinterpret_cast<void*>(heal_original);
+ assert(ivy_native_call_heal_original(self,1,1)==-8);
+ assert(ivy_native_install_heal_hook(nullptr,heal_managed)==-1);
+ assert(ivy_native_install_heal_hook(target,heal_managed)==0);
+ assert(ivy_native_install_heal_hook(target,heal_managed)==0);
+ auto tick=[](){ivy_native_test_heal(self,5,1,reinterpret_cast<void*>(2));};
+ tick();assert(heal_originals==1&&last_amount==12&&!last_broadcast);
+ heal_mode=1;tick();assert(heal_originals==1);
+ heal_mode=2;tick();assert(heal_originals==3&&last_amount==-9&&last_broadcast);
+ heal_mode=3;tick();assert(heal_originals==4&&last_amount==5&&last_broadcast&&ivy_native_heal_stat(3)==0);
+ ivy_native_set_heal_enabled(1);heal_mode=4;tick();assert(heal_originals==5&&ivy_native_heal_stat(3)==0);
+ ivy_native_set_heal_enabled(1);heal_mode=5;tick();assert(heal_originals==7&&last_amount==99);
+ ivy_native_set_heal_enabled(0);tick();assert(heal_originals==8);
+ assert(ivy_native_heal_stat(2)==2&&ivy_native_call_heal_original(self,1,1)==-8);
+ std::cout<<"Native ABI 3 heal tests passed: int/bool changes, zero/two originals, recursion, fallback and disable.\n";
 }

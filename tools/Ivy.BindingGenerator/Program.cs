@@ -12,6 +12,15 @@ var catalog = CatalogReader.ReadDirectory(args[0], prefixes);
 Directory.CreateDirectory(args[1]);
 if (args.Length > 3)
     File.WriteAllText(args[3], GameplaySdkGenerator.Generate(catalog));
+if (args.Length > 4)
+{
+    var typed = TypedAccessGenerator.Generate(catalog);
+    File.WriteAllText(args[4], typed.Source);
+    File.WriteAllText(Path.Combine(args[1], "typed-access.json"), JsonSerializer.Serialize(new {
+        profile = TypedAccessGenerator.Profile, typed.Types, typed.Fields, typed.Methods, typed.Properties, typed.Omitted,
+        runtimeValidation = "resolved lazily by full signature; Android acceptance pending"
+    }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
+}
 var json = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 File.WriteAllText(Path.Combine(args[1], "native-api.json"), JsonSerializer.Serialize(catalog, json) + "\n");
 var types = catalog.Assemblies.SelectMany(a => a.Types).ToArray();

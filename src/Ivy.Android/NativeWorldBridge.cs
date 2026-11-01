@@ -10,6 +10,41 @@ internal static class NativeWorldBridge
 {
     private static readonly object gate = new();
     private static readonly WorldCallback callback = OnWorldUpdate;
+    private static readonly HealCallback healCallback = OnHeal;
+    private static bool healInstalled;
+    private static long healCalls;
+    private static readonly NativeMember healMember = new("Assembly-CSharp", "Terraria.Player", "HealEffect", "System.Void", false, false, false, "System.Int32", "System.Boolean");
+    private static void InstallHeal(Il2CppAccess access)
+    {
+        var result = InstallHealHook(access.ResolveMethodPointer(healMember), healCallback);
+        if (result != 0) throw new InvalidOperationException(Error(result));
+        healInstalled = true;
+        SetHealEnabled(HealHooks.HasHandlers ? 1 : 0);
+        ProcessHost.Write("On_Player.HealEffect(int,bool): assinatura validada; hook de argumentos instalado.");
+    }
+    private static int OnHeal(IntPtr instance, int amount, byte broadcast)
+    {
+        try
+        {
+            // Some game methods may run on IL2CPP workers. No mod dispatch on those threads.
+            if (backend is null || !backend.IsGameplayThread)
+                return CallHealOriginalNative(instance, amount, broadcast);
+            var self = backend.EnterPlayer(instance);
+            try
+            {
+                HealHooks.Invoke(self, amount, broadcast != 0);
+                if (Interlocked.Increment(ref healCalls) <= 3)
+                    ProcessHost.Write($"On_Player.HealEffect: amount={amount}, broadcast={broadcast}; entradas={HealStat(0)}, originais={HealStat(1)}, falhas={HealStat(2)}.");
+            }
+            finally { backend.Exit(); }
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            try { ProcessHost.Write($"Hook HealEffect suspenso: {ex}"); } catch { }
+            return -1;
+        }
+    }
     private static GameBackend? backend;
     private static bool attempted;
     private static bool dispatchRequested;
@@ -26,6 +61,7 @@ internal static class NativeWorldBridge
         lock (gate)
         {
             dispatchRequested = requested;
+            if (healInstalled) SetHealEnabled(requested && HealHooks.HasHandlers ? 1 : 0);
             if (Volatile.Read(ref available) != 0 && Stat(4) != 0)
             {
                 var result = SetCallbacksEnabled(requested ? 1 : 0);
@@ -42,7 +78,7 @@ internal static class NativeWorldBridge
             attempted = true;
             try
             {
-                if (AbiVersion() != 2) throw new InvalidOperationException("ABI da ponte Ivy incompatível.");
+                if (AbiVersion() != 3) throw new InvalidOperationException("ABI da ponte Ivy incompatível.");
                 Volatile.Write(ref available, 1);
                 var findMethod = Resolve<MethodFromName>(library, "il2cpp_class_get_method_from_name");
                 var parameterCount = Resolve<ParameterCount>(library, "il2cpp_method_get_param_count");
@@ -91,6 +127,8 @@ internal static class NativeWorldBridge
                 threadCurrent = Resolve<ThreadCurrent>(library, "il2cpp_thread_current");
                 backend = new GameBackend(library, worldMethod, maxLifeField);
                 GameRuntime.Backend = backend;
+                NativeAccess.Backend = new Il2CppAccess(library, backend.AccessPointer, backend.Wrap, backend.CheckScope);
+                InstallHeal((Il2CppAccess)NativeAccess.Backend);
                 // All delegates/metadata are published before the native entry point can call back.
                 var result = InstallHook(Marshal.ReadIntPtr(worldMethod), callback);
                 if (result != 0) throw new InvalidOperationException(Error(result));
@@ -147,6 +185,22 @@ internal static class NativeWorldBridge
         private Player? player;
         private int writes;
         [ThreadStatic] private static int depth;
+        private int gameplayThread;
+        private readonly List<Entry> temporary = [];
+        internal bool IsGameplayThread => gameplayThread != 0 && gameplayThread == Environment.CurrentManagedThreadId;
+        internal void CheckScope() => RequireScope();
+        internal IntPtr AccessPointer(object identity) => Pointer(identity);
+        internal object Wrap(IntPtr address)
+        {
+            RequireScope();
+            var entry = NewEntry(address); temporary.Add(entry); return entry;
+        }
+        internal Player EnterPlayer(IntPtr address)
+        {
+            if (!IsGameplayThread) throw new InvalidOperationException("Hook fora da thread de gameplay.");
+            depth++;
+            try { return new Player(Wrap(address)); } catch { Exit(); throw; }
+        }
         internal GameBackend(IntPtr library, IntPtr method, IntPtr maxLife)
         {
             worldMethod = method;
@@ -186,6 +240,9 @@ internal static class NativeWorldBridge
         internal Terraria.Main Enter(IntPtr instance)
         {
             if (threadCurrent!() == IntPtr.Zero) throw new InvalidOperationException("Thread IL2CPP não registrada.");
+            var thread = Environment.CurrentManagedThreadId;
+            Interlocked.CompareExchange(ref gameplayThread, thread, 0);
+            if (gameplayThread != thread) throw new InvalidOperationException("DoUpdateInWorld fora da thread de gameplay registrada.");
             depth++;
             try
             {
@@ -199,7 +256,12 @@ internal static class NativeWorldBridge
             }
             catch { depth--; throw; }
         }
-        internal void Exit() => depth--;
+        internal void Exit()
+        {
+            if (--depth != 0) return;
+            foreach (var entry in temporary) Release(entry);
+            temporary.Clear();
+        }
         private void RefreshPlayer()
         {
             RequireScope();
@@ -228,9 +290,17 @@ internal static class NativeWorldBridge
             {
                 fieldGetValue!(address, lifeField, out var after);
                 ProcessHost.Write($"SDK Player.statLife: {before} → {after}; escrita IL2CPP e releitura concluídas.");
+                var targetMana = target.statMana;
+                var buffIndex = target.FindBuffIndex(21);
+                ProcessHost.Write($"SDK gerado: Player.statMana={targetMana}, dead={target.dead}, FindBuffIndex(21)={buffIndex}; leitura de campos e runtime_invoke concluídos.");
             }
         }
         public void InvokeWorld(Terraria.Main self) => invoke(Pointer(self.Identity), worldMethod);
+        public void CallHealOriginal(Player self, int amount, bool broadcast)
+        {
+            var result = CallHealOriginalNative(Pointer(self.Identity), amount, broadcast ? (byte)1 : (byte)0);
+            if (result != 0) throw new InvalidOperationException(Error(result));
+        }
         public void CallOriginal(Terraria.Main self)
         {
             var result = CallWorldOriginal(Pointer(self.Identity));
@@ -243,6 +313,7 @@ internal static class NativeWorldBridge
         lock (gate)
         {
             if (Volatile.Read(ref available) == 0) return;
+            if (healInstalled) SetHealEnabled(0);
             var result = UninstallHook();
             ProcessHost.Write(result == 0
                 ? "Hook removido. Um callback já iniciado pode terminar; reinicie o app para instalar novamente."
@@ -255,6 +326,7 @@ internal static class NativeWorldBridge
         if (Volatile.Read(ref available) == 0) return "Ponte nativa: ainda não inicializada.\n";
         return $"Ponte nativa: instalada={Stat(4)}, callbacks ativos={Stat(3)}, instalações={Stat(9)}\n" +
             $"Entradas no hook={Stat(0)}, originais iniciados={Stat(1)}, callbacks nativos={Stat(2)}, C#={Interlocked.Read(ref managedCalls)}\n" +
+            $"HealEffect: entradas={HealStat(0)}, originais={HealStat(1)}, falhas={HealStat(2)}, callbacks ativos={HealStat(3)}, C#={Interlocked.Read(ref healCalls)}\n" +
             $"TID={Stat(6)}, callbacks em curso={Stat(7)}, falhas C#={Stat(8)}, erro de controle={Stat(5)}\n";
     }
 
@@ -262,6 +334,11 @@ internal static class NativeWorldBridge
     private static T Resolve<T>(IntPtr library, string name) where T : Delegate =>
         Marshal.GetDelegateForFunctionPointer<T>(NativeLibrary.GetExport(library, name));
 
+    [DllImport("ivy-native", EntryPoint = "ivy_native_install_heal_hook", CallingConvention = CallingConvention.Cdecl)] private static extern int InstallHealHook(IntPtr target, HealCallback callback);
+    [DllImport("ivy-native", EntryPoint = "ivy_native_call_heal_original", CallingConvention = CallingConvention.Cdecl)] private static extern int CallHealOriginalNative(IntPtr instance, int amount, byte broadcast);
+    [DllImport("ivy-native", EntryPoint = "ivy_native_set_heal_enabled", CallingConvention = CallingConvention.Cdecl)] private static extern void SetHealEnabled(int enabled);
+    [DllImport("ivy-native", EntryPoint = "ivy_native_heal_stat", CallingConvention = CallingConvention.Cdecl)] private static extern long HealStat(int key);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] private delegate int HealCallback(IntPtr instance, int amount, byte broadcast);
     [DllImport("ivy-native", EntryPoint = "ivy_native_call_world_original", CallingConvention = CallingConvention.Cdecl)] private static extern int CallWorldOriginal(IntPtr instance);
     [DllImport("ivy-native", EntryPoint = "ivy_native_set_callbacks_enabled", CallingConvention = CallingConvention.Cdecl)] private static extern int SetCallbacksEnabled(int value);
     [DllImport("ivy-native", EntryPoint = "ivy_native_abi_version", CallingConvention = CallingConvention.Cdecl)] private static extern uint AbiVersion();
