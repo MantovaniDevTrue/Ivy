@@ -110,7 +110,8 @@ def merge_manifests(base, host, label="Ivy"):
             raise ValueError("Componente Android duplicado: " + str(name))
         item = copy.deepcopy(child)
         if item.tag == "activity":
-            item.set(ANDROID + "theme", "@android:style/Theme.Material.NoActionBar")
+            if not item.get(ANDROID + "theme"):
+                item.set(ANDROID + "theme", "@android:style/Theme.Material.NoActionBar")
             item.set(ANDROID + "label", label)
         app.append(item)
     app.set(ANDROID + "label", label)
@@ -143,6 +144,29 @@ def merge_payload(base_dir, host_dir):
     for abi in (base_dir / "lib").iterdir():
         if abi.is_dir() and abi.name != "arm64-v8a":
             shutil.rmtree(abi)
+
+
+def merge_panel_resources(base_dir, host_dir):
+    # Rebuild only Ivy-owned names. Java looks up IDs by name after AAPT reassigns them.
+    for source in (host_dir / "res").rglob("*"):
+        if not source.is_file():
+            continue
+        relative = source.relative_to(host_dir / "res")
+        if relative.parts[0].startswith("values") and source.suffix == ".xml" and source.name != "public.xml":
+            tree = ET.parse(source).getroot()
+            selected = [copy.deepcopy(item) for item in tree if item.get("name", "").startswith("ivy_")]
+            if selected:
+                target = base_dir / "res" / relative.parts[0] / ("ivy_" + source.name)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                root = ET.Element("resources")
+                root.extend(selected)
+                ET.ElementTree(root).write(target, encoding="utf-8", xml_declaration=True)
+        elif not relative.parts[0].startswith("values") and source.name.startswith("ivy_"):
+            target = base_dir / "res" / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if target.exists() and target.read_bytes() != source.read_bytes():
+                raise ValueError("Colisão de recurso Ivy: " + str(relative))
+            shutil.copy2(source, target)
 
 
 def run(command):
@@ -205,6 +229,7 @@ def main():
         verify_host_processes(manifest, require_unity=True)
         ET.ElementTree(manifest).write(base / "AndroidManifest.xml", encoding="utf-8", xml_declaration=True)
         merge_payload(base, host)
+        merge_panel_resources(base, host)
         metadata = base / "apktool.yml"
         text = metadata.read_text()
         for key in ("versionCode", "versionName"):

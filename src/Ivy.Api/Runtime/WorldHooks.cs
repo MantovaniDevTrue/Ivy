@@ -31,10 +31,12 @@ internal sealed class HookOwner
         lock (gate) active = false;
         WorldHooks.RemoveOwner(this);
         HealHooks.RemoveOwner(this);
+        ReturnHookFamilies.RemoveOwner(this);
         lock (gate) while (calls != 0) Monitor.Wait(gate);
         // A handler which entered before Stop may have attempted registration.
         WorldHooks.RemoveOwner(this);
         HealHooks.RemoveOwner(this);
+        ReturnHookFamilies.RemoveOwner(this);
     }
 }
 
@@ -48,7 +50,7 @@ internal static class WorldHooks
     private static On_Main.orig_DoUpdateInWorld chain = original;
     private static int handlerCount;
     internal static HookOwner? CurrentOwner => current;
-    internal static bool HasHandlers => Volatile.Read(ref handlerCount) != 0 || HealHooks.HasHandlers;
+    internal static bool HasHandlers => Volatile.Read(ref handlerCount) != 0 || HealHooks.HasHandlers || ReturnHookFamilies.HasHandlers;
     internal static OwnerScope EnterOwner(HookOwner owner)
     {
         var previous = current;

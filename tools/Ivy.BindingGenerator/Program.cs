@@ -17,7 +17,7 @@ if (args.Length > 4)
     var typed = TypedAccessGenerator.Generate(catalog);
     File.WriteAllText(args[4], typed.Source);
     File.WriteAllText(Path.Combine(args[1], "typed-access.json"), JsonSerializer.Serialize(new {
-        profile = TypedAccessGenerator.Profile, typed.Types, typed.Fields, typed.Methods, typed.Properties, typed.Omitted,
+        profile = TypedAccessGenerator.Profile, typed.Types, typed.Fields, typed.Methods, typed.Properties, typed.Omitted, typed.Families,
         runtimeValidation = "resolved lazily by full signature; Android acceptance pending"
     }, new JsonSerializerOptions { WriteIndented = true }) + "\n");
 }

@@ -12,6 +12,30 @@ public partial class Entity : global::Ivy.Runtime.NativeObject
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003F2C, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003F2C, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003F2D = new("Assembly-CSharp", "Terraria.Entity", "position", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @position
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003F2D, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003F2D, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003F2E = new("Assembly-CSharp", "Terraria.Entity", "velocity", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @velocity
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003F2E, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003F2E, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003F2F = new("Assembly-CSharp", "Terraria.Entity", "oldPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @oldPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003F2F, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003F2F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003F30 = new("Assembly-CSharp", "Terraria.Entity", "oldVelocity", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @oldVelocity
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003F30, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003F30, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003F31 = new("Assembly-CSharp", "Terraria.Entity", "oldDirection", "System.Int32", false, true, true);
     public int @oldDirection
     {
@@ -159,6 +183,12 @@ public partial class Item : global::Ivy.Runtime.NativeObject
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040031FF, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040031FF, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003200 = new("Assembly-CSharp", "Terraria.Item", "cachedItemSpawnsByType", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @cachedItemSpawnsByType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003200, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003200, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003201 = new("Assembly-CSharp", "Terraria.Item", "potionDelay", "System.Int32", true, true, true);
     public static int @potionDelay
     {
@@ -188,6 +218,36 @@ public partial class Item : global::Ivy.Runtime.NativeObject
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003205, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003205, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003206 = new("Assembly-CSharp", "Terraria.Item", "headType", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @headType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003206, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003206, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003207 = new("Assembly-CSharp", "Terraria.Item", "bodyType", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @bodyType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003207, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003207, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003208 = new("Assembly-CSharp", "Terraria.Item", "legType", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @legType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003208, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003208, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003209 = new("Assembly-CSharp", "Terraria.Item", "staff", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @staff
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003209, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003209, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400320A = new("Assembly-CSharp", "Terraria.Item", "claw", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @claw
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400320A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400320A, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f0400320B = new("Assembly-CSharp", "Terraria.Item", "flame", "System.Boolean", false, true, true);
     public bool @flame
@@ -1389,6 +1449,18 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003296, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003296, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003297 = new("Assembly-CSharp", "Terraria.Main", "destroyerHB", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @destroyerHB
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003297, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003297, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400329C = new("Assembly-CSharp", "Terraria.Main", "_lastPingMousePosition", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @_lastPingMousePosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400329C, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f0400329C, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400329D = new("Assembly-CSharp", "Terraria.Main", "_lastPingMouseDownTime", "System.Double", true, true, true);
     public static double @_lastPingMouseDownTime
     {
@@ -1454,6 +1526,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032AA, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040032AA, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032AB = new("Assembly-CSharp", "Terraria.Main", "townNPCCanSpawn", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @townNPCCanSpawn
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032AB, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032AB, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040032AC = new("Assembly-CSharp", "Terraria.Main", "musicBox2", "System.Int32", true, true, true);
     public static int @musicBox2
@@ -1533,6 +1611,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032B9, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040032B9, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040032BA = new("Assembly-CSharp", "Terraria.Main", "cloudBGX", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @cloudBGX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032BA, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032BA, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040032BB = new("Assembly-CSharp", "Terraria.Main", "cloudBGAlpha", "System.Single", true, true, true);
     public static float @cloudBGAlpha
     {
@@ -1545,11 +1629,143 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032BC, null); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040032BC, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040032BD = new("Assembly-CSharp", "Terraria.Main", "cloudBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @cloudBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032BD, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032BD, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032BE = new("Assembly-CSharp", "Terraria.Main", "treeMntBGSet1", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeMntBGSet1
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032BE, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032BE, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032BF = new("Assembly-CSharp", "Terraria.Main", "treeMntBGSet2", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeMntBGSet2
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032BF, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032BF, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C0 = new("Assembly-CSharp", "Terraria.Main", "treeMntBGSet3", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeMntBGSet3
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C0, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C0, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C1 = new("Assembly-CSharp", "Terraria.Main", "treeMntBGSet4", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeMntBGSet4
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C1, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C1, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C2 = new("Assembly-CSharp", "Terraria.Main", "treeBGSet1", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeBGSet1
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C3 = new("Assembly-CSharp", "Terraria.Main", "treeBGSet2", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeBGSet2
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C4 = new("Assembly-CSharp", "Terraria.Main", "treeBGSet3", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeBGSet3
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C4, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C5 = new("Assembly-CSharp", "Terraria.Main", "treeBGSet4", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeBGSet4
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C5, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C5, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C6 = new("Assembly-CSharp", "Terraria.Main", "corruptBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @corruptBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C6, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C6, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C7 = new("Assembly-CSharp", "Terraria.Main", "jungleBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @jungleBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C7, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C7, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C8 = new("Assembly-CSharp", "Terraria.Main", "snowMntBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snowMntBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C8, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C8, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032C9 = new("Assembly-CSharp", "Terraria.Main", "snowBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snowBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032C9, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032C9, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032CA = new("Assembly-CSharp", "Terraria.Main", "hallowBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @hallowBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CA, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032CA, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032CB = new("Assembly-CSharp", "Terraria.Main", "crimsonBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @crimsonBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CB, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032CB, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032CC = new("Assembly-CSharp", "Terraria.Main", "desertBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @desertBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CC, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032CC, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032CD = new("Assembly-CSharp", "Terraria.Main", "mushroomBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @mushroomBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CD, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032CD, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040032CE = new("Assembly-CSharp", "Terraria.Main", "oceanBG", "System.Int32", true, true, true);
     public static int @oceanBG
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CE, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040032CE, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032CF = new("Assembly-CSharp", "Terraria.Main", "underworldBG", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @underworldBG
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032CF, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032CF, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032D1 = new("Assembly-CSharp", "Terraria.Main", "treeX", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032D1, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032D1, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032D2 = new("Assembly-CSharp", "Terraria.Main", "treeStyle", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @treeStyle
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032D2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032D2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032D3 = new("Assembly-CSharp", "Terraria.Main", "caveBackX", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @caveBackX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032D3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032D3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032D4 = new("Assembly-CSharp", "Terraria.Main", "caveBackStyle", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @caveBackStyle
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032D4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032D4, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040032D5 = new("Assembly-CSharp", "Terraria.Main", "iceBackStyle", "System.Int32", true, true, true);
     public static int @iceBackStyle
@@ -1628,6 +1844,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032E2, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040032E2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040032E4 = new("Assembly-CSharp", "Terraria.Main", "keyInt", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @keyInt
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040032E4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040032E4, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040032E5 = new("Assembly-CSharp", "Terraria.Main", "UpdateTimeAccumulator", "System.Double", true, true, true);
     public static double @UpdateTimeAccumulator
@@ -1839,11 +2061,47 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400330F, null); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f0400330F, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003310 = new("Assembly-CSharp", "Terraria.Main", "buffAlpha", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @buffAlpha
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003310, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003310, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003311 = new("Assembly-CSharp", "Terraria.Main", "hardMode", "System.Boolean", true, true, true);
     public static bool @hardMode
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003311, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003311, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003312 = new("Assembly-CSharp", "Terraria.Main", "sceneWaterPos", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @sceneWaterPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003312, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003312, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003313 = new("Assembly-CSharp", "Terraria.Main", "sceneTilePos", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @sceneTilePos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003313, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003313, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003314 = new("Assembly-CSharp", "Terraria.Main", "sceneTile2Pos", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @sceneTile2Pos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003314, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003314, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003315 = new("Assembly-CSharp", "Terraria.Main", "sceneWallPos", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @sceneWallPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003315, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003315, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003316 = new("Assembly-CSharp", "Terraria.Main", "sceneBackgroundPos", "Microsoft.Xna.Framework.Vector2", true, true, true);
+    public static global::Microsoft.Xna.Framework.Vector2 @sceneBackgroundPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003316, null); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003316, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003317 = new("Assembly-CSharp", "Terraria.Main", "maxQ", "System.Boolean", true, true, true);
     public static bool @maxQ
@@ -2090,6 +2348,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003340, null); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003340, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003341 = new("Assembly-CSharp", "Terraria.Main", "slimeRainNPC", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @slimeRainNPC
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003341, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003341, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003342 = new("Assembly-CSharp", "Terraria.Main", "slimeRainTime", "System.Double", true, true, true);
     public static double @slimeRainTime
@@ -2493,11 +2757,47 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400338D, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f0400338D, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f0400338F = new("Assembly-CSharp", "Terraria.Main", "musicFade", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @musicFade
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400338F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400338F, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003391 = new("Assembly-CSharp", "Terraria.Main", "tilesLoaded", "System.Boolean", true, true, true);
     public static bool @tilesLoaded
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003391, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003391, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003396 = new("Assembly-CSharp", "Terraria.Main", "timeItemSlotCannotBeReusedFor", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @timeItemSlotCannotBeReusedFor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003396, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003396, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003397 = new("Assembly-CSharp", "Terraria.Main", "npc", "Terraria.NPC[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.NPC?>? @npc
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003397, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.NPC?>(arrayIdentity, "Terraria.NPC", static element => element.Reference is { } identity ? new global::Terraria.NPC(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003397, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400339E = new("Assembly-CSharp", "Terraria.Main", "projectile", "Terraria.Projectile[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Projectile?>? @projectile
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400339E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Projectile?>(arrayIdentity, "Terraria.Projectile", static element => element.Reference is { } identity ? new global::Terraria.Projectile(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400339E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033A3 = new("Assembly-CSharp", "Terraria.Main", "itemFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @itemFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033A3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033A3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033A4 = new("Assembly-CSharp", "Terraria.Main", "itemFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @itemFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033A4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033A4, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040033A5 = new("Assembly-CSharp", "Terraria.Main", "screenMaximized", "System.Boolean", true, true, true);
     public static bool @screenMaximized
@@ -2541,6 +2841,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033AB, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040033AB, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040033AD = new("Assembly-CSharp", "Terraria.Main", "hotbarScale", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @hotbarScale
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033AD, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033AD, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040033AE = new("Assembly-CSharp", "Terraria.Main", "mouseTextColor", "System.Byte", true, true, true);
     public static byte @mouseTextColor
     {
@@ -2576,6 +2882,36 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033B3, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040033B3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033B5 = new("Assembly-CSharp", "Terraria.Main", "availableRecipeY", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @availableRecipeY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033B5, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033B5, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033B6 = new("Assembly-CSharp", "Terraria.Main", "player", "Terraria.Player[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Player?>? @player
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033B6, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Player?>(arrayIdentity, "Terraria.Player", static element => element.Reference is { } identity ? new global::Terraria.Player(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033B6, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033B7 = new("Assembly-CSharp", "Terraria.Main", "playerVisualClone", "Terraria.Player[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Player?>? @playerVisualClone
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033B7, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Player?>(arrayIdentity, "Terraria.Player", static element => element.Reference is { } identity ? new global::Terraria.Player(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033B7, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033B8 = new("Assembly-CSharp", "Terraria.Main", "countsAsHostForGameplay", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @countsAsHostForGameplay
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033B8, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033B8, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040033BA = new("Assembly-CSharp", "Terraria.Main", "travelShop", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @travelShop
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040033BA, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040033BA, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040033BC = new("Assembly-CSharp", "Terraria.Main", "anglerQuest", "System.Int32", true, true, true);
     public static int @anglerQuest
@@ -3105,6 +3441,18 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003436, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003436, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003438 = new("Assembly-CSharp", "Terraria.Main", "specX", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @specX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003438, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003438, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003439 = new("Assembly-CSharp", "Terraria.Main", "specY", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @specY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003439, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003439, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400343B = new("Assembly-CSharp", "Terraria.Main", "hidePVPIcons", "System.Boolean", true, true, true);
     public static bool @hidePVPIcons
     {
@@ -3439,6 +3787,30 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003496, null); return unchecked((int)__ivyValue.Bits); }
     }
+    private static readonly NativeMember __ivy_f04003498 = new("Assembly-CSharp", "Terraria.Main", "OffsetsNPCOffhand", "Microsoft.Xna.Framework.Vector2[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @OffsetsNPCOffhand
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003498, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003498, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003499 = new("Assembly-CSharp", "Terraria.Main", "OffsetsPlayerOffhand", "Microsoft.Xna.Framework.Vector2[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @OffsetsPlayerOffhand
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003499, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003499, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400349A = new("Assembly-CSharp", "Terraria.Main", "OffsetsPlayerOnhand", "Microsoft.Xna.Framework.Vector2[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @OffsetsPlayerOnhand
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400349A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400349A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400349B = new("Assembly-CSharp", "Terraria.Main", "OffsetsPlayerHeadgear", "Microsoft.Xna.Framework.Vector2[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @OffsetsPlayerHeadgear
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400349B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400349B, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400349C = new("Assembly-CSharp", "Terraria.Main", "noWindowBorder", "System.Boolean", true, true, true);
     public static bool @noWindowBorder
     {
@@ -3510,6 +3882,72 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034AD, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040034AD, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034AE = new("Assembly-CSharp", "Terraria.Main", "projHostile", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @projHostile
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034AE, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034AE, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034AF = new("Assembly-CSharp", "Terraria.Main", "projHook", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @projHook
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034AF, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034AF, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B0 = new("Assembly-CSharp", "Terraria.Main", "pvpBuff", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @pvpBuff
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B0, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B0, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B1 = new("Assembly-CSharp", "Terraria.Main", "persistentBuff", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @persistentBuff
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B1, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B1, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B2 = new("Assembly-CSharp", "Terraria.Main", "vanityPet", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @vanityPet
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B3 = new("Assembly-CSharp", "Terraria.Main", "lightPet", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @lightPet
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B4 = new("Assembly-CSharp", "Terraria.Main", "meleeBuff", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @meleeBuff
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B4, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B5 = new("Assembly-CSharp", "Terraria.Main", "debuff", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @debuff
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B5, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B5, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B6 = new("Assembly-CSharp", "Terraria.Main", "buffNoSave", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @buffNoSave
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B6, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B6, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B7 = new("Assembly-CSharp", "Terraria.Main", "buffNoTimeDisplay", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @buffNoTimeDisplay
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B7, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B7, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040034B8 = new("Assembly-CSharp", "Terraria.Main", "buffDoubleApply", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @buffDoubleApply
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040034B8, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040034B8, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040034C1 = new("Assembly-CSharp", "Terraria.Main", "backgroundTargetSwapPending", "System.Boolean", false, true, true);
     public bool @backgroundTargetSwapPending
@@ -3661,6 +4099,264 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003518, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003518, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003519 = new("Assembly-CSharp", "Terraria.Main", "projFrames", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @projFrames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003519, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003519, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400351A = new("Assembly-CSharp", "Terraria.Main", "projPet", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @projPet
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400351A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400351A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003528 = new("Assembly-CSharp", "Terraria.Main", "musicNoCrossFade", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @musicNoCrossFade
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003528, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003528, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352A = new("Assembly-CSharp", "Terraria.Main", "tileLighted", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileLighted
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352B = new("Assembly-CSharp", "Terraria.Main", "tileMergeDirt", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileMergeDirt
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352C = new("Assembly-CSharp", "Terraria.Main", "tileCut", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileCut
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352D = new("Assembly-CSharp", "Terraria.Main", "tileAlch", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileAlch
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352E = new("Assembly-CSharp", "Terraria.Main", "tileShine", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @tileShine
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400352F = new("Assembly-CSharp", "Terraria.Main", "tileShine2", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileShine2
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400352F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400352F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003530 = new("Assembly-CSharp", "Terraria.Main", "wallHouse", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @wallHouse
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003530, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003530, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003531 = new("Assembly-CSharp", "Terraria.Main", "wallDungeon", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @wallDungeon
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003531, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003531, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003532 = new("Assembly-CSharp", "Terraria.Main", "wallLight", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @wallLight
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003532, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003532, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003533 = new("Assembly-CSharp", "Terraria.Main", "wallLighted", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @wallLighted
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003533, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003533, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003534 = new("Assembly-CSharp", "Terraria.Main", "wallBlend", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @wallBlend
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003534, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003534, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003535 = new("Assembly-CSharp", "Terraria.Main", "tileStone", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileStone
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003535, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003535, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003536 = new("Assembly-CSharp", "Terraria.Main", "tileAxe", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileAxe
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003536, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003536, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003537 = new("Assembly-CSharp", "Terraria.Main", "tileHammer", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileHammer
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003537, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003537, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003538 = new("Assembly-CSharp", "Terraria.Main", "tileWaterDeath", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileWaterDeath
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003538, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003538, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003539 = new("Assembly-CSharp", "Terraria.Main", "tileLavaDeath", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileLavaDeath
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003539, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003539, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353A = new("Assembly-CSharp", "Terraria.Main", "tileTable", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileTable
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353B = new("Assembly-CSharp", "Terraria.Main", "tileBlockLight", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileBlockLight
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353C = new("Assembly-CSharp", "Terraria.Main", "tileNoSunLight", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileNoSunLight
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353D = new("Assembly-CSharp", "Terraria.Main", "tileDungeon", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileDungeon
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353E = new("Assembly-CSharp", "Terraria.Main", "tileSpelunker", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileSpelunker
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400353F = new("Assembly-CSharp", "Terraria.Main", "tileSolidTop", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileSolidTop
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400353F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400353F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003540 = new("Assembly-CSharp", "Terraria.Main", "tileSolid", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileSolid
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003540, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003540, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003541 = new("Assembly-CSharp", "Terraria.Main", "tileBouncy", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileBouncy
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003541, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003541, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003542 = new("Assembly-CSharp", "Terraria.Main", "tileOreFinderPriority", "System.Int16[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<short>? @tileOreFinderPriority
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003542, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<short>(arrayIdentity, "System.Int16", static element => unchecked((short)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003542, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003543 = new("Assembly-CSharp", "Terraria.Main", "tileLargeFrames", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @tileLargeFrames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003543, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003543, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003544 = new("Assembly-CSharp", "Terraria.Main", "wallLargeFrames", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @wallLargeFrames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003544, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003544, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003545 = new("Assembly-CSharp", "Terraria.Main", "tileRope", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileRope
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003545, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003545, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003546 = new("Assembly-CSharp", "Terraria.Main", "tileBrick", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileBrick
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003546, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003546, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003547 = new("Assembly-CSharp", "Terraria.Main", "tileMoss", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileMoss
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003547, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003547, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003548 = new("Assembly-CSharp", "Terraria.Main", "tileNoAttach", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileNoAttach
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003548, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003548, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003549 = new("Assembly-CSharp", "Terraria.Main", "tileNoFail", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileNoFail
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003549, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003549, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354A = new("Assembly-CSharp", "Terraria.Main", "tileCracked", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileCracked
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354B = new("Assembly-CSharp", "Terraria.Main", "tileObsidianKill", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileObsidianKill
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354C = new("Assembly-CSharp", "Terraria.Main", "tileFrameImportant", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileFrameImportant
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354D = new("Assembly-CSharp", "Terraria.Main", "tilePile", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tilePile
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354E = new("Assembly-CSharp", "Terraria.Main", "tileBlendAll", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileBlendAll
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400354F = new("Assembly-CSharp", "Terraria.Main", "tileGlowMask", "System.Int16[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<short>? @tileGlowMask
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400354F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<short>(arrayIdentity, "System.Int16", static element => unchecked((short)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400354F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003550 = new("Assembly-CSharp", "Terraria.Main", "tileContainer", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileContainer
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003550, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003550, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003551 = new("Assembly-CSharp", "Terraria.Main", "tileSign", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileSign
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003551, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003551, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003553 = new("Assembly-CSharp", "Terraria.Main", "cageFrames", "System.Int32", true, true, true);
     public static int @cageFrames
     {
@@ -3673,11 +4369,437 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003554, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003554, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003555 = new("Assembly-CSharp", "Terraria.Main", "bunnyCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @bunnyCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003555, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003555, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003556 = new("Assembly-CSharp", "Terraria.Main", "bunnyCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @bunnyCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003556, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003556, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003557 = new("Assembly-CSharp", "Terraria.Main", "squirrelCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @squirrelCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003557, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003557, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003558 = new("Assembly-CSharp", "Terraria.Main", "squirrelCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @squirrelCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003558, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003558, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003559 = new("Assembly-CSharp", "Terraria.Main", "squirrelCageFrameOrange", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @squirrelCageFrameOrange
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003559, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003559, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355A = new("Assembly-CSharp", "Terraria.Main", "squirrelCageFrameCounterOrange", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @squirrelCageFrameCounterOrange
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355B = new("Assembly-CSharp", "Terraria.Main", "mallardCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @mallardCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355C = new("Assembly-CSharp", "Terraria.Main", "mallardCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @mallardCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355D = new("Assembly-CSharp", "Terraria.Main", "duckCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @duckCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355E = new("Assembly-CSharp", "Terraria.Main", "duckCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @duckCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400355F = new("Assembly-CSharp", "Terraria.Main", "grebeCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @grebeCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400355F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400355F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003560 = new("Assembly-CSharp", "Terraria.Main", "grebeCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @grebeCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003560, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003560, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003561 = new("Assembly-CSharp", "Terraria.Main", "seagullCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @seagullCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003561, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003561, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003562 = new("Assembly-CSharp", "Terraria.Main", "seagullCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @seagullCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003562, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003562, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003563 = new("Assembly-CSharp", "Terraria.Main", "birdCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @birdCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003563, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003563, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003564 = new("Assembly-CSharp", "Terraria.Main", "birdCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @birdCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003564, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003564, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003565 = new("Assembly-CSharp", "Terraria.Main", "redBirdCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @redBirdCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003565, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003565, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003566 = new("Assembly-CSharp", "Terraria.Main", "redBirdCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @redBirdCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003566, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003566, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003567 = new("Assembly-CSharp", "Terraria.Main", "blueBirdCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @blueBirdCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003567, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003567, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003568 = new("Assembly-CSharp", "Terraria.Main", "blueBirdCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @blueBirdCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003568, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003568, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003569 = new("Assembly-CSharp", "Terraria.Main", "macawCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @macawCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003569, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003569, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400356A = new("Assembly-CSharp", "Terraria.Main", "macawCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @macawCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400356A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400356A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003572 = new("Assembly-CSharp", "Terraria.Main", "snailCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snailCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003572, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003572, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003573 = new("Assembly-CSharp", "Terraria.Main", "snailCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snailCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003573, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003573, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003574 = new("Assembly-CSharp", "Terraria.Main", "snail2CageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snail2CageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003574, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003574, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003575 = new("Assembly-CSharp", "Terraria.Main", "snail2CageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @snail2CageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003575, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003575, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003576 = new("Assembly-CSharp", "Terraria.Main", "fishBowlFrameMode", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @fishBowlFrameMode
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003576, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003576, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003577 = new("Assembly-CSharp", "Terraria.Main", "fishBowlFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @fishBowlFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003577, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003577, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003578 = new("Assembly-CSharp", "Terraria.Main", "fishBowlFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @fishBowlFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003578, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003578, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003579 = new("Assembly-CSharp", "Terraria.Main", "lavaFishBowlFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @lavaFishBowlFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003579, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003579, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357A = new("Assembly-CSharp", "Terraria.Main", "lavaFishBowlFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @lavaFishBowlFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357B = new("Assembly-CSharp", "Terraria.Main", "frogCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @frogCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357C = new("Assembly-CSharp", "Terraria.Main", "frogCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @frogCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357D = new("Assembly-CSharp", "Terraria.Main", "mouseCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @mouseCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357E = new("Assembly-CSharp", "Terraria.Main", "mouseCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @mouseCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400357F = new("Assembly-CSharp", "Terraria.Main", "turtleCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @turtleCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400357F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400357F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003580 = new("Assembly-CSharp", "Terraria.Main", "turtleCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @turtleCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003580, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003580, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003581 = new("Assembly-CSharp", "Terraria.Main", "fairyJarFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @fairyJarFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003581, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003581, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003582 = new("Assembly-CSharp", "Terraria.Main", "fairyJarFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @fairyJarFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003582, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003582, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003586 = new("Assembly-CSharp", "Terraria.Main", "wormCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @wormCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003586, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003586, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003587 = new("Assembly-CSharp", "Terraria.Main", "wormCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @wormCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003587, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003587, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003588 = new("Assembly-CSharp", "Terraria.Main", "maggotCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @maggotCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003588, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003588, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003589 = new("Assembly-CSharp", "Terraria.Main", "maggotCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @maggotCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003589, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003589, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358A = new("Assembly-CSharp", "Terraria.Main", "ratCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @ratCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358B = new("Assembly-CSharp", "Terraria.Main", "ratCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @ratCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358C = new("Assembly-CSharp", "Terraria.Main", "ladybugCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @ladybugCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358D = new("Assembly-CSharp", "Terraria.Main", "ladybugCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @ladybugCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358E = new("Assembly-CSharp", "Terraria.Main", "penguinCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @penguinCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400358F = new("Assembly-CSharp", "Terraria.Main", "penguinCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @penguinCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400358F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400358F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003590 = new("Assembly-CSharp", "Terraria.Main", "waterStriderCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @waterStriderCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003590, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003590, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003591 = new("Assembly-CSharp", "Terraria.Main", "waterStriderCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @waterStriderCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003591, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003591, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003592 = new("Assembly-CSharp", "Terraria.Main", "seahorseCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @seahorseCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003592, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003592, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003593 = new("Assembly-CSharp", "Terraria.Main", "seahorseCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @seahorseCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003593, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003593, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003596 = new("Assembly-CSharp", "Terraria.Main", "owlCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @owlCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003596, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003596, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003597 = new("Assembly-CSharp", "Terraria.Main", "owlCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @owlCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003597, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003597, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003598 = new("Assembly-CSharp", "Terraria.Main", "grasshopperCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @grasshopperCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003598, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003598, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003599 = new("Assembly-CSharp", "Terraria.Main", "grasshopperCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @grasshopperCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003599, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003599, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359A = new("Assembly-CSharp", "Terraria.Main", "pufferfishCageFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @pufferfishCageFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359A, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359B = new("Assembly-CSharp", "Terraria.Main", "pufferfishCageFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @pufferfishCageFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359B, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359B, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359C = new("Assembly-CSharp", "Terraria.Main", "tileSand", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileSand
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359C, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359D = new("Assembly-CSharp", "Terraria.Main", "tileFlame", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @tileFlame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359D, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359D, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359E = new("Assembly-CSharp", "Terraria.Main", "npcCatchable", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @npcCatchable
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359E, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359E, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f0400359F = new("Assembly-CSharp", "Terraria.Main", "tileFrame", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @tileFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400359F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400359F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A0 = new("Assembly-CSharp", "Terraria.Main", "tileFrameCounter", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @tileFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A0, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A0, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A1 = new("Assembly-CSharp", "Terraria.Main", "wallFrame", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @wallFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A1, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A1, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A2 = new("Assembly-CSharp", "Terraria.Main", "wallFrameCounter", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @wallFrameCounter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A3 = new("Assembly-CSharp", "Terraria.Main", "backgroundWidth", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @backgroundWidth
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A3, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A4 = new("Assembly-CSharp", "Terraria.Main", "backgroundHeight", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @backgroundHeight
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A4, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A4, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035A9 = new("Assembly-CSharp", "Terraria.Main", "anglerQuestItemNetIDs", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @anglerQuestItemNetIDs
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035A9, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035A9, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040035AA = new("Assembly-CSharp", "Terraria.Main", "_renderTargetMaxSize", "System.Int32", true, true, true);
     public static int @_renderTargetMaxSize
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035AA, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040035AA, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035AE = new("Assembly-CSharp", "Terraria.Main", "displayWidth", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @displayWidth
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035AE, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035AE, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035AF = new("Assembly-CSharp", "Terraria.Main", "displayHeight", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @displayHeight
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035AF, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035AF, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040035B0 = new("Assembly-CSharp", "Terraria.Main", "maxLoadPlayer", "System.Int32", true, true, true);
     public static int @maxLoadPlayer
@@ -3690,6 +4812,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035B1, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040035B1, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035B2 = new("Assembly-CSharp", "Terraria.Main", "npcFrameCount", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @npcFrameCount
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035B2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035B2, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040035D4 = new("Assembly-CSharp", "Terraria.Main", "SyncingWorlds", "System.Boolean", true, true, true);
     public static bool @SyncingWorlds
@@ -3781,11 +4909,29 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035EB, null); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040035EB, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040035EC = new("Assembly-CSharp", "Terraria.Main", "UpdateDragonflyJarFrame_0", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @UpdateDragonflyJarFrame_0
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035EC, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035EC, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035ED = new("Assembly-CSharp", "Terraria.Main", "UpdateDragonflyJarFrame_1", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @UpdateDragonflyJarFrame_1
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035ED, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035ED, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040035EF = new("Assembly-CSharp", "Terraria.Main", "_perfLastFrame", "System.Int32", false, true, true);
     public int @_perfLastFrame
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035EF, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040035EF, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035F0 = new("Assembly-CSharp", "Terraria.Main", "lastCloudScreenPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @lastCloudScreenPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035F0, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f040035F0, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040035F3 = new("Assembly-CSharp", "Terraria.Main", "AutoSavePlayerTime", "System.Int32", true, true, true);
     public static int @AutoSavePlayerTime
@@ -3846,6 +4992,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035FD, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040035FD, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040035FE = new("Assembly-CSharp", "Terraria.Main", "menuItemScale", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @menuItemScale
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040035FE, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040035FE, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040035FF = new("Assembly-CSharp", "Terraria.Main", "focusMenu", "System.Int32", false, true, true);
     public int @focusMenu
@@ -3931,6 +5083,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003611, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003611, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f0400362A = new("Assembly-CSharp", "Terraria.Main", "_npcIndexWhoHoldsHeadIndex", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @_npcIndexWhoHoldsHeadIndex
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400362A, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f0400362A, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f0400362B = new("Assembly-CSharp", "Terraria.Main", "_preventCraftingBecauseClickWasUsedToChangeFocusedRecipe", "System.Boolean", true, true, true);
     public static bool @_preventCraftingBecauseClickWasUsedToChangeFocusedRecipe
     {
@@ -3985,6 +5143,12 @@ public partial class Main
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003636, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003636, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003637 = new("Assembly-CSharp", "Terraria.Main", "menuWide", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @menuWide
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003637, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003637, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003638 = new("Assembly-CSharp", "Terraria.Main", "_needsMenuUIRecalculation", "System.Boolean", false, true, true);
     public bool @_needsMenuUIRecalculation
     {
@@ -4002,6 +5166,12 @@ public partial class Main
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400363B, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f0400363B, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003640 = new("Assembly-CSharp", "Terraria.Main", "tempBack", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @tempBack
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003640, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003640, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003641 = new("Assembly-CSharp", "Terraria.Main", "_minimapTopRightAnchorOffsetTowardsLeft", "System.Int32", true, true, true);
     public static int @_minimapTopRightAnchorOffsetTowardsLeft
@@ -8442,6 +9612,12 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003700, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003700, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003701 = new("Assembly-CSharp", "Terraria.NPC", "killCount", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @killCount
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003701, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003701, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003702 = new("Assembly-CSharp", "Terraria.NPC", "waveKills", "System.Single", true, true, true);
     public static float @waveKills
     {
@@ -8940,6 +10116,24 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003754, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003754, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003755 = new("Assembly-CSharp", "Terraria.NPC", "npcsFoundForCheckActive", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @npcsFoundForCheckActive
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003755, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003755, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003756 = new("Assembly-CSharp", "Terraria.NPC", "lazyNPCOwnedProjectileSearchArray", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @lazyNPCOwnedProjectileSearchArray
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003756, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003756, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003757 = new("Assembly-CSharp", "Terraria.NPC", "spawnSlotProtected", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @spawnSlotProtected
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003757, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003757, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003758 = new("Assembly-CSharp", "Terraria.NPC", "spawnRate", "System.Int32", true, true, true);
     public static int @spawnRate
     {
@@ -9131,6 +10325,12 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003781, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003781, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003782 = new("Assembly-CSharp", "Terraria.NPC", "ShimmeredTownNPCs", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @ShimmeredTownNPCs
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003782, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003782, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003783 = new("Assembly-CSharp", "Terraria.NPC", "altTexture", "System.Int32", false, true, true);
     public int @altTexture
     {
@@ -9160,6 +10360,12 @@ public partial class NPC : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003787, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003787, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003788 = new("Assembly-CSharp", "Terraria.NPC", "playerInteraction", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @playerInteraction
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003788, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003788, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003789 = new("Assembly-CSharp", "Terraria.NPC", "lastInteraction", "System.Int32", false, true, true);
     public int @lastInteraction
@@ -9220,6 +10426,18 @@ public partial class NPC : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003792, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003792, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003793 = new("Assembly-CSharp", "Terraria.NPC", "oldPos", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @oldPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003793, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003793, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003794 = new("Assembly-CSharp", "Terraria.NPC", "oldRot", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @oldRot
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003794, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003794, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003795 = new("Assembly-CSharp", "Terraria.NPC", "setFrameSize", "System.Boolean", false, true, true);
     public bool @setFrameSize
@@ -9290,6 +10508,12 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037A2, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040037A2, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040037A3 = new("Assembly-CSharp", "Terraria.NPC", "netOffset", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @netOffset
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037A3, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f040037A3, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040037A5 = new("Assembly-CSharp", "Terraria.NPC", "realLife", "System.Int32", false, true, true);
     public int @realLife
     {
@@ -9318,6 +10542,24 @@ public partial class NPC : global::Terraria.Entity
     public static int @maxBuffs
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037AA, null); return unchecked((int)__ivyValue.Bits); }
+    }
+    private static readonly NativeMember __ivy_f040037AB = new("Assembly-CSharp", "Terraria.NPC", "buffType", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @buffType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037AB, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037AB, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040037AC = new("Assembly-CSharp", "Terraria.NPC", "buffTime", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @buffTime
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037AC, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037AC, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040037AD = new("Assembly-CSharp", "Terraria.NPC", "buffImmune", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @buffImmune
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037AD, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037AD, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040037AE = new("Assembly-CSharp", "Terraria.NPC", "canDisplayBuffs", "System.Boolean", false, true, true);
     public bool @canDisplayBuffs
@@ -9685,6 +10927,12 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037EA, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040037EA, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040037EB = new("Assembly-CSharp", "Terraria.NPC", "immune", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @immune
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037EB, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037EB, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040037EC = new("Assembly-CSharp", "Terraria.NPC", "directionY", "System.Int32", false, true, true);
     public int @directionY
     {
@@ -9696,6 +10944,18 @@ public partial class NPC : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037ED, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040037ED, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040037EE = new("Assembly-CSharp", "Terraria.NPC", "ai", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @ai
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037EE, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037EE, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040037EF = new("Assembly-CSharp", "Terraria.NPC", "localAI", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @localAI
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040037EF, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040037EF, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040037F0 = new("Assembly-CSharp", "Terraria.NPC", "aiAction", "System.Int32", false, true, true);
     public int @aiAction
@@ -10103,11 +11363,32 @@ public partial class NPC : global::Terraria.Entity
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f0400383D, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f0400383D, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003841 = new("Assembly-CSharp", "Terraria.NPC", "_deerclopsAttack1Frames", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @_deerclopsAttack1Frames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003841, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
+    private static readonly NativeMember __ivy_f04003842 = new("Assembly-CSharp", "Terraria.NPC", "_deerclopsAttack2Frames", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @_deerclopsAttack2Frames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003842, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
+    private static readonly NativeMember __ivy_f04003843 = new("Assembly-CSharp", "Terraria.NPC", "_deerclopsAttack3Frames", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @_deerclopsAttack3Frames
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003843, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
     private static readonly NativeMember __ivy_f04003844 = new("Assembly-CSharp", "Terraria.NPC", "DelayNPCDeathSyncs", "System.Boolean", true, true, true);
     public static bool @DelayNPCDeathSyncs
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003844, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003844, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003846 = new("Assembly-CSharp", "Terraria.NPC", "MoonEventRequiredPointsPerWaveLookup", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @MoonEventRequiredPointsPerWaveLookup
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003846, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003846, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f0400384A = new("Assembly-CSharp", "Terraria.NPC", "PreventJojaColaDialog", "System.Boolean", true, true, true);
     public static bool @PreventJojaColaDialog
@@ -12263,6 +13544,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038A7, null); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040038A7, null, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040038B2 = new("Assembly-CSharp", "Terraria.Player", "_torchAttackPosX", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @_torchAttackPosX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038B2, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038B2, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040038B3 = new("Assembly-CSharp", "Terraria.Player", "_torchAttackPosY", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @_torchAttackPosY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038B3, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038B3, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040038B4 = new("Assembly-CSharp", "Terraria.Player", "requestedSignInfo", "System.Boolean", true, true, true);
     public static bool @requestedSignInfo
     {
@@ -12305,6 +13598,12 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038BC, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040038BC, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040038BE = new("Assembly-CSharp", "Terraria.Player", "ENCRYPTION_KEY", "System.Byte[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<byte>? @ENCRYPTION_KEY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038BE, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<byte>(arrayIdentity, "System.Byte", static element => unchecked((byte)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038BE, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040038C3 = new("Assembly-CSharp", "Terraria.Player", "alchemyTable", "System.Boolean", false, true, true);
     public bool @alchemyTable
     {
@@ -12322,6 +13621,18 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038C5, this.Identity); return unchecked((byte)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040038C5, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040038C6 = new("Assembly-CSharp", "Terraria.Player", "hideInfo", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @hideInfo
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038C6, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038C6, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040038C7 = new("Assembly-CSharp", "Terraria.Player", "builderAccStatus", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @builderAccStatus
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038C7, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038C7, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040038C8 = new("Assembly-CSharp", "Terraria.Player", "lostCoins", "System.Int64", false, true, true);
     public long @lostCoins
@@ -12394,6 +13705,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038D6, null); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040038D6, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040038D7 = new("Assembly-CSharp", "Terraria.Player", "lastDeathPostion", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @lastDeathPostion
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038D7, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f040038D7, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040038D9 = new("Assembly-CSharp", "Terraria.Player", "showLastDeath", "System.Boolean", false, true, true);
     public bool @showLastDeath
@@ -12587,6 +13904,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038F8, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f040038F8, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040038FA = new("Assembly-CSharp", "Terraria.Player", "solarShieldPos", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @solarShieldPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038FA, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038FA, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040038FB = new("Assembly-CSharp", "Terraria.Player", "solarShieldVel", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @solarShieldVel
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040038FB, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040038FB, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040038FC = new("Assembly-CSharp", "Terraria.Player", "solarDashing", "System.Boolean", false, true, true);
     public bool @solarDashing
     {
@@ -12719,6 +14048,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003912, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003912, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003913 = new("Assembly-CSharp", "Terraria.Player", "beetlePos", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @beetlePos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003913, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003913, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003914 = new("Assembly-CSharp", "Terraria.Player", "beetleVel", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @beetleVel
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003914, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003914, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003915 = new("Assembly-CSharp", "Terraria.Player", "beetleFrame", "System.Int32", false, true, true);
     public int @beetleFrame
     {
@@ -12806,6 +14147,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003923, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003923, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003924 = new("Assembly-CSharp", "Terraria.Player", "itemFlamePos", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @itemFlamePos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003924, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003924, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003925 = new("Assembly-CSharp", "Terraria.Player", "itemFlameCount", "System.Int32", false, true, true);
     public int @itemFlameCount
@@ -13959,6 +15306,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040039EC, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040039EC, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f040039ED = new("Assembly-CSharp", "Terraria.Player", "doubleTapCardinalTimer", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @doubleTapCardinalTimer
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040039ED, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040039ED, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040039EE = new("Assembly-CSharp", "Terraria.Player", "holdDownCardinalTimer", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @holdDownCardinalTimer
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040039EE, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040039EE, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f040039EF = new("Assembly-CSharp", "Terraria.Player", "defendedByPaladin", "System.Boolean", false, true, true);
     public bool @defendedByPaladin
     {
@@ -13970,6 +15329,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040039F0, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f040039F0, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f040039F1 = new("Assembly-CSharp", "Terraria.Player", "speedSlice", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @speedSlice
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f040039F1, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f040039F1, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f040039F2 = new("Assembly-CSharp", "Terraria.Player", "townNPCs", "System.Int32", false, true, true);
     public int @townNPCs
@@ -14133,6 +15498,30 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A0D, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A0D, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003A18 = new("Assembly-CSharp", "Terraria.Player", "armor", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @armor
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A18, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A18, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A19 = new("Assembly-CSharp", "Terraria.Player", "dye", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @dye
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A19, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A19, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A1A = new("Assembly-CSharp", "Terraria.Player", "miscEquips", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @miscEquips
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A1A, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A1A, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A1B = new("Assembly-CSharp", "Terraria.Player", "miscDyes", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @miscDyes
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A1B, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A1B, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003A1C = new("Assembly-CSharp", "Terraria.Player", "trashItem", "Terraria.Item", false, true, true);
     public global::Terraria.Item? @trashItem
     {
@@ -14144,6 +15533,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A1D, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A1D, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A1E = new("Assembly-CSharp", "Terraria.Player", "itemLocation", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @itemLocation
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A1E, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A1E, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003A1F = new("Assembly-CSharp", "Terraria.Player", "poundRelease", "System.Boolean", false, true, true);
     public bool @poundRelease
@@ -14162,6 +15557,24 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A21, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A21, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A23 = new("Assembly-CSharp", "Terraria.Player", "buffType", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @buffType
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A23, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A23, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A24 = new("Assembly-CSharp", "Terraria.Player", "buffTime", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @buffTime
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A24, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A24, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A25 = new("Assembly-CSharp", "Terraria.Player", "buffImmune", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @buffImmune
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A25, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A25, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003A26 = new("Assembly-CSharp", "Terraria.Player", "heldProj", "System.Int32", false, true, true);
     public int @heldProj
@@ -14343,6 +15756,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A43, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A43, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003A44 = new("Assembly-CSharp", "Terraria.Player", "inventory", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @inventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A44, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A44, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A45 = new("Assembly-CSharp", "Terraria.Player", "inventoryChestStack", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @inventoryChestStack
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A45, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A45, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003A46 = new("Assembly-CSharp", "Terraria.Player", "lastVisualizedSelectedItem", "Terraria.Item", false, true, true);
     public global::Terraria.Item? @lastVisualizedSelectedItem
     {
@@ -14367,11 +15792,53 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A4E, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A4E, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003A4F = new("Assembly-CSharp", "Terraria.Player", "headPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @headPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A4F, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A4F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A50 = new("Assembly-CSharp", "Terraria.Player", "bodyPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @bodyPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A50, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A50, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A51 = new("Assembly-CSharp", "Terraria.Player", "legPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @legPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A51, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A51, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A52 = new("Assembly-CSharp", "Terraria.Player", "headVelocity", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @headVelocity
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A52, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A52, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A53 = new("Assembly-CSharp", "Terraria.Player", "bodyVelocity", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @bodyVelocity
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A53, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A53, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A54 = new("Assembly-CSharp", "Terraria.Player", "legVelocity", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @legVelocity
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A54, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A54, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003A55 = new("Assembly-CSharp", "Terraria.Player", "fullRotation", "System.Single", false, true, true);
     public float @fullRotation
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A55, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A55, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A56 = new("Assembly-CSharp", "Terraria.Player", "fullRotationOrigin", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @fullRotationOrigin
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A56, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A56, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003A57 = new("Assembly-CSharp", "Terraria.Player", "fartKartCloudDelay", "System.Int32", false, true, true);
     public int @fartKartCloudDelay
@@ -14390,6 +15857,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A5A, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A5A, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A5B = new("Assembly-CSharp", "Terraria.Player", "netOffset", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @netOffset
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A5B, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003A5B, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003A5E = new("Assembly-CSharp", "Terraria.Player", "dead", "System.Boolean", false, true, true);
     public bool @dead
@@ -14620,6 +16093,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A86, this.Identity); return unchecked((sbyte)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003A86, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003A87 = new("Assembly-CSharp", "Terraria.Player", "hideVisibleAccessory", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @hideVisibleAccessory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003A87, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003A87, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003A8E = new("Assembly-CSharp", "Terraria.Player", "blockUseItem", "System.Boolean", false, true, true);
     public bool @blockUseItem
@@ -15154,6 +16633,30 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003AEC, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003AEC, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003AEE = new("Assembly-CSharp", "Terraria.Player", "shadowPos", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @shadowPos
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003AEE, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003AEE, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003AEF = new("Assembly-CSharp", "Terraria.Player", "shadowRotation", "System.Single[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<float>? @shadowRotation
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003AEF, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003AEF, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003AF0 = new("Assembly-CSharp", "Terraria.Player", "shadowOrigin", "Microsoft.Xna.Framework.Vector2[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>? @shadowOrigin
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003AF0, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Microsoft.Xna.Framework.Vector2>(arrayIdentity, "Microsoft.Xna.Framework.Vector2", static element => element.Vector(), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003AF0, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003AF1 = new("Assembly-CSharp", "Terraria.Player", "shadowDirection", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @shadowDirection
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003AF1, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003AF1, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003AF2 = new("Assembly-CSharp", "Terraria.Player", "shadowCount", "System.Int32", false, true, true);
     public int @shadowCount
@@ -15838,6 +17341,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003B6E, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003B6E, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003B6F = new("Assembly-CSharp", "Terraria.Player", "lastBoost", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @lastBoost
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003B6F, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003B6F, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003B71 = new("Assembly-CSharp", "Terraria.Player", "blackCat", "System.Boolean", false, true, true);
     public bool @blackCat
@@ -16894,6 +18403,24 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C21, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003C21, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003C24 = new("Assembly-CSharp", "Terraria.Player", "spX", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @spX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C24, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003C24, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C25 = new("Assembly-CSharp", "Terraria.Player", "spY", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @spY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C25, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003C25, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C27 = new("Assembly-CSharp", "Terraria.Player", "spI", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @spI
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C27, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003C27, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003C28 = new("Assembly-CSharp", "Terraria.Player", "lastTileRangeX", "System.Int32", false, true, true);
     public int @lastTileRangeX
     {
@@ -16978,6 +18505,12 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C35, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003C35, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003C36 = new("Assembly-CSharp", "Terraria.Player", "adjTile", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @adjTile
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C36, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003C36, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003C37 = new("Assembly-CSharp", "Terraria.Player", "itemGrabSpeed", "System.Single", true, true, true);
     public static float @itemGrabSpeed
     {
@@ -17019,6 +18552,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C45, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003C45, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C47 = new("Assembly-CSharp", "Terraria.Player", "instantMovementAccumulatedThisFrame", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @instantMovementAccumulatedThisFrame
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C47, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003C47, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003C48 = new("Assembly-CSharp", "Terraria.Player", "accCompass", "System.Int32", false, true, true);
     public int @accCompass
@@ -17499,6 +19038,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C9C, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003C9C, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003C9D = new("Assembly-CSharp", "Terraria.Player", "grappling", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @grappling
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003C9D, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003C9D, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003C9E = new("Assembly-CSharp", "Terraria.Player", "grapCount", "System.Int32", false, true, true);
     public int @grapCount
@@ -18202,6 +19747,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D1E, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D1E, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D1F = new("Assembly-CSharp", "Terraria.Player", "ownedProjectileCounts", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @ownedProjectileCounts
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D1F, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D1F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D20 = new("Assembly-CSharp", "Terraria.Player", "npcTypeNoAggro", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @npcTypeNoAggro
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D20, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D20, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003D21 = new("Assembly-CSharp", "Terraria.Player", "lastPortalColorIndex", "System.Int32", false, true, true);
     public int @lastPortalColorIndex
     {
@@ -18231,6 +19788,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D25, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D25, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D26 = new("Assembly-CSharp", "Terraria.Player", "MinionRestTargetPoint", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @MinionRestTargetPoint
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D26, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003D26, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D27 = new("Assembly-CSharp", "Terraria.Player", "MinionAttackTargetNPC", "System.Int32", false, true, true);
     public int @MinionAttackTargetNPC
@@ -18316,11 +19879,23 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D3B, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D3B, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D3C = new("Assembly-CSharp", "Terraria.Player", "PetBuffs", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @PetBuffs
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D3C, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D3C, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003D3E = new("Assembly-CSharp", "Terraria.Player", "_lastSmartCursorToolStrategy", "System.Int32", false, true, true);
     public int @_lastSmartCursorToolStrategy
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D3E, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D3E, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D3F = new("Assembly-CSharp", "Terraria.Player", "nearbyTorch", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @nearbyTorch
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D3F, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D3F, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D40 = new("Assembly-CSharp", "Terraria.Player", "dryCoralTorch", "System.Boolean", false, true, true);
     public bool @dryCoralTorch
@@ -18345,6 +19920,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D43, this.Identity); return global::System.BitConverter.UInt32BitsToSingle((uint)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D43, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D44 = new("Assembly-CSharp", "Terraria.Player", "_nextTorchLuckCheckCenter", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @_nextTorchLuckCheckCenter
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D44, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003D44, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D45 = new("Assembly-CSharp", "Terraria.Player", "happyFunTorchTime", "System.Boolean", false, true, true);
     public bool @happyFunTorchTime
@@ -18375,6 +19956,18 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D49, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D49, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D4A = new("Assembly-CSharp", "Terraria.Player", "unlitTorchX", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @unlitTorchX
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D4A, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D4A, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D4B = new("Assembly-CSharp", "Terraria.Player", "unlitTorchY", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @unlitTorchY
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D4B, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D4B, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D4C = new("Assembly-CSharp", "Terraria.Player", "ladyBugLuckTimeLeft", "System.Int32", false, true, true);
     public int @ladyBugLuckTimeLeft
@@ -18436,6 +20029,18 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D58, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003D58, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D59 = new("Assembly-CSharp", "Terraria.Player", "TouchCanAlterntiveFireAxis", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @TouchCanAlterntiveFireAxis
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D59, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D59, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D5A = new("Assembly-CSharp", "Terraria.Player", "ItemUsesRightFire", "System.Boolean[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<bool>? @ItemUsesRightFire
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D5A, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D5A, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003D5B = new("Assembly-CSharp", "Terraria.Player", "UsingAlternativeFire", "System.Boolean", false, true, true);
     public bool @UsingAlternativeFire
     {
@@ -18457,6 +20062,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D5F, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D5F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D60 = new("Assembly-CSharp", "Terraria.Player", "_unbreakableWallScanLastPosition", "Microsoft.Xna.Framework.Vector2", false, true, true);
+    public global::Microsoft.Xna.Framework.Vector2 @_unbreakableWallScanLastPosition
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D60, this.Identity); return __ivyValue.Vector(); }
+        set => NativeAccess.Backend.Write(__ivy_f04003D60, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D62 = new("Assembly-CSharp", "Terraria.Player", "wingAccRunSpeed", "System.Single", false, true, true);
     public float @wingAccRunSpeed
@@ -18572,6 +20183,36 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D7E, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D7E, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D7F = new("Assembly-CSharp", "Terraria.Player", "costInventory", "Terraria.Item[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @costInventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D7F, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D7F, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D80 = new("Assembly-CSharp", "Terraria.Player", "costBankInventory", "Terraria.Item[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @costBankInventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D80, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D80, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D81 = new("Assembly-CSharp", "Terraria.Player", "costBank2Inventory", "Terraria.Item[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @costBank2Inventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D81, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D81, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D82 = new("Assembly-CSharp", "Terraria.Player", "costBank3Inventory", "Terraria.Item[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @costBank3Inventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D82, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D82, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D83 = new("Assembly-CSharp", "Terraria.Player", "costBank4Inventory", "Terraria.Item[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @costBank4Inventory
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D83, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D83, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003D84 = new("Assembly-CSharp", "Terraria.Player", "DisplayLegFrameCounter", "System.Single", true, true, true);
     public static float @DisplayLegFrameCounter
     {
@@ -18583,6 +20224,12 @@ public partial class Player
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D85, null); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D85, null, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D86 = new("Assembly-CSharp", "Terraria.Player", "hurtCooldowns", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @hurtCooldowns
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D86, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D86, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003D88 = new("Assembly-CSharp", "Terraria.Player", "FlexibleWandRandomSeed", "System.Int32", true, true, true);
     public static int @FlexibleWandRandomSeed
@@ -18608,6 +20255,12 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D8C, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D8C, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D8F = new("Assembly-CSharp", "Terraria.Player", "meleeNPCHitCooldown", "System.Int32[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<int>? @meleeNPCHitCooldown
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D8F, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D8F, this.Identity, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003D90 = new("Assembly-CSharp", "Terraria.Player", "musicDist", "System.Single", false, true, true);
     public float @musicDist
     {
@@ -18620,11 +20273,38 @@ public partial class Player
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D91, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D91, this.Identity, NativeValue.From(value));
     }
+    private static readonly NativeMember __ivy_f04003D93 = new("Assembly-CSharp", "Terraria.Player", "AmmoSlotOrder_Default", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @AmmoSlotOrder_Default
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D93, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
+    private static readonly NativeMember __ivy_f04003D94 = new("Assembly-CSharp", "Terraria.Player", "AmmoSlotOrder_AmmoOnly", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @AmmoSlotOrder_AmmoOnly
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D94, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
+    private static readonly NativeMember __ivy_f04003D95 = new("Assembly-CSharp", "Terraria.Player", "AmmoSlotOrder_CoinsOnly", "System.Int32[]", true, true, false);
+    public static global::Ivy.Runtime.NativeArray<int>? @AmmoSlotOrder_CoinsOnly
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D95, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+    }
     private static readonly NativeMember __ivy_f04003D97 = new("Assembly-CSharp", "Terraria.Player", "CurrentLoadoutIndex", "System.Int32", false, true, true);
     public int @CurrentLoadoutIndex
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D97, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003D97, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003D9F = new("Assembly-CSharp", "Terraria.Player", "_temporaryItemSlots", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @_temporaryItemSlots
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003D9F, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003D9F, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003DA0 = new("Assembly-CSharp", "Terraria.Player", "_pendingRefunds", "Terraria.Item[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<global::Terraria.Item?>? @_pendingRefunds
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003DA0, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<global::Terraria.Item?>(arrayIdentity, "Terraria.Item", static element => element.Reference is { } identity ? new global::Terraria.Item(identity) : null, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003DA0, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_m06002874 = new("Assembly-CSharp", "Terraria.Player", "get_tileRangeX", "System.Int32", true, false, false);
     private static readonly NativeMember __ivy_m06002875 = new("Assembly-CSharp", "Terraria.Player", "set_tileRangeX", "System.Void", true, false, false, "System.Int32");
@@ -22493,11 +24173,23 @@ public partial class Player
 public partial class Projectile : global::Terraria.Entity
 {
     internal Projectile(object identity) : base(identity) { }
+    private static readonly NativeMember __ivy_f04003E24 = new("Assembly-CSharp", "Terraria.Projectile", "_CompanionCubeScreamCooldown", "System.Single[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<float>? @_CompanionCubeScreamCooldown
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E24, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<float>(arrayIdentity, "System.Single", static element => global::System.BitConverter.UInt32BitsToSingle((uint)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003E24, null, NativeValue.From(value));
+    }
     private static readonly NativeMember __ivy_f04003E25 = new("Assembly-CSharp", "Terraria.Projectile", "active", "System.Boolean", false, true, true);
     public bool @active
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E25, this.Identity); return __ivyValue.Bits != 0; }
         set => NativeAccess.Backend.Write(__ivy_f04003E25, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003E26 = new("Assembly-CSharp", "Terraria.Projectile", "slotGenerations", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @slotGenerations
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E26, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003E26, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003E2A = new("Assembly-CSharp", "Terraria.Projectile", "ownerHitCheckDistance", "System.Single", false, true, true);
     public float @ownerHitCheckDistance
@@ -22720,6 +24412,12 @@ public partial class Projectile : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E52, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003E52, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003E53 = new("Assembly-CSharp", "Terraria.Projectile", "netSyncSkippedForPlayer", "System.Boolean[]", false, true, true);
+    public global::Ivy.Runtime.NativeArray<bool>? @netSyncSkippedForPlayer
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E53, this.Identity); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<bool>(arrayIdentity, "System.Boolean", static element => element.Bits != 0, static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003E53, this.Identity, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003E57 = new("Assembly-CSharp", "Terraria.Projectile", "minion", "System.Boolean", false, true, true);
     public bool @minion
@@ -22948,6 +24646,12 @@ public partial class Projectile : global::Terraria.Entity
     {
         get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E80, this.Identity); return unchecked((int)__ivyValue.Bits); }
         set => NativeAccess.Backend.Write(__ivy_f04003E80, this.Identity, NativeValue.From(value));
+    }
+    private static readonly NativeMember __ivy_f04003E84 = new("Assembly-CSharp", "Terraria.Projectile", "npcCrystalDartList", "System.Int32[]", true, true, true);
+    public static global::Ivy.Runtime.NativeArray<int>? @npcCrystalDartList
+    {
+        get { var __ivyValue = NativeAccess.Backend.Read(__ivy_f04003E84, null); return __ivyValue.Reference is { } arrayIdentity ? new global::Ivy.Runtime.NativeArray<int>(arrayIdentity, "System.Int32", static element => unchecked((int)element.Bits), static element => NativeValue.From(element)) : null; }
+        set => NativeAccess.Backend.Write(__ivy_f04003E84, null, NativeValue.From(value));
     }
     private static readonly NativeMember __ivy_f04003E93 = new("Assembly-CSharp", "Terraria.Projectile", "kiteSoundPitch", "System.Single", true, true, true);
     public static float @kiteSoundPitch
@@ -24443,7 +26147,7 @@ public partial class Projectile : global::Terraria.Entity
     }
 }
 
-public static class On_Player
+public static partial class On_Player
 {
     public delegate void orig_HealEffect(Player self, int healAmount, bool broadcast);
     public delegate void hook_HealEffect(orig_HealEffect orig, Player self, int healAmount, bool broadcast);

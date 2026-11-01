@@ -4,16 +4,18 @@ using Android.OS;
 using Android.Widget;
 using System.Text;
 using Ivy.Loader;
+using Android.Views;
+using System.Text.Json;
 
 namespace Ivy.AndroidHost;
 
-[Activity(Label = "Ivy", MainLauncher = true, Exported = true, Process = ":launcher", TaskAffinity = "${ivyPanelAffinity}")]
-public sealed class MainActivity : Activity
+[Activity(Theme = "@style/ivy_panel_theme", Label = "Ivy Loader", MainLauncher = true, Exported = true, Process = ":launcher", TaskAffinity = "${ivyPanelAffinity}")]
+public sealed class MainActivity : Activity, View.IOnClickListener
 {
-    private TextView output = null!;
+    private NativePanel panel = null!;
+    private readonly SemaphoreSlim libraryMutations = new(1,1);
     private ModLibrary library = null!;
     private Task libraryReady = Task.CompletedTask;
-    private TextView counts = null!;
     private int libraryRefreshVersion;
     private CancellationTokenSource? launchCancellation;
     private readonly GameLaunchCoordinator launchCoordinator = new();
@@ -28,46 +30,13 @@ public sealed class MainActivity : Activity
         ProcessHost.Initialize(FilesDir!.AbsolutePath, gameProcess: false);
         library = new ModLibrary(FilesDir!.AbsolutePath);
         libraryReady = Task.Run(library.Initialize);
-        var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-        var padding = (int)(20 * Resources!.DisplayMetrics!.Density);
-        layout.SetPadding(padding, padding, padding, padding);
-        var title = new TextView(this) { Text = "Ivy · 0.6.1", TextSize = 24 };
-        layout.AddView(title);
-        layout.AddView(new TextView(this) { Text = "Host C# + Terraria · ARM64\nSeleção de mods · modo sem mods disponível", TextSize = 15 });
-        counts = new TextView(this) { Text = "Lendo biblioteca de mods…", TextSize = 15 };
-        layout.AddView(counts);
-        AddButton(layout, "Jogar", OpenGame);
-        AddButton(layout, "Meus mods", () => StartActivity(new Intent(this, typeof(ModsActivity))));
-        AddButton(layout, "Preparar seleção", () => SendCommand(GameControlService.Load));
-        AddButton(layout, "Descarregar sessão", () => SendCommand(GameControlService.Unload));
-        if (Assets!.List("")!.Contains("ExampleMod.dll"))
-        {
-            AddButton(layout, "Instalar exemplo (opcional)", InstallExample);
-            AddButton(layout, "Parar ponte On_Main (desenvolvimento)", () => SendCommand(GameControlService.StopHook));
-        }
-        AddButton(layout, "Importar mod (.dll)", () =>
-        {
-            var intent = new Intent(Intent.ActionOpenDocument);
-            intent.AddCategory(Intent.CategoryOpenable);
-            intent.SetType("*/*");
-            StartActivityForResult(intent, ImportRequest);
-        });
-        AddButton(layout, "Exportar relatório", () =>
-        {
-            var intent = new Intent(Intent.ActionCreateDocument);
-            intent.AddCategory(Intent.CategoryOpenable);
-            intent.SetType("text/plain");
-            intent.PutExtra(Intent.ExtraTitle, "Ivy-relatorio.txt");
-            StartActivityForResult(intent, ExportRequest);
-        });
-        output = new TextView(this) { TextSize = 13 };
-        var scroll = new ScrollView(this);
-        scroll.AddView(output);
-        layout.AddView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
-        SetContentView(layout);
+        panel=new NativePanel(this,this,"0.7.0",Assets!.List("")!.Contains("ExampleMod.dll"));
+        SetContentView(panel.View);
+        if(savedInstanceState?.GetString("ivy.panel") is {} savedPanel)panel.RestoreState(savedPanel);
         Log($"Android {Build.VERSION.Release} · {string.Join(", ", Build.SupportedAbis!)}");
         Log($"Runtime: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}");
-        Log("Runtime Mono/.NET pronto. SDK gerado: 6 classes; On_Main e On_Player.HealEffect. Conteúdo ainda pendente.");
+        ProcessHost.Write("Runtime Mono/.NET pronto. SDK gerado; API de conteúdo pendente.");
+        panel.Status("Escolha seus mods ou jogue sem mods.");
         _ = RefreshLibrary();
     }
 
@@ -79,9 +48,9 @@ public sealed class MainActivity : Activity
             await libraryReady;
             var list = await Task.Run(library.List);
             if (version != libraryRefreshVersion) return;
-            counts.Text = $"{list.Count} instalado(s) · {list.Count(m => m.Enabled)} selecionado(s) · {list.Count(m => m.Problem is not null)} incompatível(is)";
+            panel.Library(JsonSerializer.Serialize(list,new JsonSerializerOptions { PropertyNamingPolicy=JsonNamingPolicy.CamelCase }));
         }
-        catch (Exception ex) { counts.Text = "Biblioteca indisponível"; Log(ex.Message); }
+        catch (Exception ex) { Log("Biblioteca indisponível: "+ex.Message); }
     }
 
     private async void InstallExample()
@@ -105,20 +74,60 @@ public sealed class MainActivity : Activity
         catch (Exception ex) { Log($"Falha ao instalar exemplo: {ex.Message}"); }
     }
 
-    private void AddButton(LinearLayout parent, string text, Action action)
+    public async void OnClick(View? view)
     {
-        var button = new Button(this) { Text = text };
-        button.Click += (_, _) =>
+        try
         {
-            try
+            var action=view?.Tag?.ToString()??"";
+            switch(action)
             {
-                action();
-                output.Text = ProcessHost.GetReport();
+                case "play": OpenGame(); break;
+                case "prepare": SendCommand(GameControlService.Load); break;
+                case "unload": SendCommand(GameControlService.Unload); break;
+                case "example": InstallExample(); break;
+                case "stop_bridge": SendCommand(GameControlService.StopHook); break;
+                case "refresh_reports": panel.Report(ProcessHost.GetReport()); break;
+                case "import": PickDocument(false); break;
+                case "export": PickDocument(true); break;
+                default:
+                    await libraryMutations.WaitAsync();
+                    try
+                    {
+                        await libraryReady;
+                        if(action=="disable_all")await Task.Run(library.DisableAll);
+                        else if(action.StartsWith("toggle|",StringComparison.Ordinal))
+                        {
+                            var parts=action.Split('|');
+                            if(parts.Length!=3)throw new InvalidDataException("Ação de seleção inválida.");
+                            await Task.Run(()=>library.SetEnabled(parts[1],parts[2]=="1"));
+                        }
+                        else throw new InvalidOperationException("Ação desconhecida do painel.");
+                    }
+                    finally { libraryMutations.Release(); await RefreshLibrary(); }
+                    break;
             }
-            catch (Exception ex) { Log(ex.ToString()); }
-        };
-        parent.AddView(button);
+        }
+        catch(Exception ex) { Log(ex.Message); }
     }
+    private void PickDocument(bool export)
+    {
+        var intent=new Intent(export?Intent.ActionCreateDocument:Intent.ActionOpenDocument);
+        intent.AddCategory(Intent.CategoryOpenable);intent.SetType(export?"text/plain":"*/*");
+        if(export)intent.PutExtra(Intent.ExtraTitle,"Ivy-relatorio.txt");
+        StartActivityForResult(intent,export?ExportRequest:ImportRequest);
+    }
+    protected override void OnSaveInstanceState(Bundle outState)
+    {
+        if(panel is not null)outState.PutString("ivy.panel",panel.SaveState());
+        base.OnSaveInstanceState(outState);
+    }
+#pragma warning disable CA1422 // Keep the API 24+ Activity fallback until predictive-back device coverage.
+    public override void OnBackPressed()
+    {
+        if(panel is null||!panel.GoBack())base.OnBackPressed();
+    }
+
+#pragma warning restore CA1422
 
     private async Task<Bundle> RequestCommand(string action, CancellationToken token)
     {
@@ -131,6 +140,7 @@ public sealed class MainActivity : Activity
         using var registration = token.Register(() => receiver.Completion.TrySetCanceled(token));
         var result = await receiver.Completion.Task.WaitAsync(token);
         GC.KeepAlive(receiver);
+        panel.Session(action==GameControlService.Unload?"Sessão descarregada":$"Última preparação: {result.GetInt("mods")} mod(s)");
         return result;
     }
 
@@ -151,6 +161,7 @@ public sealed class MainActivity : Activity
         if (launchCoordinator.IsPending) { Log("Aguardando confirmação dos mods; abertura já solicitada."); return; }
         using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
         launchCancellation = cancellation;
+        panel.Busy(true);
         try
         {
             var intent = new Intent();
@@ -176,7 +187,7 @@ public sealed class MainActivity : Activity
             Log("Abertura cancelada: painel saiu de foco ou o serviço não confirmou em 20 segundos. O Terraria não foi aberto automaticamente.");
         }
         catch (Exception ex) { Log($"Não foi possível preparar o jogo: {ex}"); }
-        finally { if (ReferenceEquals(launchCancellation, cancellation)) launchCancellation = null; }
+        finally { panel.Busy(false); if (ReferenceEquals(launchCancellation, cancellation)) launchCancellation = null; }
     }
 
     protected override async void OnActivityResult(int requestCode, Result resultCode, Intent? data)
@@ -233,14 +244,15 @@ public sealed class MainActivity : Activity
     private void Log(string message)
     {
         ProcessHost.Write(message);
-        output.Text = ProcessHost.GetReport();
+        panel.Status(message);
+        panel.Report(ProcessHost.GetReport());
     }
 
     protected override void OnResume()
     {
         base.OnResume();
         RecordGameExits();
-        if (output is not null) output.Text = ProcessHost.GetReport();
+        if (panel is not null) panel.Report(ProcessHost.GetReport());
         _ = RefreshLibrary();
     }
 

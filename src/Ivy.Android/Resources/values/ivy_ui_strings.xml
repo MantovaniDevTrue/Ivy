@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="ivy_ui_6b8ab97061">Seu mundo,\nsuas regras.</string>
+  <string name="ivy_ui_60ea35ba52">Escolha seus mods e entre no Terraria.</string>
+  <string name="ivy_ui_2f7011b4db">PRÓXIMA SESSÃO</string>
+  <string name="ivy_ui_ea2183c589">A preparação acontece automaticamente ao jogar.</string>
+  <string name="ivy_ui_0d2b7ca656">Ambiente</string>
+  <string name="ivy_ui_78a4906fef">Runtime C# inicializado</string>
+  <string name="ivy_ui_e4e5ff38ad">Gerenciar mods</string>
+  <string name="ivy_ui_6477f0b83f">Preparar sessão</string>
+  <string name="ivy_ui_a36cb05e27">IVY LOADER · MANTOVANI</string>
+  <string name="ivy_ui_f8fbef3fb3">Meus mods</string>
+  <string name="ivy_ui_9f73687b9f">A seleção vale para a próxima sessão. Para trocar uma sessão preparada, descarregue-a em Ajustes.</string>
+  <string name="ivy_ui_443c9a13dd">Sem resultados. Importe um mod ou ajuste a busca.</string>
+  <string name="ivy_ui_4f2debbbf4">Ajustes</string>
+  <string name="ivy_ui_04f9f0a78d">Aparência</string>
+  <string name="ivy_ui_f722ef868e">Tema escuro Ivy · componentes Android nativos</string>
+  <string name="ivy_ui_e6f5e06079">Sessão</string>
+  <string name="ivy_ui_9d8a5c401a">Descarregar sessão</string>
+  <string name="ivy_ui_578cdfc9cb">Desativar todos os mods</string>
+  <string name="ivy_ui_c36c2f69fb">Desenvolvimento</string>
+  <string name="ivy_ui_619f71a59b">Instalar exemplo opcional</string>
+  <string name="ivy_ui_b7a8aeb5dd">Parar ponte — reiniciar depois</string>
+  <string name="ivy_ui_5e96184669">O Ivy mantém o núcleo C# junto do Terraria. O painel é isolado para preservar os relatórios.</string>
+  <string name="ivy_ui_dc4bb10b6d">Relatórios</string>
+  <string name="ivy_ui_08e45b1adb">Mensagens reais do painel e da última sessão. Atualização por ação, sem leitura contínua durante o jogo.</string>
+  <string name="ivy_ui_6b782b6426">Atualizar mensagens</string>
+  <string name="ivy_ui_9bb126076d">Copiar relatório</string>
+</resources>

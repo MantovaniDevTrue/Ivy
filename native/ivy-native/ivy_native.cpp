@@ -158,7 +158,7 @@ IVY_EXPORT const char *ivy_native_error_message(int32_t error) {
         case -5: return "Hook backend returned no stub";
         case -6: return "Hook backend returned no original function";
         case -7: return "World update hook is not installed";
-        case -8: return "Original is only callable inside a world hook on its thread";
+        case -8: return "Original is only callable inside its matching hook on the same thread";
         default: return shadowhook_to_errmsg(error);
     }
 }
@@ -170,3 +170,5 @@ IVY_EXPORT void ivy_native_test_tick(void *instance, const void *method_info) { 
 #include "heal_hook.h"
 
 #include "runtime_ready.h"
+
+#include "return_hooks.g.inc"
